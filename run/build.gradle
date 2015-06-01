@@ -1,0 +1,70 @@
+plugins {
+    id "java"
+    id "idea"
+}
+
+version = "0"
+
+repositories {
+    mavenCentral()
+    maven {
+        name "sponge"
+        url "http://repo.spongepowered.org/maven/"
+    }
+    maven {
+        name "forge"
+        url "http://files.minecraftforge.net/maven/"
+    }
+    maven {
+        name "mojang"
+        url "https://libraries.minecraft.net/"
+    }
+}
+
+configurations {
+    forgeInstaller
+    forge
+    sponge
+
+    sponge.exclude module: 'spongecommon'
+
+    compile.extendsFrom forge
+    compile.extendsFrom sponge
+}
+
+dependencies {
+    forgeInstaller "net.minecraftforge:forge:$forgeVersion:installer"
+    sponge "org.spongepowered:sponge:$spongeVersion"
+    if(file("forge-$forgeVersion-universal.jar").exists()){
+        forge files("forge-$forgeVersion-universal.jar")
+    }
+    compile rootProject
+}
+
+task runInstaller(type: JavaExec) {
+    inputs.property("version", forgeVersion)
+    outputs.dir(file("libraries"))
+    outputs.file(file("forge-$forgeVersion-universal.jar"))
+
+    classpath = files(configurations.forgeInstaller.singleFile)
+    main = "net.minecraftforge.installer.SimpleInstaller"
+    args += "--installServer"
+    workingDir file(".")
+    setStandardOutput(new OutputStream(){
+        @Override void write(int b) throws IOException {}
+    })
+    setErrorOutput(new OutputStream(){
+        @Override void write(int b) throws IOException {}
+    })
+    doLast {
+        file("forge-$forgeVersion-installer.jar.log").delete()
+        logger.lifecycle("Now the installer is done setting up the files, you need to refresh the gradle project in your IDE")
+        logger.lifecycle("When that is done, you can add a run configuration in your IDE with the following settings:")
+        logger.lifecycle(" - Main Class:       net.minecraftforge.fml.relauncher.ServerLaunchWrapper")
+        logger.lifecycle(" - Work Directory:   pumpkin/run")
+        logger.lifecycle(" - Module classpath: run")
+    }
+}
+
+task setupRuntime(dependsOn: [runInstaller])
+setupRuntime.group = "pumpkin"

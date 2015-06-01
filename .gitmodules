@@ -1,0 +1,3 @@
+[submodule "Pumpkin-Hooks"]
+	path = Pumpkin-Hooks
+	url = https://github.com/Pumpkin-Framework/Hooks

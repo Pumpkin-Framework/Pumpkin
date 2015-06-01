@@ -6,7 +6,6 @@ import static org.spongepowered.api.util.Tristate.FALSE;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
-import org.spongepowered.api.entity.player.gamemode.GameModes;
 import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.entity.player.PlayerChatEvent;
 import org.spongepowered.api.event.entity.player.PlayerJoinEvent;
@@ -20,7 +19,6 @@ import org.spongepowered.api.service.permission.PermissionService;
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.world.DimensionTypes;
 import org.spongepowered.api.world.GeneratorTypes;
-import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.difficulty.Difficulties;
 
 import nl.jk_5.pumpkin.command.PumpkinCommands;
@@ -34,18 +32,16 @@ public class PumpkinPlugin {
     @Inject
     private Game game;
 
-    private World world2;
-
     @Subscribe
     public void onServerPreStart(ServerAboutToStartEvent event){
         logger.info("Pumpkin initializing...");
 
-        PumpkinCommands.init(this, event.getGame().getCommandDispatcher());
+        PumpkinCommands.init(this, game.getCommandDispatcher());
 
         PermissionService service = event.getGame().getServiceManager().provide(PermissionService.class).get();
         service.getDefaultData().setPermission(GLOBAL_CONTEXT, "pumpkin.command.test", FALSE);
 
-        world2 = game.getRegistry().getWorldBuilder().dimensionType(DimensionTypes.OVERWORLD).enabled(true).gameMode(GameModes.ADVENTURE).generator(GeneratorTypes.FLAT).keepsSpawnLoaded(false).loadsOnStartup(false).name("map_1_1").build().get();
+        game.getServiceManager().provide(PumpkinHooksService.class);
     }
 
     @Subscribe

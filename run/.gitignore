@@ -1,0 +1,9 @@
+config
+crash-reports
+libraries
+logs
+mods
+world
+*.json
+minecraft_server.1.8.jar
+*.jar
