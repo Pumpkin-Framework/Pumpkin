@@ -22,8 +22,9 @@ import org.spongepowered.api.world.GeneratorTypes;
 import org.spongepowered.api.world.difficulty.Difficulties;
 
 import nl.jk_5.pumpkin.command.PumpkinCommands;
+import nl.jk_5.pumpkin.hooks.PumpkinHooksService;
 
-@Plugin(id = "pumpkin", name = "Pumpkin", version = "1.0.0-SNAPSHOT")
+@Plugin(id = "pumpkin", name = "Pumpkin", version = "1.0.0-SNAPSHOT", dependencies = "required-after:pumpkin-hooks")
 public class PumpkinPlugin {
 
     @Inject
@@ -41,7 +42,11 @@ public class PumpkinPlugin {
         PermissionService service = event.getGame().getServiceManager().provide(PermissionService.class).get();
         service.getDefaultData().setPermission(GLOBAL_CONTEXT, "pumpkin.command.test", FALSE);
 
-        game.getServiceManager().provide(PumpkinHooksService.class);
+        PumpkinHooksService hooks = game.getServiceManager().provide(PumpkinHooksService.class).orNull();
+        if(hooks == null){
+            logger.info("Pumpkin Hooks service was not found");
+            throw new RuntimeException("Pumpkin Hooks service missing");
+        }
     }
 
     @Subscribe
