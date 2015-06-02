@@ -39,6 +39,7 @@ dependencies {
         forge files("forge-$forgeVersion-universal.jar")
     }
     compile rootProject
+    runtime rootProject.project("Pumpkin-Hooks")
 }
 
 task runInstaller(type: JavaExec) {
@@ -63,6 +64,7 @@ task runInstaller(type: JavaExec) {
         logger.lifecycle(" - Main Class:       net.minecraftforge.fml.relauncher.ServerLaunchWrapper")
         logger.lifecycle(" - Work Directory:   pumpkin/run")
         logger.lifecycle(" - Module classpath: run")
+        logger.lifecycle(" - VM Arguments:     -Dfml.coreMods.load=org.spongepowered.mod.SpongeCoremod,nl.jk_5.pumpkin.hooks.impl.PumpkinHooksCoremod")
     }
 }
 
