@@ -12,14 +12,50 @@ repositories {
         name "sponge"
         url "http://repo.spongepowered.org/maven/"
     }
+    maven {
+        name "jk-5"
+        url "http://maven.jk-5.nl/"
+    }
+}
+
+configurations {
+    shaded
 }
 
 dependencies {
     compile "org.spongepowered:spongeapi:2.1-SNAPSHOT"
 
-    //compile project("Pumpkin-Hooks:api")
+    compile "nl.jk5.pumpkin.sponge.hooks:Pumpkin-Hooks-Worlds:1.1.0"
+    shaded "nl.jk5.pumpkin.sponge.hooks:Pumpkin-Hooks-Worlds:1.1.0"
+    runtime "nl.jk5.pumpkin.sponge.hooks.impl:Pumpkin-Hooks-Worlds:1.1.0"
+}
+
+jar {
+    from {
+        configurations.shaded.collect {
+            it.isDirectory() ? it : zipTree(it).matching {
+                exclude "META-INF", "META-INF/**", "*META-INF*", "meta-inf"
+                exclude "**.jar", "**/*.jar", "*.jar"
+            }
+        }
+    }
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
 }
 
 jar.manifest {
+    attributes "Built-By": System.getProperty("user.name")
+    attributes "Build-Jdk": System.getProperty("java.version")
+    attributes "Created-By": "Gradle " + gradle.gradleVersion
     attributes "Implementation-Version": project.version
+    attributes "Implementation-Title": "nl.jk_5.pumpkin.hooks"
+    attributes "Implementation-Vendor": "jk-5"
 }

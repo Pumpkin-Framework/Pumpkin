@@ -25,11 +25,10 @@ configurations {
     forgeInstaller
     forge
     sponge
-
-    sponge.exclude module: 'spongecommon'
+    sponge.transitive = false
 
     compile.extendsFrom forge
-    compile.extendsFrom sponge
+    //compile.extendsFrom sponge
 }
 
 dependencies {
@@ -39,7 +38,6 @@ dependencies {
         forge files("forge-$forgeVersion-universal.jar")
     }
     compile rootProject
-    runtime rootProject.project("Pumpkin-Hooks")
 }
 
 task runInstaller(type: JavaExec) {
@@ -68,5 +66,14 @@ task runInstaller(type: JavaExec) {
     }
 }
 
-task setupRuntime(dependsOn: [runInstaller])
+task copySponge(type: Copy) {
+    doFirst {
+        file("mods").delete()
+        file("mods").mkdir()
+    }
+    from configurations.sponge.singleFile
+    into file("mods")
+}
+
+task setupRuntime(dependsOn: [runInstaller, copySponge])
 setupRuntime.group = "pumpkin"

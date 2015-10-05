@@ -5,4 +5,7 @@ build
 *.iml
 *.ids
 .idea
+run
+out
+
 

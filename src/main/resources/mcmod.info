@@ -1,0 +1,9 @@
+[
+  {
+    "modid": "Pumpkin",
+    "name": "Pumpkin",
+    "version": "${version}",
+    "description": "Pumpkin. A PvP game framework for Minecraft built on sponge",
+    "authorList": ["jk-5"]
+  }
+]

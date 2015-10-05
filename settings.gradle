@@ -1,6 +1,1 @@
 rootProject.name = "Pumpkin"
-
-include "run"
-include "Pumpkin-API"
-//include "Pumpkin-Hooks"
-//include "Pumpkin-Hooks:api"
