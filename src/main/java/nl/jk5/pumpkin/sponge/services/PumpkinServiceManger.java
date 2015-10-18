@@ -1,7 +1,6 @@
 package nl.jk5.pumpkin.sponge.services;
 
 import nl.jk5.pumpkin.sponge.Log;
-import nl.jk5.pumpkin.sponge.hooks.worlds.WorldHooksService;
 import org.spongepowered.api.Game;
 
 import java.util.Optional;
@@ -12,12 +11,12 @@ public class PumpkinServiceManger {
 
     private final Game game;
 
-    private final WorldHooksService worldHooksService;
+    //private final WorldHooksService worldHooksService;
 
     public PumpkinServiceManger(Game game) {
         this.game = game;
 
-        this.worldHooksService = provide(WorldHooksService.class, null);
+        //this.worldHooksService = provide(WorldHooksService.class, null);
     }
 
     @Nonnull
@@ -41,9 +40,5 @@ public class PumpkinServiceManger {
             Log.info("Successfully loaded service " + cl.getSimpleName());
             return opt.get();
         }
-    }
-
-    public WorldHooksService getWorldHooksService() {
-        return this.worldHooksService;
     }
 }
