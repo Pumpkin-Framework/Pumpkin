@@ -1,1 +1,3 @@
 rootProject.name = "Pumpkin"
+
+include "Pumpkin-Commands"

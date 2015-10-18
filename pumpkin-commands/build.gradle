@@ -23,11 +23,8 @@ configurations {
 }
 
 dependencies {
+    //compile rootProject
     compile "org.spongepowered:spongeapi:2.1-SNAPSHOT"
-
-    compile "nl.jk5.pumpkin.sponge.hooks:Pumpkin-Hooks-Worlds:1.1.0"
-    shaded "nl.jk5.pumpkin.sponge.hooks:Pumpkin-Hooks-Worlds:1.1.0"
-    runtime "nl.jk5.pumpkin.sponge.hooks.impl:Pumpkin-Hooks-Worlds:1.1.0"
 }
 
 jar {

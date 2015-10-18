@@ -63,7 +63,7 @@ public class PumpkinSpongePlugin {
     }
 
     @Listener
-    public void playerLoggedIn(ClientConnectionEvent.Join event){
+    public void playerLoggedIn(ClientConnectionEvent.Login event){
         //event.setToTransform(new Transform<>(lobby));
         logger.info("Effective dimension type: {}", event.getFromTransform().getExtent().getDimension().getType());
         logger.info("WorldProvider: {}", event.getFromTransform().getExtent().getDimension().getClass().getName());
