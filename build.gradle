@@ -1,0 +1,62 @@
+plugins {
+    id "java"
+    id "idea"
+}
+
+group = "nl.jk-5.pumpkin"
+version = "1.0.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+    maven {
+        name "sponge"
+        url "http://repo.spongepowered.org/maven/"
+    }
+    maven {
+        name "jk-5"
+        url "http://maven.jk-5.nl/"
+    }
+}
+
+configurations {
+    shaded
+}
+
+dependencies {
+    compile "org.spongepowered:spongeapi:3.1.0-SNAPSHOT"
+
+    compile 'org.postgresql:postgresql:9.4-1206-jdbc41'
+    compile 'org.javassist:javassist:3.19.0-GA'
+    compile 'com.j256.ormlite:ormlite-jdbc:4.48'
+    compile 'org.apache.httpcomponents:httpclient:4.5.1'
+}
+
+jar {
+    from {
+        configurations.shaded.collect {
+            it.isDirectory() ? it : zipTree(it).matching {
+                exclude "META-INF", "META-INF/**", "*META-INF*", "meta-inf"
+                exclude "**.jar", "**/*.jar", "*.jar"
+            }
+        }
+    }
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+jar.manifest {
+    attributes "Built-By": System.getProperty("user.name")
+    attributes "Build-Jdk": System.getProperty("java.version")
+    attributes "Created-By": "Gradle " + gradle.gradleVersion
+    attributes "Implementation-Version": project.version
+    attributes "Implementation-Title": "nl.jk_5.pumpkin"
+    attributes "Implementation-Vendor": "jk-5"
+}
