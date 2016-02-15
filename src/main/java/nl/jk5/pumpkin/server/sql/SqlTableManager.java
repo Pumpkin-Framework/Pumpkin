@@ -7,10 +7,7 @@ import com.j256.ormlite.jdbc.DataSourceConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
-import nl.jk5.pumpkin.server.sql.obj.DatabaseMappack;
-import nl.jk5.pumpkin.server.sql.obj.DatabaseMappackAuthor;
-import nl.jk5.pumpkin.server.sql.obj.DatabaseMappackWorld;
-import nl.jk5.pumpkin.server.sql.obj.DatabaseUser;
+import nl.jk5.pumpkin.server.sql.obj.*;
 import org.postgresql.Driver;
 
 import java.sql.SQLException;
@@ -29,6 +26,7 @@ public final class SqlTableManager {
     public Dao<DatabaseMappackAuthor, Integer> mappackAuthorDao;
     public Dao<DatabaseUser, Integer> userDao;
     private Dao<DatabaseMappackWorld, Integer> mappackWorldsDao;
+    public Dao<DatabasePlayer, Integer> playerDao;
     //private Dao<DatabaseWorldFile, Integer> mappackFilesDao;
     //private Dao<DatabaseMappackTeam, Integer> mappackTeamDao;
     //private Dao<DatabaseGamerule, Integer> gameruleDao;
@@ -61,6 +59,7 @@ public final class SqlTableManager {
         this.mappackAuthorDao = createTable(DatabaseMappackAuthor.class);
         this.userDao = createTable(DatabaseUser.class);
         this.mappackWorldsDao = createTable(DatabaseMappackWorld.class);
+        this.playerDao = createTable(DatabasePlayer.class);
         //mappackFilesDao = createTable(DatabaseWorldFile.class);
         //mappackTeamDao = createTable(DatabaseMappackTeam.class);
         //gameruleDao = createTable(DatabaseGamerule.class);

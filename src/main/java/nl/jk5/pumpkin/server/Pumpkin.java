@@ -11,6 +11,7 @@ import nl.jk5.pumpkin.server.command.element.MappackCommandElement;
 import nl.jk5.pumpkin.server.map.MapEventListener;
 import nl.jk5.pumpkin.server.map.MapRegistry;
 import nl.jk5.pumpkin.server.mappack.MappackRegistry;
+import nl.jk5.pumpkin.server.player.PlayerRegistry;
 import nl.jk5.pumpkin.server.services.PumpkinServiceManger;
 import nl.jk5.pumpkin.server.sql.SqlTableManager;
 import nl.jk5.pumpkin.server.utils.WorldUtils;
@@ -42,9 +43,12 @@ import java.nio.file.Path;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Plugin(id = "pumpkin", name = "Pumpkin")
 public class Pumpkin {
+
+    private static final UUID SERVER_ID = UUID.randomUUID();
 
     @Inject public Logger logger;
     @Inject public Game game;
@@ -63,6 +67,7 @@ public class Pumpkin {
     private SqlTableManager tableManager;
     private MappackRegistry mappackRegistry;
     private MapRegistry mapRegistry;
+    private PlayerRegistry playerRegistry;
 
     @Listener
     public void onPreInit(GamePreInitializationEvent event) throws IOException {
@@ -98,10 +103,12 @@ public class Pumpkin {
 
         this.mappackRegistry = new MappackRegistry(this);
         this.mapRegistry = new MapRegistry(this);
+        this.playerRegistry = new PlayerRegistry(this);
 
         this.game.getRegistry().register(WorldGeneratorModifier.class, new VoidWorldGeneratorModifier());
         this.game.getEventManager().registerListeners(this, this.mapRegistry);
         this.game.getEventManager().registerListeners(this, new MapEventListener(this));
+        this.game.getEventManager().registerListeners(this, this.playerRegistry);
     }
 
     @Listener
@@ -246,5 +253,9 @@ public class Pumpkin {
 
     public MapRegistry getMapRegistry() {
         return mapRegistry;
+    }
+
+    public static UUID getServerId(){
+        return SERVER_ID;
     }
 }

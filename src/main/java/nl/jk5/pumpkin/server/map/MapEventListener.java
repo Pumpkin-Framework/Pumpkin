@@ -17,7 +17,7 @@ public final class MapEventListener {
         this.pumpkin = pumpkin;
     }
 
-    @Listener
+    //@Listener
     public void onJoin(ClientConnectionEvent.Login event){
         Optional<JoinData> joinData = event.getTargetUser().get(JoinData.class);
         if(joinData.isPresent()){

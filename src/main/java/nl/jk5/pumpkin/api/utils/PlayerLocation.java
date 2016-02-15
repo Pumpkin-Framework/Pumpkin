@@ -112,6 +112,6 @@ public final class PlayerLocation {
     }
 
     public <E extends Extent> Location<E> toLocation(E extent) {
-        return new Location<E>(extent, this.toVector3i());
+        return new Location<E>(extent, this.x, this.y, this.z);
     }
 }
