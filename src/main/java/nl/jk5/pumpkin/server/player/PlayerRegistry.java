@@ -55,6 +55,9 @@ public class PlayerRegistry {
                     );
                 }
             }
+            if(player.getServer().equals(Pumpkin.getServerId())){
+                tpToLobby = false;
+            }
             player.setServer(Pumpkin.getServerId());
             this.pumpkin.getTableManager().playerDao.update(player);
         }
