@@ -18,6 +18,7 @@ import java.sql.SQLException;
 public final class SqlTableManager {
 
     private final Pumpkin pumpkin;
+    private final String connectionString;
 
     private ConnectionSource conn;
 
@@ -36,32 +37,37 @@ public final class SqlTableManager {
     //private Dao<DatabaseGame, Integer> gameDao;
     //private Dao<DatabaseGameEvent, Integer> gameEventDao;
 
-    public SqlTableManager(Pumpkin pumpkin) {
+    public SqlTableManager(Pumpkin pumpkin, String connectionString) {
         this.pumpkin = pumpkin;
+        this.connectionString = connectionString;
+    }
+
+    public void connect(){
+        PostgresDatabaseType type = new PostgresDatabaseType();
+        type.setDriver(new Driver());
+        try{
+            this.conn = new DataSourceConnectionSource(this.pumpkin.getServiceManager().getSqlService().getDataSource(this.connectionString), type);
+        }catch(SQLException e){
+            Log.error("Could not connect to the database: " + e.getMessage());
+            throw new RuntimeException("Could not connect to the database", e);
+        }
     }
 
     public void setupTables(){
-        try{
-            this.conn = this.getConnectionSource();
-
-            //groupPermissionDao = createTable(DatabaseGroupPermission.class);
-            //userPermissionDao = createTable(DatabaseUserPermission.class);
-            //zoneDao = createTable(DatabaseZone.class);
-            this.mappackDao = createTable(DatabaseMappack.class);
-            this.mappackAuthorDao = createTable(DatabaseMappackAuthor.class);
-            this.userDao = createTable(DatabaseUser.class);
-            this.mappackWorldsDao = createTable(DatabaseMappackWorld.class);
-            //mappackFilesDao = createTable(DatabaseWorldFile.class);
-            //mappackTeamDao = createTable(DatabaseMappackTeam.class);
-            //gameruleDao = createTable(DatabaseGamerule.class);
-            //groupsDao = createTable(DatabaseGroup.class);
-            //userGroupDao = createTable(DatabaseGroupMembership.class);
-            //gameDao = createTable(DatabaseGame.class);
-            //gameEventDao = createTable(DatabaseGameEvent.class);
-
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+        //groupPermissionDao = createTable(DatabaseGroupPermission.class);
+        //userPermissionDao = createTable(DatabaseUserPermission.class);
+        //zoneDao = createTable(DatabaseZone.class);
+        this.mappackDao = createTable(DatabaseMappack.class);
+        this.mappackAuthorDao = createTable(DatabaseMappackAuthor.class);
+        this.userDao = createTable(DatabaseUser.class);
+        this.mappackWorldsDao = createTable(DatabaseMappackWorld.class);
+        //mappackFilesDao = createTable(DatabaseWorldFile.class);
+        //mappackTeamDao = createTable(DatabaseMappackTeam.class);
+        //gameruleDao = createTable(DatabaseGamerule.class);
+        //groupsDao = createTable(DatabaseGroup.class);
+        //userGroupDao = createTable(DatabaseGroupMembership.class);
+        //gameDao = createTable(DatabaseGame.class);
+        //gameEventDao = createTable(DatabaseGameEvent.class);
     }
 
     private <T, ID> Dao<T, ID> createTable(Class<T> cls){
@@ -73,11 +79,5 @@ public final class SqlTableManager {
             Log.error("Error while creating table for " + cls.getSimpleName(), e);
         }
         return dao;
-    }
-
-    private ConnectionSource getConnectionSource() throws SQLException {
-        PostgresDatabaseType type = new PostgresDatabaseType();
-        type.setDriver(new Driver());
-        return new DataSourceConnectionSource(this.pumpkin.getServiceManager().getSqlService().getDataSource("jdbc:postgresql://10.2.1.2/pumpkin?user=postgres&password=laserint"), type); //TODO: make this configurable
     }
 }

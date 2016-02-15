@@ -1,7 +1,10 @@
 package nl.jk5.pumpkin.api.utils;
 
+import com.flowpowered.math.vector.Vector3d;
 import com.flowpowered.math.vector.Vector3i;
 import com.google.common.base.Objects;
+import org.spongepowered.api.world.Location;
+import org.spongepowered.api.world.extent.Extent;
 
 public final class PlayerLocation {
 
@@ -102,5 +105,13 @@ public final class PlayerLocation {
 
     public Vector3i toVector3i(){
         return new Vector3i(x, y, z);
+    }
+
+    public Vector3d getRotation() {
+        return new Vector3d(this.pitch, this.yaw, 0);
+    }
+
+    public <E extends Extent> Location<E> toLocation(E extent) {
+        return new Location<E>(extent, this.toVector3i());
     }
 }

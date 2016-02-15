@@ -5,4 +5,6 @@ import java.util.Collection;
 public interface Map {
 
     Collection<MapWorld> getWorlds();
+
+    MapWorld getDefaultWorld();
 }

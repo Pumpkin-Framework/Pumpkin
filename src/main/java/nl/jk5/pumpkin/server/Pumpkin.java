@@ -1,10 +1,14 @@
 package nl.jk5.pumpkin.server;
 
 import com.flowpowered.math.vector.Vector3d;
+import ninja.leaping.configurate.commented.CommentedConfigurationNode;
+import ninja.leaping.configurate.loader.ConfigurationLoader;
+import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
 import nl.jk5.pumpkin.api.mappack.Mappack;
 import nl.jk5.pumpkin.api.utils.PlayerLocation;
 import nl.jk5.pumpkin.server.command.element.MappackCommandElement;
+import nl.jk5.pumpkin.server.map.MapEventListener;
 import nl.jk5.pumpkin.server.map.MapRegistry;
 import nl.jk5.pumpkin.server.mappack.MappackRegistry;
 import nl.jk5.pumpkin.server.services.PumpkinServiceManger;
@@ -17,11 +21,14 @@ import org.spongepowered.api.Game;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
+import org.spongepowered.api.config.ConfigDir;
+import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameAboutToStartServerEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
+import org.spongepowered.api.event.game.state.GameStartingServerEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
@@ -30,6 +37,8 @@ import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.gen.WorldGeneratorModifier;
 
 import javax.inject.Inject;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -40,16 +49,51 @@ public class Pumpkin {
     @Inject public Logger logger;
     @Inject public Game game;
 
+    @Inject
+    @DefaultConfig(sharedRoot = false)
+    private ConfigurationLoader<CommentedConfigurationNode> configManager;
+
+    @Inject
+    @ConfigDir(sharedRoot = false)
+    private Path configDir;
+
+    private CommentedConfigurationNode config;
+
     private PumpkinServiceManger serviceManager;
     private SqlTableManager tableManager;
     private MappackRegistry mappackRegistry;
     private MapRegistry mapRegistry;
 
     @Listener
-    public void onPreInit(GamePreInitializationEvent event){
+    public void onPreInit(GamePreInitializationEvent event) throws IOException {
+        config = configManager.load();
+
+        if(config.getNode("database", "connection-string").isVirtual()){
+            config.getNode("database", "connection-string")
+                    .setComment("The JDBC connection string for the database")
+                    .setValue("jdbc:postgresql://HOST/DATABASE?user=USER&password=PASSWORD");
+        }
+
+        if(config.getNode("lobby-mappack").isVirtual()){
+            config.getNode("lobby-mappack")
+                    .setComment("The mappack to use for the lobby. The lobby is the map where players will enter if they join the server for the first time")
+                    .setValue(-1);
+        }
+
+        String dbConn = config.getNode("database", "connection-string")
+                .setComment("The JDBC connection string for the database")
+                .getString();
+
+        try{
+            configManager.save(config);
+        }catch(IOException e){
+            Log.error("Could not save config", e);
+        }
+
         this.serviceManager = new PumpkinServiceManger(game);
 
-        this.tableManager = new SqlTableManager(this);
+        this.tableManager = new SqlTableManager(this, dbConn);
+        this.tableManager.connect();
         this.tableManager.setupTables();
 
         this.mappackRegistry = new MappackRegistry(this);
@@ -57,6 +101,7 @@ public class Pumpkin {
 
         this.game.getRegistry().register(WorldGeneratorModifier.class, new VoidWorldGeneratorModifier());
         this.game.getEventManager().registerListeners(this, this.mapRegistry);
+        this.game.getEventManager().registerListeners(this, new MapEventListener(this));
     }
 
     @Listener
@@ -74,15 +119,6 @@ public class Pumpkin {
         WorldUtils.unregisterDimension(1);
         WorldUtils.releaseDimensionId(-1);
         WorldUtils.releaseDimensionId(1);
-
-        //Optional<Mappack> testMappack = this.mappackRegistry.byName("test");
-        //if(testMappack.isPresent()){
-        //    this.mappackRegistry.load(testMappack.get());
-        //}
-
-        //To change the dimension type of the lobby
-        /////WorldUtils.unregisterDimension(0);
-        /////WorldUtils.registerDimension(0, 1);
 
         //To change the generator type, see MixinMinecraftServer.loadAllWorlds (SpongeCommon)
         //The worldInfo var is loaded from the level.dat file. To change it in the code we need to patch that loading code
@@ -123,7 +159,7 @@ public class Pumpkin {
                         return CommandResult.empty();
                     }
                     PlayerLocation spawn = mapWorld.get().getConfig().getSpawnpoint();
-                    player.setLocationAndRotation(new Location<>(world, spawn.getX(), spawn.getY(), spawn.getZ()), new Vector3d(spawn.getYaw(), spawn.getPitch(), 0));
+                    player.setLocationAndRotation(new Location<>(world, spawn.getX(), spawn.getY(), spawn.getZ()), new Vector3d(spawn.getPitch(), spawn.getYaw(), 0));
                     return CommandResult.success();
                 })
                 .build();
@@ -131,6 +167,24 @@ public class Pumpkin {
         game.getCommandManager().register(this, mappackCommand, "mappack");
         game.getCommandManager().register(this, mappackLoadCommand, "loadmappack");
         game.getCommandManager().register(this, gotoCommand, "goto");
+    }
+
+    @Listener
+    public void onServerStarting(GameStartingServerEvent event){
+        int lobbyId = config.getNode("lobby-mappack").getInt();
+        Optional<Mappack> lobby = this.getMappackRegistry().byId(lobbyId);
+        if(!lobby.isPresent()){
+            Log.error("Mappack with id " + lobbyId + " not found. Could not load lobby");
+            throw new RuntimeException("Mappack with id " + lobbyId + " not found. Could not load lobby");
+        }
+
+        Optional<Map> lobbyMap = this.mapRegistry.load(lobby.get());
+        if(!lobbyMap.isPresent()){
+            Log.error("Could not load lobby map");
+            throw new RuntimeException("Could not load lobby map");
+        }
+
+        this.mapRegistry.setLobby(lobbyMap.get());
     }
 
     //@Listener
@@ -188,5 +242,9 @@ public class Pumpkin {
 
     public MappackRegistry getMappackRegistry() {
         return mappackRegistry;
+    }
+
+    public MapRegistry getMapRegistry() {
+        return mapRegistry;
     }
 }

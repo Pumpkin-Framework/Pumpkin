@@ -5,6 +5,7 @@ import nl.jk5.pumpkin.api.mappack.MapWorld;
 import nl.jk5.pumpkin.api.mappack.MappackWorld;
 import nl.jk5.pumpkin.server.Log;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
 public class DefaultMapWorld implements MapWorld {
@@ -32,6 +33,11 @@ public class DefaultMapWorld implements MapWorld {
 
     public World getWorld() {
         return world;
+    }
+
+    @Override
+    public Location<World> getSpawnPoint() {
+        return new Location<>(this.getWorld(), this.getConfig().getSpawnpoint().getX(), this.getConfig().getSpawnpoint().getY(), this.getConfig().getSpawnpoint().getZ());
     }
 
     @Override

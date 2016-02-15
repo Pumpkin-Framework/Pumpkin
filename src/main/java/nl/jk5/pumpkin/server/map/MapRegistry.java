@@ -45,6 +45,8 @@ public class MapRegistry {
 
     private final Pumpkin pumpkin;
 
+    private Map lobby;
+
     public MapRegistry(Pumpkin pumpkin){
         this.pumpkin = pumpkin;
     }
@@ -182,5 +184,11 @@ public class MapRegistry {
         return new String(hexChars);
     }
 
+    public void setLobby(Map lobby) {
+        this.lobby = lobby;
+    }
 
+    public Map getLobby() {
+        return lobby;
+    }
 }

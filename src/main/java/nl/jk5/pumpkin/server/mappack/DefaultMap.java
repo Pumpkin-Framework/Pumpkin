@@ -15,6 +15,8 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
     private final Pumpkin pumpkin;
     private final List<DefaultMapWorld> worlds = new ArrayList<>();
 
+    private MapWorld defaultWorld;
+
     public DefaultMap(Mappack mappack, Pumpkin pumpkin){
         this.mappack = mappack;
         this.pumpkin = pumpkin;
@@ -26,12 +28,20 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
 
     public void addWorld(DefaultMapWorld world) {
         this.worlds.add(world);
+        if(world.getConfig().isDefault()){
+            this.defaultWorld = world;
+        }
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public Collection<MapWorld> getWorlds() {
         return ((Collection) worlds);
+    }
+
+    @Override
+    public MapWorld getDefaultWorld() {
+        return this.defaultWorld;
     }
 
     @Override
