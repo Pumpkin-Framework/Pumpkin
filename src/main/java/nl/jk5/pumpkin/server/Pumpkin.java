@@ -7,6 +7,7 @@ import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
 import nl.jk5.pumpkin.api.mappack.Mappack;
 import nl.jk5.pumpkin.api.utils.PlayerLocation;
+import nl.jk5.pumpkin.server.authentication.PumpkinBanService;
 import nl.jk5.pumpkin.server.command.element.MappackCommandElement;
 import nl.jk5.pumpkin.server.map.MapEventListener;
 import nl.jk5.pumpkin.server.map.MapRegistry;
@@ -31,6 +32,7 @@ import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartingServerEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.service.ban.BanService;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.Location;
@@ -69,6 +71,8 @@ public class Pumpkin {
     private MapRegistry mapRegistry;
     private PlayerRegistry playerRegistry;
 
+    private PumpkinBanService banService;
+
     @Listener
     public void onPreInit(GamePreInitializationEvent event) throws IOException {
         config = configManager.load();
@@ -96,6 +100,10 @@ public class Pumpkin {
         }
 
         this.serviceManager = new PumpkinServiceManger(game);
+
+        this.banService = new PumpkinBanService(this);
+
+        this.game.getServiceManager().setProvider(this, BanService.class, this.banService);
 
         this.tableManager = new SqlTableManager(this, dbConn);
         this.tableManager.connect();
