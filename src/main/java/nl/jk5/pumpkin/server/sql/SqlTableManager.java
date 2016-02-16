@@ -27,6 +27,7 @@ public final class SqlTableManager {
     public Dao<DatabaseUser, Integer> userDao;
     private Dao<DatabaseMappackWorld, Integer> mappackWorldsDao;
     public Dao<DatabasePlayer, Integer> playerDao;
+    public Dao<DatabaseZone, Integer> zoneDao;
     //private Dao<DatabaseWorldFile, Integer> mappackFilesDao;
     //private Dao<DatabaseMappackTeam, Integer> mappackTeamDao;
     //private Dao<DatabaseGamerule, Integer> gameruleDao;
@@ -60,6 +61,7 @@ public final class SqlTableManager {
         this.userDao = createTable(DatabaseUser.class);
         this.mappackWorldsDao = createTable(DatabaseMappackWorld.class);
         this.playerDao = createTable(DatabasePlayer.class);
+        this.zoneDao = createTable(DatabaseZone.class);
         //mappackFilesDao = createTable(DatabaseWorldFile.class);
         //mappackTeamDao = createTable(DatabaseMappackTeam.class);
         //gameruleDao = createTable(DatabaseGamerule.class);

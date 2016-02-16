@@ -34,4 +34,7 @@ public interface MappackWorld {
 
     @SuppressWarnings("unchecked")
     Collection<WorldFile> getFiles();
+
+    @SuppressWarnings("unchecked")
+    Collection<Zone> getZones();
 }
