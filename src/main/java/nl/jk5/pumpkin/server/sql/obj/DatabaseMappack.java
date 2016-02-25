@@ -7,6 +7,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import nl.jk5.pumpkin.api.mappack.Mappack;
 import nl.jk5.pumpkin.api.mappack.MappackAuthor;
+import nl.jk5.pumpkin.api.mappack.MappackTeam;
 import nl.jk5.pumpkin.api.mappack.MappackWorld;
 
 import java.util.Collection;
@@ -40,17 +41,14 @@ public class DatabaseMappack implements Mappack {
     @ForeignCollectionField
     private ForeignCollection<DatabaseMappackAuthor> authors;
 
-    //@ForeignCollectionField
-    //private ForeignCollection<DatabaseMappackTeam> teams;
+    @ForeignCollectionField
+    private ForeignCollection<DatabaseMappackTeam> teams;
 
     @ForeignCollectionField
     private ForeignCollection<DatabaseMappackWorld> worlds;
 
     //@ForeignCollectionField
     //private ForeignCollection<DatabaseGamerule> gamerules;
-
-    //@ForeignCollectionField
-    //private ForeignCollection<DatabaseZone> zones;
 
     public DatabaseMappack() {
     }
@@ -83,21 +81,11 @@ public class DatabaseMappack implements Mappack {
         return ((Collection) this.worlds);
     }
 
-    //@SuppressWarnings("unchecked")
-    //@Override
-    //public Collection<GameRule> getGameRules() {
-    //    return ((Collection) this.gamerules);
-    //}
-
-    //@SuppressWarnings("unchecked")
-    //public Collection<DatabaseZone> getZones() {
-    //    return this.zones;
-    //}
-
-    //public Collection<DatabaseMappackTeam> getTeams() {
-    //    return teams;
-    //}
-
+    @SuppressWarnings("unchecked")
+    @Override
+    public Collection<MappackTeam> getTeams() {
+        return ((Collection) teams);
+    }
 
     @Override
     public String toString() {

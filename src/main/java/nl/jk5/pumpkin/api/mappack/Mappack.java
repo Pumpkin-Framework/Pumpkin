@@ -13,4 +13,7 @@ public interface Mappack {
 
     @SuppressWarnings("unchecked")
     Collection<MappackWorld> getWorlds();
+
+    @SuppressWarnings("unchecked")
+    Collection<MappackTeam> getTeams();
 }

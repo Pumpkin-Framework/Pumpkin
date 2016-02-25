@@ -138,7 +138,7 @@ public class MapRegistry {
                 return Optional.empty();
             }
             properties.get().setWorldTime(world.getInitialTime());
-            properties.get().setSpawnPosition(world.getSpawnpoint().toVector3i()); //TODO: 9-2-16 do this in respawn event
+            properties.get().setSpawnPosition(world.getSpawnpoint().toVector3i());
 
             Optional<World> generatedWorld = this.pumpkin.getGame().getServer().loadWorld(properties.get());
             if(!generatedWorld.isPresent()){
@@ -147,7 +147,7 @@ public class MapRegistry {
                 return Optional.empty();
             }
 
-            DefaultMapWorld mapWorld = new DefaultMapWorld(generatedWorld.get(), world);
+            DefaultMapWorld mapWorld = new DefaultMapWorld(generatedWorld.get(), world, map);
             map.addWorld(mapWorld);
             this.mapWorlds.put(generatedWorld.get(), mapWorld);
         }

@@ -2,10 +2,16 @@ package nl.jk5.pumpkin.server.player;
 
 import com.flowpowered.math.vector.Vector3d;
 import com.google.common.base.Charsets;
+import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
 import nl.jk5.pumpkin.server.Pumpkin;
+import nl.jk5.pumpkin.server.mappack.DefaultMap;
+import nl.jk5.pumpkin.server.mappack.DefaultMapWorld;
 import nl.jk5.pumpkin.server.sql.obj.DatabasePlayer;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.entity.DisplaceEntityEvent;
+import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.world.Location;
 
@@ -23,7 +29,7 @@ public class PlayerRegistry {
     }
 
     @Listener
-    public void onJoin(ClientConnectionEvent.Login event) throws SQLException {
+    public void onLogin(ClientConnectionEvent.Login event) throws SQLException {
         List<DatabasePlayer> players = this.pumpkin.getTableManager().playerDao.queryForEq("uuid", event.getProfile().getUniqueId());
         DatabasePlayer player;
         boolean tpToLobby = true;
@@ -71,7 +77,32 @@ public class PlayerRegistry {
     }
 
     @Listener
+    public void onJoin(ClientConnectionEvent.Join event) throws SQLException {
+        Optional<MapWorld> mapWorld = this.pumpkin.getMapRegistry().getMapWorld(event.getTargetEntity().getWorld());
+        if(mapWorld.isPresent()){
+            if(mapWorld.get() instanceof DefaultMapWorld){
+                ((DefaultMapWorld) mapWorld.get()).onPlayerJoin(event.getTargetEntity());
+            }
+            Map map = mapWorld.get().getMap();
+            if(map instanceof DefaultMap){
+                ((DefaultMap) map).onPlayerJoin(event.getTargetEntity());
+            }
+        }
+    }
+
+    @Listener
     public void onDisconect(ClientConnectionEvent.Disconnect event) throws SQLException {
+        Optional<MapWorld> mapWorld = this.pumpkin.getMapRegistry().getMapWorld(event.getTargetEntity().getWorld());
+        if(mapWorld.isPresent()){
+            if(mapWorld.get() instanceof DefaultMapWorld){
+                ((DefaultMapWorld) mapWorld.get()).onPlayerLeave(event.getTargetEntity());
+            }
+            Map map = mapWorld.get().getMap();
+            if(map instanceof DefaultMap){
+                ((DefaultMap) map).onPlayerLeft(event.getTargetEntity());
+            }
+        }
+
         List<DatabasePlayer> players = this.pumpkin.getTableManager().playerDao.queryForEq("uuid", event.getTargetEntity().getUniqueId());
         if(players.isEmpty()){
             return;
@@ -90,5 +121,33 @@ public class PlayerRegistry {
         player.setPitch((float) event.getTargetEntity().getRotation().getX());
         player.setYaw((float) event.getTargetEntity().getRotation().getY());
         this.pumpkin.getTableManager().playerDao.update(player);
+    }
+
+    @Listener // TODO: 25-2-16 Switch to DisplaceEntityEvent.Teleport once it's implemented
+    public void onMove(DisplaceEntityEvent.Move event, @First Player player){
+        if(event.getFromTransform().getExtent() != event.getToTransform().getExtent()){
+            Optional<MapWorld> oldMapWorld = this.pumpkin.getMapRegistry().getMapWorld(event.getFromTransform().getExtent());
+            Optional<MapWorld> newMapWorld = this.pumpkin.getMapRegistry().getMapWorld(event.getToTransform().getExtent());
+            if(!oldMapWorld.isPresent() || !newMapWorld.isPresent()){
+                return;
+            }
+            if(oldMapWorld.get() instanceof DefaultMapWorld){
+                ((DefaultMapWorld) oldMapWorld.get()).onPlayerLeave(player);
+            }
+            if(newMapWorld.get() instanceof DefaultMapWorld){
+                ((DefaultMapWorld) newMapWorld.get()).onPlayerJoin(player);
+            }
+
+            Map oldMap = oldMapWorld.get().getMap();
+            Map newMap = newMapWorld.get().getMap();
+            if(oldMap instanceof DefaultMap){
+                DefaultMap defaultMap = (DefaultMap) oldMap;
+                defaultMap.onPlayerLeft(player);
+            }
+            if(newMap instanceof DefaultMap){
+                DefaultMap defaultMap = (DefaultMap) newMap;
+                defaultMap.onPlayerJoin(player);
+            }
+        }
     }
 }

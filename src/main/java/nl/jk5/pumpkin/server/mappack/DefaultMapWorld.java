@@ -1,10 +1,13 @@
 package nl.jk5.pumpkin.server.mappack;
 
 import com.google.common.base.Objects;
+import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
 import nl.jk5.pumpkin.api.mappack.MappackWorld;
 import nl.jk5.pumpkin.server.Log;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
@@ -12,10 +15,12 @@ public class DefaultMapWorld implements MapWorld {
 
     private final World world;
     private final MappackWorld mappackWorld;
+    private final Map map;
 
-    public DefaultMapWorld(World world, MappackWorld mappackWorld) {
+    public DefaultMapWorld(World world, MappackWorld mappackWorld, Map map) {
         this.world = world;
         this.mappackWorld = mappackWorld;
+        this.map = map;
     }
 
     @Override
@@ -43,5 +48,18 @@ public class DefaultMapWorld implements MapWorld {
     @Override
     public MappackWorld getConfig() {
         return mappackWorld;
+    }
+
+    @Override
+    public Map getMap() {
+        return map;
+    }
+
+    public void onPlayerJoin(Player player){
+        player.offer(Keys.GAME_MODE, this.getConfig().getGamemode());
+    }
+
+    public void onPlayerLeave(Player player){
+
     }
 }

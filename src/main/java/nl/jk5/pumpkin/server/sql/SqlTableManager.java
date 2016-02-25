@@ -19,22 +19,13 @@ public final class SqlTableManager {
 
     private ConnectionSource conn;
 
-    //public Dao<DatabaseGroupPermission, Integer> groupPermissionDao;
-    //public Dao<DatabaseUserPermission, Void> userPermissionDao;
-    //public Dao<DatabaseZone, Integer> zoneDao;
     public Dao<DatabaseMappack, Integer> mappackDao;
     public Dao<DatabaseMappackAuthor, Integer> mappackAuthorDao;
     public Dao<DatabaseUser, Integer> userDao;
-    private Dao<DatabaseMappackWorld, Integer> mappackWorldsDao;
+    public Dao<DatabaseMappackWorld, Integer> mappackWorldsDao;
     public Dao<DatabasePlayer, Integer> playerDao;
     public Dao<DatabaseZone, Integer> zoneDao;
-    //private Dao<DatabaseWorldFile, Integer> mappackFilesDao;
-    //private Dao<DatabaseMappackTeam, Integer> mappackTeamDao;
-    //private Dao<DatabaseGamerule, Integer> gameruleDao;
-    //public Dao<DatabaseGroup, Integer> groupsDao;
-    //private Dao<DatabaseGroupMembership, Integer> userGroupDao;
-    //private Dao<DatabaseGame, Integer> gameDao;
-    //private Dao<DatabaseGameEvent, Integer> gameEventDao;
+    public Dao<DatabaseMappackTeam, Integer> mappackTeamDao;
 
     public SqlTableManager(Pumpkin pumpkin, String connectionString) {
         this.pumpkin = pumpkin;
@@ -62,8 +53,7 @@ public final class SqlTableManager {
         this.mappackWorldsDao = createTable(DatabaseMappackWorld.class);
         this.playerDao = createTable(DatabasePlayer.class);
         this.zoneDao = createTable(DatabaseZone.class);
-        //mappackFilesDao = createTable(DatabaseWorldFile.class);
-        //mappackTeamDao = createTable(DatabaseMappackTeam.class);
+        this.mappackTeamDao = createTable(DatabaseMappackTeam.class);
         //gameruleDao = createTable(DatabaseGamerule.class);
         //groupsDao = createTable(DatabaseGroup.class);
         //userGroupDao = createTable(DatabaseGroupMembership.class);

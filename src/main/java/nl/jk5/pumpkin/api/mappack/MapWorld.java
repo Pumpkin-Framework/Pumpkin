@@ -10,4 +10,6 @@ public interface MapWorld {
     Location<World> getSpawnPoint();
 
     World getWorld();
+
+    Map getMap();
 }

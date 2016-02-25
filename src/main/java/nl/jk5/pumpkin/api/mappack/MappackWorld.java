@@ -32,9 +32,7 @@ public interface MappackWorld {
 
     String getGeneratorOptions();
 
-    @SuppressWarnings("unchecked")
     Collection<WorldFile> getFiles();
 
-    @SuppressWarnings("unchecked")
     Collection<Zone> getZones();
 }

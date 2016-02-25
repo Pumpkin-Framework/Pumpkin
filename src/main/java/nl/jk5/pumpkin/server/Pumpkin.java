@@ -6,6 +6,7 @@ import ninja.leaping.configurate.loader.ConfigurationLoader;
 import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
 import nl.jk5.pumpkin.api.mappack.Mappack;
+import nl.jk5.pumpkin.api.mappack.Team;
 import nl.jk5.pumpkin.api.utils.PlayerLocation;
 import nl.jk5.pumpkin.server.authentication.PumpkinBanService;
 import nl.jk5.pumpkin.server.command.element.MappackCommandElement;
@@ -179,9 +180,64 @@ public class Pumpkin {
                 })
                 .build();
 
+        CommandSpec teamJoinCommand = CommandSpec.builder()
+                .description(Text.of("Add a player to a team"))
+                .arguments(GenericArguments.player(Text.of("player")), GenericArguments.string(Text.of("team")))
+                .executor((src, args) -> {
+                    if(!(src instanceof Player)){
+                        return CommandResult.success();
+                    }
+                    Player player = (Player) src;
+                    Optional<MapWorld> mapWorld = mapRegistry.getMapWorld(player.getWorld());
+                    if(!mapWorld.isPresent()){
+                        src.sendMessage(Text.of(TextColors.RED, "You are not in a valid pumpkin world"));
+                        return CommandResult.empty();
+                    }
+                    Optional<Team> team = mapWorld.get().getMap().teamByName(args.<String>getOne("team").get());
+                    if(!team.isPresent()){
+                        src.sendMessage(Text.of(TextColors.RED, "That team does not exist"));
+                        return CommandResult.empty();
+                    }
+                    Player teamPlayer = args.<Player>getOne("player").get();
+                    mapWorld.get().getMap().addPlayerToTeam(teamPlayer, team.get());
+                    //src.sendMessage(Text.of(TextColors.GREEN, "Player " + teamPlayer.getName() + " added to team " + team.get().getName()));
+                    return CommandResult.success();
+                }).build();
+
+        CommandSpec teamRemoveCommand = CommandSpec.builder()
+                .description(Text.of("Remove a player from a team"))
+                .arguments(GenericArguments.player(Text.of("player")))
+                .executor((src, args) -> {
+                    if(!(src instanceof Player)){
+                        return CommandResult.success();
+                    }
+                    Player player = (Player) src;
+                    Optional<MapWorld> mapWorld = mapRegistry.getMapWorld(player.getWorld());
+                    if(!mapWorld.isPresent()){
+                        src.sendMessage(Text.of(TextColors.RED, "You are not in a valid pumpkin world"));
+                        return CommandResult.empty();
+                    }
+                    Player teamPlayer = args.<Player>getOne("player").get();
+                    Optional<Team> team = mapWorld.get().getMap().getPlayerTeam(teamPlayer);
+                    if(!team.isPresent()){
+                        src.sendMessage(Text.of(TextColors.RED, "That player is not in a team"));
+                        return CommandResult.empty();
+                    }
+                    mapWorld.get().getMap().removePlayerFromTeam(teamPlayer);
+                    //src.sendMessage(Text.of(TextColors.GREEN, "Player " + teamPlayer.getName() + " has been removed from team " + team.get().getName()));
+                    return CommandResult.success();
+                }).build();
+
+        CommandSpec teamCommand = CommandSpec.builder()
+                .description(Text.of("Team commands"))
+                .child(teamJoinCommand, "join")
+                .child(teamRemoveCommand, "remove")
+                .build();
+
         game.getCommandManager().register(this, mappackCommand, "mappack");
-        game.getCommandManager().register(this, mappackLoadCommand, "loadmappack");
+        //game.getCommandManager().register(this, mappackLoadCommand, "loadmappack");
         game.getCommandManager().register(this, gotoCommand, "goto");
+        game.getCommandManager().register(this, teamCommand, "team");
     }
 
     @Listener
@@ -201,47 +257,6 @@ public class Pumpkin {
 
         this.mapRegistry.setLobby(lobbyMap.get());
     }
-
-    //@Listener
-    //public void onCreateWorld(ConstructWorldEvent event){
-    //    //event.getWorldProperties().setGeneratorType(GeneratorTypes.FLAT);
-    //    //event.getWorldProperties().setGeneratorType(PumpkinGeneratorTypes.VOID);
-    //    //event.getWorldProperties().getGeneratorType().getGeneratorSettings().set(DataQuery.of("customSettings"), "3;minecraft:bedrock,16*minecraft:lava;8;");
-    //
-    //    Log.info(event.getWorldProperties().getGeneratorSettings().toString());
-    //    Log.info(event.getWorldProperties().getGeneratorModifiers().toString());
-    //    Log.info(event.getWorldProperties().getGeneratorType().toString());
-    //    Log.info(event.getWorldProperties().getGeneratorType().getGeneratorSettings().getString(DataQuery.of("customSettings")).orElse(null));
-    //}
-
-    //@Listener
-    //public void onLoadWorld(LoadWorldEvent event){
-    //    //event.getTargetWorld().getProperties().setGeneratorType(GeneratorTypes.FLAT);
-    //}
-
-    //@Listener
-    /*public void onServerStarting(GameStartingServerEvent event){
-        WorldCreationSettings creationSettings = WorldCreationSettings.builder()
-                .dimension(DimensionTypes.NETHER)
-                .generator(GeneratorTypes.FLAT)
-                .name("lobby")
-                .enabled(true)
-                .loadsOnStartup(true)
-                //.generator()
-                .build();
-
-        Optional<WorldProperties> worldProperties = game.getServer().createWorldProperties(creationSettings);
-        if(!worldProperties.isPresent()){
-            Log.warn("Could not create world");
-            return;
-        }
-
-        //Optional<World> world = game.getServer().loadWorld(worldProperties.get());
-        //if(!world.isPresent()){
-        //    Log.warn("Could not create world");
-        //    return;
-        //}
-    }*/
 
     public PumpkinServiceManger getServiceManager() {
         return serviceManager;

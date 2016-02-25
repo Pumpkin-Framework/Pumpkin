@@ -3,23 +3,35 @@ package nl.jk5.pumpkin.server.mappack;
 import com.google.common.base.Objects;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
 import nl.jk5.pumpkin.api.mappack.Mappack;
+import nl.jk5.pumpkin.api.mappack.Team;
+import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
+import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.channel.MessageReceiver;
+import org.spongepowered.api.text.format.TextColors;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
 
     private final Mappack mappack;
     private final Pumpkin pumpkin;
+
     private final List<DefaultMapWorld> worlds = new ArrayList<>();
+    private final List<MapTeam> teams = new ArrayList<>();
+
+    private final Map<UUID, Team> userTeams = new HashMap<>();
+    private final Map<Player, Team> playerTeams = new HashMap<>();
 
     private MapWorld defaultWorld;
 
     public DefaultMap(Mappack mappack, Pumpkin pumpkin){
         this.mappack = mappack;
         this.pumpkin = pumpkin;
+
+        this.mappack.getTeams().forEach(t -> this.teams.add(new MapTeam(t, this)));
     }
 
     public Mappack getMappack() {
@@ -45,10 +57,99 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    public Collection<Team> getTeams() {
+        return ((Collection) this.teams);
+    }
+
+    @Override
+    public void addPlayerToTeam(Player player, Team team){
+        if(this.userTeams.containsKey(player.getUniqueId())){
+            this.removePlayerFromTeam(player, false);
+        }
+        this.userTeams.put(player.getUniqueId(), team);
+        this.playerTeams.put(player, team);
+        this.send(Text.of(TextColors.GREEN, "Player " + player.getName() + " is added to team " + team.getName()));
+    }
+
+    @Override
+    public void removePlayerFromTeam(Player player){
+        this.removePlayerFromTeam(player, true);
+    }
+
+    private void removePlayerFromTeam(Player player, boolean log){
+        Team team = this.userTeams.remove(player.getUniqueId());
+        this.playerTeams.remove(player);
+        if(team != null && log){
+            this.send(Text.of(TextColors.GREEN, "Player " + player.getName() + " is removed from team " + team.getName()));
+        }
+    }
+
+    @Override
+    public Optional<Team> getPlayerTeam(Player player){
+        return Optional.ofNullable(this.userTeams.get(player.getUniqueId()));
+    }
+
+    @Override
+    public Optional<Team> teamByName(String name){
+        return this.teams.stream().map(t -> (Team) t).filter(t -> t.getName().equals(name)).findFirst();
+    }
+
+    @Override
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("mappack", mappack)
                 .add("worlds", worlds)
                 .toString();
+    }
+
+    @Override
+    public Collection<MessageReceiver> getMembers() {
+        return this.getWorlds()
+                .stream()
+                .map(w -> w.getWorld().getEntities(e -> e instanceof Player))
+                .flatMap(Collection::stream)
+                .map(e -> (MessageReceiver) e)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<UUID, Team> getUserTeams() {
+        return userTeams;
+    }
+
+    @Override
+    public Map<Player, Team> getPlayerTeams() {
+        return playerTeams;
+    }
+
+    public void onPlayerJoin(Player player) {
+        Log.info("Player " + player.getName() + " joined map " + this.toString());
+
+        if(this.userTeams.containsKey(player.getUniqueId())){
+            Team team = this.userTeams.get(player.getUniqueId());
+            this.playerTeams.put(player, team); //TODO: scoreboard update
+        }
+
+        /*List<org.spongepowered.api.scoreboard.Team> teams = this.teams.stream().map(t -> {
+            return org.spongepowered.api.scoreboard.Team.builder()
+                    .allowFriendlyFire(false) //TODO
+                    .canSeeFriendlyInvisibles(true) //TODO
+                    .color(t.getColor())
+                    .name(t.getName())
+                    .prefix(Text.of(t.getName()))
+                    .members(t.getMembers().stream().map(TeamMember::getTeamRepresentation).collect(Collectors.toSet()))
+                    .build(); //TODO: prefix, suffix, displayname
+        }).collect(Collectors.toList());
+        Scoreboard scoreboard = Scoreboard.builder().teams(teams).build();
+        player.setScoreboard(scoreboard);*/
+    }
+
+    public void onPlayerLeft(Player player) {
+        Log.info("Player " + player.getName() + " left map " + this.toString());
+
+        if(this.playerTeams.containsKey(player)){
+            this.playerTeams.remove(player); //TODO: scoreboard update
+        }
     }
 }

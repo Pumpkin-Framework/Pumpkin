@@ -11,7 +11,9 @@ import org.spongepowered.api.data.Transaction;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
+import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.entity.living.humanoid.player.RespawnPlayerEvent;
+import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.world.Location;
 
 import java.util.Optional;
@@ -66,10 +68,7 @@ public final class MapEventListener {
     }
 
     @Listener
-    public void onBlockPlace(ChangeBlockEvent.Place event){
-        if(!(event.getCause().root() instanceof Player)){
-            return;
-        }
+    public void onBlockPlace(ChangeBlockEvent.Place event, @First Player player){
         Optional<MapWorld> mapWorld = this.pumpkin.getMapRegistry().getMapWorld(event.getTargetWorld());
         if(!mapWorld.isPresent()){
             return;
@@ -88,6 +87,14 @@ public final class MapEventListener {
                     return;
                 }
             }
+        }
+    }
+
+    @Listener
+    public void onAttack(DamageEntityEvent event, @First Player player){
+        //TODO: if player is in a game, do not cancel the event
+        if(event.getTargetEntity() instanceof Player){
+            event.setCancelled(true);
         }
     }
 
