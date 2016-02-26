@@ -11,6 +11,8 @@ import org.spongepowered.api.data.Transaction;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
+import org.spongepowered.api.event.cause.entity.damage.DamageTypes;
+import org.spongepowered.api.event.cause.entity.damage.source.DamageSource;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.entity.living.humanoid.player.RespawnPlayerEvent;
 import org.spongepowered.api.event.filter.cause.First;
@@ -91,9 +93,16 @@ public final class MapEventListener {
     }
 
     @Listener
-    public void onAttack(DamageEntityEvent event, @First Player player){
-        //TODO: if player is in a game, do not cancel the event
+    public void onAttack(DamageEntityEvent event){
         if(event.getTargetEntity() instanceof Player){
+            Optional<DamageSource> source = event.getCause().first(DamageSource.class);
+            if(!source.isPresent()){
+                return;
+            }
+            if(source.get().getType() == DamageTypes.VOID){
+                return;
+            }
+            //TODO: if player is in a game, do not cancel the event
             event.setCancelled(true);
         }
     }

@@ -7,6 +7,8 @@ import nl.jk5.pumpkin.api.mappack.Team;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.scoreboard.Scoreboard;
+import org.spongepowered.api.scoreboard.TeamMember;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.channel.MessageReceiver;
 import org.spongepowered.api.text.format.TextColors;
@@ -24,6 +26,8 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
 
     private final Map<UUID, Team> userTeams = new HashMap<>();
     private final Map<Player, Team> playerTeams = new HashMap<>();
+
+    private final Set<Player> players = new HashSet<>();
 
     private MapWorld defaultWorld;
 
@@ -70,6 +74,8 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
         this.userTeams.put(player.getUniqueId(), team);
         this.playerTeams.put(player, team);
         this.send(Text.of(TextColors.GREEN, "Player " + player.getName() + " is added to team " + team.getName()));
+
+        this.players.forEach(this::initScoreboard);
     }
 
     @Override
@@ -83,6 +89,8 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
         if(team != null && log){
             this.send(Text.of(TextColors.GREEN, "Player " + player.getName() + " is removed from team " + team.getName()));
         }
+
+        this.players.forEach(this::initScoreboard);
     }
 
     @Override
@@ -125,31 +133,38 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
 
     public void onPlayerJoin(Player player) {
         Log.info("Player " + player.getName() + " joined map " + this.toString());
+        this.players.add(player);
 
         if(this.userTeams.containsKey(player.getUniqueId())){
             Team team = this.userTeams.get(player.getUniqueId());
             this.playerTeams.put(player, team); //TODO: scoreboard update
         }
 
-        /*List<org.spongepowered.api.scoreboard.Team> teams = this.teams.stream().map(t -> {
-            return org.spongepowered.api.scoreboard.Team.builder()
-                    .allowFriendlyFire(false) //TODO
-                    .canSeeFriendlyInvisibles(true) //TODO
-                    .color(t.getColor())
-                    .name(t.getName())
-                    .prefix(Text.of(t.getName()))
-                    .members(t.getMembers().stream().map(TeamMember::getTeamRepresentation).collect(Collectors.toSet()))
-                    .build(); //TODO: prefix, suffix, displayname
-        }).collect(Collectors.toList());
-        Scoreboard scoreboard = Scoreboard.builder().teams(teams).build();
-        player.setScoreboard(scoreboard);*/
+        this.initScoreboard(player);
     }
 
     public void onPlayerLeft(Player player) {
         Log.info("Player " + player.getName() + " left map " + this.toString());
+        this.players.remove(player);
 
         if(this.playerTeams.containsKey(player)){
             this.playerTeams.remove(player); //TODO: scoreboard update
         }
+    }
+
+    private void initScoreboard(Player player){
+        List<org.spongepowered.api.scoreboard.Team> teams = this.teams.stream().map(t -> {
+            return org.spongepowered.api.scoreboard.Team.builder()
+                    .allowFriendlyFire(false) //TODO
+                    .canSeeFriendlyInvisibles(true) //TODO
+                    .color(t.getColor())
+                    .prefix(Text.of(t.getColor(), ""))
+                    .name(t.getName())
+                    .displayName(Text.of(t.getColor(), t.getName()))
+                    .members(t.getMembers().stream().map(TeamMember::getTeamRepresentation).collect(Collectors.toSet()))
+                    .build(); //TODO: prefix, suffix, displayname
+        }).collect(Collectors.toList());
+        Scoreboard scoreboard = Scoreboard.builder().teams(teams).build();
+        player.setScoreboard(scoreboard);
     }
 }
