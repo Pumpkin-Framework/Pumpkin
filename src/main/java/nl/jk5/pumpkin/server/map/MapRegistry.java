@@ -49,6 +49,11 @@ public class MapRegistry {
 
     public MapRegistry(Pumpkin pumpkin){
         this.pumpkin = pumpkin;
+
+        this.pumpkin.getGame().getScheduler().createTaskBuilder()
+                .intervalTicks(1)
+                .execute(this::tick)
+                .submit(this.pumpkin);
     }
 
     public Optional<Map> load(Mappack mappack){
@@ -153,6 +158,10 @@ public class MapRegistry {
         }
         this.maps.add(map);
         return Optional.of(map);
+    }
+
+    private void tick(){
+        this.maps.forEach(Map::tick);
     }
 
     private void destroyMap(Map map){

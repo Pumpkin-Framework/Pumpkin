@@ -6,6 +6,8 @@ import nl.jk5.pumpkin.api.mappack.Mappack;
 import nl.jk5.pumpkin.api.mappack.Team;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
+import nl.jk5.pumpkin.server.scripting.DefaultMachine;
+import nl.jk5.pumpkin.server.scripting.Machine;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.scoreboard.Scoreboard;
 import org.spongepowered.api.scoreboard.TeamMember;
@@ -29,13 +31,19 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
 
     private final Set<Player> players = new HashSet<>();
 
+    private final Machine machine;
+
     private MapWorld defaultWorld;
+
+    private boolean firstTick = true;
 
     public DefaultMap(Mappack mappack, Pumpkin pumpkin){
         this.mappack = mappack;
         this.pumpkin = pumpkin;
 
         this.mappack.getTeams().forEach(t -> this.teams.add(new MapTeam(t, this)));
+
+        this.machine = new DefaultMachine(this);
     }
 
     public Mappack getMappack() {
@@ -47,6 +55,20 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
         if(world.getConfig().isDefault()){
             this.defaultWorld = world;
         }
+    }
+
+    @Override
+    public void tick() {
+        if(this.firstTick){
+            this.machine.start();
+            this.firstTick = false;
+        }
+        ((DefaultMachine) this.machine).update();
+    }
+
+    @Override
+    public Machine getMachine() {
+        return this.machine;
     }
 
     @Override

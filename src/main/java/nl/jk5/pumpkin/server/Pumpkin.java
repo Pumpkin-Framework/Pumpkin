@@ -52,6 +52,7 @@ import java.util.UUID;
 public class Pumpkin {
 
     private static final UUID SERVER_ID = UUID.randomUUID();
+    private static Pumpkin INSTANCE;
 
     @Inject public Logger logger;
     @Inject public Game game;
@@ -73,6 +74,10 @@ public class Pumpkin {
     private PlayerRegistry playerRegistry;
 
     private PumpkinBanService banService;
+
+    public Pumpkin() {
+        INSTANCE = this;
+    }
 
     @Listener
     public void onPreInit(GamePreInitializationEvent event) throws IOException {
@@ -280,5 +285,9 @@ public class Pumpkin {
 
     public static UUID getServerId(){
         return SERVER_ID;
+    }
+
+    public static Pumpkin instance(){
+        return INSTANCE;
     }
 }

@@ -1,5 +1,6 @@
 package nl.jk5.pumpkin.api.mappack;
 
+import nl.jk5.pumpkin.server.scripting.MachineHost;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.channel.MessageChannel;
 
@@ -7,7 +8,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface Map extends MessageChannel {
+public interface Map extends MessageChannel, MachineHost {
 
     Collection<MapWorld> getWorlds();
 
@@ -26,4 +27,6 @@ public interface Map extends MessageChannel {
     java.util.Map<UUID, Team> getUserTeams();
 
     java.util.Map<Player, Team> getPlayerTeams();
+
+    void tick();
 }
