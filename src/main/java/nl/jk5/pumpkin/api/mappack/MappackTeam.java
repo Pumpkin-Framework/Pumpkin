@@ -11,4 +11,6 @@ public interface MappackTeam {
     TextColor getColor();
 
     Mappack getMappack();
+
+    boolean isFriendlyFireEnabled();
 }

@@ -22,6 +22,9 @@ public class DatabaseMappackTeam implements MappackTeam {
     @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "map_id")
     private DatabaseMappack mappack;
 
+    @DatabaseField(columnName = "friendly_fire", defaultValue = "TRUE")
+    private boolean friendlyFire;
+
     private TextColor textColor;
 
     @Override
@@ -102,5 +105,10 @@ public class DatabaseMappackTeam implements MappackTeam {
     @Override
     public Mappack getMappack() {
         return this.mappack;
+    }
+
+    @Override
+    public boolean isFriendlyFireEnabled() {
+        return this.friendlyFire;
     }
 }

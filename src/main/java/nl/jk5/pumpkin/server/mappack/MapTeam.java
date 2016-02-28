@@ -37,4 +37,9 @@ public class MapTeam implements Team {
                 .map(java.util.Map.Entry::getKey)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public boolean isFriendlyFireEnabled() {
+        return this.config.isFriendlyFireEnabled();
+    }
 }

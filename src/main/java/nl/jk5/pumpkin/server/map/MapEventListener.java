@@ -2,7 +2,9 @@ package nl.jk5.pumpkin.server.map;
 
 import com.flowpowered.math.vector.Vector3d;
 import com.flowpowered.math.vector.Vector3i;
+import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
+import nl.jk5.pumpkin.api.mappack.Team;
 import nl.jk5.pumpkin.api.mappack.Zone;
 import nl.jk5.pumpkin.api.utils.PlayerLocation;
 import nl.jk5.pumpkin.server.Pumpkin;
@@ -13,6 +15,7 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
 import org.spongepowered.api.event.cause.entity.damage.DamageTypes;
 import org.spongepowered.api.event.cause.entity.damage.source.DamageSource;
+import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.entity.living.humanoid.player.RespawnPlayerEvent;
 import org.spongepowered.api.event.filter.cause.First;
@@ -94,16 +97,66 @@ public final class MapEventListener {
 
     @Listener
     public void onAttack(DamageEntityEvent event){
+        Optional<DamageSource> damageSource = event.getCause().first(DamageSource.class);
+        if(!damageSource.isPresent()){
+            return;
+        }
         if(event.getTargetEntity() instanceof Player){
-            Optional<DamageSource> source = event.getCause().first(DamageSource.class);
-            if(!source.isPresent()){
-                return;
+            Player target = (Player) event.getTargetEntity();
+            if(damageSource.get().getType() == DamageTypes.VOID){
+                Optional<MapWorld> world = this.pumpkin.getMapRegistry().getMapWorld(target.getWorld());
+                if(world.isPresent()){
+                    //Faster void respawning
+                    // TODO: 28-2-16 Disable this when player is ingame
+                    target.setLocationAndRotation(world.get().getSpawnPoint(), world.get().getConfig().getSpawnpoint().getRotation());
+                    event.setCancelled(true);
+                    return;
+                }else{
+                    return;
+                }
             }
-            if(source.get().getType() == DamageTypes.VOID){
-                return;
+            if(damageSource.get() instanceof EntityDamageSource){
+                EntityDamageSource entitySource = (EntityDamageSource) damageSource.get();
+                if(entitySource.getSource() instanceof Player){
+                    Player source = (Player) entitySource.getSource();
+
+                    // TODO: 27-2-16 Only check for friendly fire when the players are in an active game
+                    Optional<Map> sourceMap = this.pumpkin.getMapRegistry().getMap(source);
+                    Optional<Map> targetMap = this.pumpkin.getMapRegistry().getMap(target);
+
+                    if(!sourceMap.isPresent() || !targetMap.isPresent() || sourceMap.get() != targetMap.get()){
+                        event.setCancelled(true);
+                        return;
+                    }
+
+                    Optional<Team> sourceTeam = sourceMap.get().getPlayerTeam(source);
+                    Optional<Team> targetTeam = targetMap.get().getPlayerTeam(target);
+
+                    if(!sourceTeam.isPresent() || !targetTeam.isPresent()){
+                        // One of the players is not in a team. Spectators may not attack players, and players may not
+                        // attack spectators. Cancel it
+                        event.setCancelled(true);
+                        return;
+                    }
+
+                    if(sourceTeam.get() != targetTeam.get() || !sourceTeam.get().isFriendlyFireEnabled()){
+                        event.setCancelled(true);
+                    }
+                }else{
+                    //TODO: if player is in a game, do not cancel the event
+                    event.setCancelled(true);
+                }
+            }else{
+                //TODO: if player is in a game, do not cancel the event
+                event.setCancelled(true);
             }
+        }else if(damageSource.get() instanceof EntityDamageSource && ((EntityDamageSource) damageSource.get()).getSource() instanceof Player){
+            // Target is not a player, but source is a player
             //TODO: if player is in a game, do not cancel the event
             event.setCancelled(true);
+        }else{
+            // Target and source is not a player. Don't cancel the event
+            return;
         }
     }
 

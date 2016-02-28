@@ -12,4 +12,6 @@ public interface Team {
     TextColor getColor();
 
     Collection<Player> getMembers();
+
+    boolean isFriendlyFireEnabled();
 }
