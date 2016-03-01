@@ -7,6 +7,7 @@ import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
 import nl.jk5.pumpkin.api.mappack.Mappack;
 import nl.jk5.pumpkin.api.mappack.Team;
+import nl.jk5.pumpkin.api.mappack.game.GameStartResult;
 import nl.jk5.pumpkin.api.utils.PlayerLocation;
 import nl.jk5.pumpkin.server.authentication.PumpkinBanService;
 import nl.jk5.pumpkin.server.command.element.MappackCommandElement;
@@ -217,10 +218,35 @@ public class Pumpkin {
                 .child(teamRemoveCommand, "remove")
                 .build();
 
+        CommandSpec gameStartCommand = CommandSpec.builder()
+                .description(Text.of("Start the game in this map"))
+                .executor((src, args) -> {
+                    if(!(src instanceof Player)){
+                        return CommandResult.success();
+                    }
+                    Player player = (Player) src;
+                    Optional<MapWorld> mapWorld = mapRegistry.getMapWorld(player.getWorld());
+                    if(!mapWorld.isPresent()){
+                        src.sendMessage(Text.of(TextColors.RED, "You are not in a valid pumpkin world"));
+                        return CommandResult.empty();
+                    }
+                    Map map = mapWorld.get().getMap();
+                    map.getGame().ifPresent(game -> {
+                        GameStartResult result = game.start();
+                        src.sendMessage(result.message());
+                    });
+                    return CommandResult.success();
+                }).build();
+
+        CommandSpec gameCommand = CommandSpec.builder()
+                .description(Text.of("Game commands"))
+                .child(gameStartCommand, "start")
+                .build();
+
         game.getCommandManager().register(this, mappackCommand, "mappack");
-        //game.getCommandManager().register(this, mappackLoadCommand, "loadmappack");
         game.getCommandManager().register(this, gotoCommand, "goto");
         game.getCommandManager().register(this, teamCommand, "team");
+        game.getCommandManager().register(this, gameCommand, "game");
     }
 
     @Listener

@@ -176,7 +176,7 @@ public class MapRegistry {
         this.maps.remove(map);
     }
 
-    @Listener
+    @Listener // TODO: 1-3-16 Move event handlers out of MapRegistry
     public void onRespawn(RespawnPlayerEvent event){
         MapWorld world = this.mapWorlds.get(event.getTargetEntity().getWorld());
         if(world == null) return;

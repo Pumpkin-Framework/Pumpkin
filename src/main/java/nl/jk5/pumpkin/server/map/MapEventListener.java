@@ -19,6 +19,8 @@ import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.entity.living.humanoid.player.RespawnPlayerEvent;
 import org.spongepowered.api.event.filter.cause.First;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.Location;
 
 import java.util.Optional;
@@ -97,69 +99,99 @@ public final class MapEventListener {
 
     @Listener
     public void onAttack(DamageEntityEvent event){
-        Optional<DamageSource> damageSource = event.getCause().first(DamageSource.class);
-        if(!damageSource.isPresent()){
+        Optional<DamageSource> damageSourceOpt = event.getCause().first(DamageSource.class);
+        if(!damageSourceOpt.isPresent()){
             return;
         }
+        DamageSource damageSource = damageSourceOpt.get();
+
+        Optional<MapWorld> mapWorldOpt = this.pumpkin.getMapRegistry().getMapWorld(event.getTargetEntity().getWorld());
+        if(!mapWorldOpt.isPresent()){
+            return;
+        }
+        MapWorld world = mapWorldOpt.get();
+        Map map = world.getMap();
+
+        // Handle player -> entity when player not in game
+        if(damageSource instanceof EntityDamageSource){ // If the damage is caused by an entity
+            EntityDamageSource entityDamageSource = (EntityDamageSource) damageSource;
+            if(entityDamageSource.getSource() instanceof Player){ // A player attacked something
+                Player sourcePlayer = (Player) entityDamageSource.getSource();
+                if(!map.isInActiveGame(sourcePlayer)){ // If the player is not in an active game, cancel the damage
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+        }
+
+        // Handle void -> player when player not in game
         if(event.getTargetEntity() instanceof Player){
             Player target = (Player) event.getTargetEntity();
-            if(damageSource.get().getType() == DamageTypes.VOID){
-                Optional<MapWorld> world = this.pumpkin.getMapRegistry().getMapWorld(target.getWorld());
-                if(world.isPresent()){
-                    //Faster void respawning
-                    // TODO: 28-2-16 Disable this when player is ingame
-                    target.setLocationAndRotation(world.get().getSpawnPoint(), world.get().getConfig().getSpawnpoint().getRotation());
+            if(damageSource.getType() == DamageTypes.VOID){ // Void damage
+                if(!map.isInActiveGame(target)){ // If the player is not in an active game, respawn it quickly
+                    target.setLocationAndRotation(world.getSpawnPoint(), world.getConfig().getSpawnpoint().getRotation());
                     event.setCancelled(true);
                     return;
                 }else{
+                    // Let the void damage happen so the player does not fall forever
                     return;
                 }
             }
-            if(damageSource.get() instanceof EntityDamageSource){
-                EntityDamageSource entitySource = (EntityDamageSource) damageSource.get();
-                if(entitySource.getSource() instanceof Player){
-                    Player source = (Player) entitySource.getSource();
+        }
 
-                    // TODO: 27-2-16 Only check for friendly fire when the players are in an active game
-                    Optional<Map> sourceMap = this.pumpkin.getMapRegistry().getMap(source);
-                    Optional<Map> targetMap = this.pumpkin.getMapRegistry().getMap(target);
-
-                    if(!sourceMap.isPresent() || !targetMap.isPresent() || sourceMap.get() != targetMap.get()){
-                        event.setCancelled(true);
-                        return;
-                    }
-
-                    Optional<Team> sourceTeam = sourceMap.get().getPlayerTeam(source);
-                    Optional<Team> targetTeam = targetMap.get().getPlayerTeam(target);
-
-                    if(!sourceTeam.isPresent() || !targetTeam.isPresent()){
-                        // One of the players is not in a team. Spectators may not attack players, and players may not
-                        // attack spectators. Cancel it
-                        event.setCancelled(true);
-                        return;
-                    }
-
-                    if(sourceTeam.get() != targetTeam.get() || !sourceTeam.get().isFriendlyFireEnabled()){
-                        event.setCancelled(true);
-                    }
-                }else{
-                    //TODO: if player is in a game, do not cancel the event
-                    event.setCancelled(true);
-                }
-            }else{
-                //TODO: if player is in a game, do not cancel the event
+        // Handle * -> player when player not in game
+        if(event.getTargetEntity() instanceof Player){
+            Player target = (Player) event.getTargetEntity();
+            if(!map.isInActiveGame(target)){
                 event.setCancelled(true);
+                return;
             }
-        }else if(damageSource.get() instanceof EntityDamageSource && ((EntityDamageSource) damageSource.get()).getSource() instanceof Player){
-            // Target is not a player, but source is a player
-            //TODO: if player is in a game, do not cancel the event
-            event.setCancelled(true);
-        }else{
-            // Target and source is not a player. Don't cancel the event
-            return;
+        }
+
+        // Handle player -> player
+        if(event.getTargetEntity() instanceof Player && damageSource instanceof EntityDamageSource && ((EntityDamageSource) damageSource).getSource() instanceof Player){
+            Player target = (Player) event.getTargetEntity();
+            Player source = (Player) ((EntityDamageSource) damageSource).getSource();
+
+            boolean targetActive = map.isInActiveGame(target);
+            boolean sourceActive = map.isInActiveGame(source);
+
+            // Handle a spectator attacking a player
+            if(targetActive && !sourceActive){
+                event.setCancelled(true);
+                source.sendMessage(Text.of(TextColors.RED, "Please don't attack players that are in game"));
+                return;
+            }
+
+            // Handle the target being inactive
+            if(!targetActive){
+                event.setCancelled(true);
+                return;
+            }
+
+            // At this point both players are active
+
+            Optional<Team> sourceTeam = map.getPlayerTeam(source);
+            Optional<Team> targetTeam = map.getPlayerTeam(target);
+
+            // When both players are in a team
+            if(sourceTeam.isPresent() && targetTeam.isPresent()){
+
+                // If the players are in the same team
+                if(sourceTeam.get() == targetTeam.get()){
+
+                    // Handle friendly fire
+                    if(sourceTeam.get().isFriendlyFireEnabled()){
+                        event.setCancelled(true);
+                        //noinspection UnnecessaryReturnStatement
+                        return;
+                    }
+                }
+            }
         }
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     private boolean contains(Vector3i start, Vector3i end, Vector3i point){
         Vector3i min = start.min(end);
         Vector3i max = start.max(end);

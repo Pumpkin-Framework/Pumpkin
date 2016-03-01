@@ -4,8 +4,10 @@ import com.google.common.base.Objects;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
 import nl.jk5.pumpkin.api.mappack.Mappack;
 import nl.jk5.pumpkin.api.mappack.Team;
+import nl.jk5.pumpkin.api.mappack.game.Game;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
+import nl.jk5.pumpkin.server.mappack.game.MapGame;
 import nl.jk5.pumpkin.server.scripting.DefaultMachine;
 import nl.jk5.pumpkin.server.scripting.Machine;
 import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystem;
@@ -37,6 +39,7 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
     private final Set<Player> players = new HashSet<>();
 
     private final Machine machine;
+    private final MapGame game;
 
     private MapWorld defaultWorld;
 
@@ -47,15 +50,20 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
         this.pumpkin = pumpkin;
         this.saveDir = saveDir;
 
+        this.game = new MapGame(this);
+
         this.mappack.getTeams().forEach(t -> this.teams.add(new MapTeam(t, this)));
 
         this.machine = new DefaultMachine(this);
 
-        //FileSystem fs = FileSystems.fromDirectory(new File("machinetest"));
         FileSystem fs = FileSystems.fromClass(Pumpkin.class, "pumpkin", "lua/pumpkinos");
         FileSystemComponent rootfs = new FileSystemComponent("/dev/pknrootfs", fs);
 
+        fs = FileSystems.fromDirectory(new File("nailtest"));
+        FileSystemComponent gamefs = new FileSystemComponent("/dev/gamefs", fs);
+
         this.machine.addComponent(rootfs);
+        this.machine.addComponent(gamefs);
     }
 
     public Mappack getMappack() {
@@ -194,10 +202,15 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
         this.machine.signal("player_leave", player.getName());
     }
 
+    @Override
+    public Collection<Player> getPlayers() {
+        return this.players;
+    }
+
     private void initScoreboard(Player player){
         List<org.spongepowered.api.scoreboard.Team> teams = this.teams.stream().map(t -> {
             return org.spongepowered.api.scoreboard.Team.builder()
-                    .allowFriendlyFire(false) //TODO
+                    .allowFriendlyFire(true) // Friendly fire is handled in MapEventListener#onAttack
                     .canSeeFriendlyInvisibles(true) //TODO
                     .color(t.getColor())
                     .prefix(Text.of(t.getColor(), ""))
@@ -208,5 +221,20 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
         }).collect(Collectors.toList());
         Scoreboard scoreboard = Scoreboard.builder().teams(teams).build();
         player.setScoreboard(scoreboard);
+    }
+
+    @Override
+    public Optional<Game> getGame() {
+        return Optional.of(this.game);
+    }
+
+    public boolean isInActiveGame(Player player){
+        return this.game.isInActiveGame(player);
+    }
+
+    public void onSignal(DefaultMachine.SimpleSignal signal) {
+        if(signal.getName().equals("game_finished")){
+            this.game.onGameFinished();
+        }
     }
 }

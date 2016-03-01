@@ -96,7 +96,9 @@ do
 
     -- Mount the Rootfs and temporary file systems to allow working on the file
     -- system module from this point on.
-    require("filesystem").mount(computer.getBootAddress(), "/")
+    local fs = require("filesystem")
+    fs.mount(computer.getBootAddress(), "/")
+    fs.mount("/dev/gamefs", "/opt/mappack")
     package.preload={}
 
     print("Running boot scripts...")
@@ -137,8 +139,19 @@ end
 
 
 local event = require "event"
+local computer = require "computer"
+repeat
+    event.pull("game_start")
+    print("Running game script")
+    local game = loadfile("/opt/mappack/game.lua")
+    game()
+    print("Game finished")
+    computer.pushSignal("game_finished")
+until false
 
-local evt
+
+
+--[[local evt
 pcall(function()
     repeat
         evt = table.pack(event.pull())
@@ -153,4 +166,4 @@ pcall(function()
 
         print("\n")
     until evt[1] == "interrupted"
-end)
+end)]]

@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
+import nl.jk5.pumpkin.server.mappack.DefaultMap;
 import nl.jk5.pumpkin.server.scripting.architecture.Architecture;
 import nl.jk5.pumpkin.server.scripting.architecture.ExecutionResult;
 import nl.jk5.pumpkin.server.scripting.architecture.jnlua.JNLuaArchitecture;
@@ -242,7 +243,9 @@ public class DefaultMachine implements Machine, Runnable {
                     if(signals.size() > 256){
                         return false;
                     }else if(args == null || args.length == 0){
-                        signals.offer(new SimpleSignal(name, ArrayUtils.EMPTY_OBJECT_ARRAY));
+                        SimpleSignal sig = new SimpleSignal(name, ArrayUtils.EMPTY_OBJECT_ARRAY);
+                        signals.offer(sig);
+                        ((DefaultMap) this.host).onSignal(sig);
                         return true;
                     }else{
                         List<Object> a = new ArrayList<>();
@@ -281,6 +284,7 @@ public class DefaultMachine implements Machine, Runnable {
                         }
                         SimpleSignal sig = new SimpleSignal(name, a.toArray(new Object[a.size()]));
                         signals.offer(sig);
+                        ((DefaultMap) this.host).onSignal(sig);
                         return true;
                     }
                 }
