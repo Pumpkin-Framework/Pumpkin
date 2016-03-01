@@ -4,6 +4,7 @@ import com.naef.jnlua.JavaFunction;
 import com.naef.jnlua.LuaState;
 import com.naef.jnlua.LuaType;
 import nl.jk5.pumpkin.server.Log;
+import nl.jk5.pumpkin.server.Pumpkin;
 import nl.jk5.pumpkin.server.scripting.architecture.jnlua.JNLuaArchitecture;
 import nl.jk5.pumpkin.server.scripting.architecture.jnlua.NativeLuaApi;
 
@@ -62,18 +63,14 @@ public class SystemApi extends NativeLuaApi {
 
         // Whether bytecode may be loaded directly.
         lua().pushJavaFunction(lua -> {
-            // TODO: 28-2-16 Make this configurable
-            //lua.pushBoolean(Settings.lua.allowBytecode);
-            lua.pushBoolean(false);
+            lua.pushBoolean(Pumpkin.instance().getSettings().getLuaVmSettings().allowBytecode());
             return 1;
         });
         lua().setField(-2, "allowBytecode");
 
         // How long programs may run without yielding before we stop them.
         lua().pushJavaFunction(lua -> {
-            // TODO: 28-2-16 make this configurable
-            //lua.pushNumber(Settings.lua.timeout);
-            lua.pushNumber(5);
+            lua.pushNumber(Pumpkin.instance().getSettings().getLuaVmSettings().timeout());
             return 1;
         });
         lua().setField(-2, "timeout");

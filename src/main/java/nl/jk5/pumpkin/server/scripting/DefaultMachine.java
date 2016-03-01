@@ -8,8 +8,9 @@ import nl.jk5.pumpkin.server.scripting.architecture.Architecture;
 import nl.jk5.pumpkin.server.scripting.architecture.ExecutionResult;
 import nl.jk5.pumpkin.server.scripting.architecture.jnlua.JNLuaArchitecture;
 import nl.jk5.pumpkin.server.scripting.component.Component;
-import nl.jk5.pumpkin.server.scripting.filesystem.FileSystem;
-import nl.jk5.pumpkin.server.scripting.network.Node;
+import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystem;
+import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystemComponent;
+import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystems;
 import org.apache.commons.lang3.ArrayUtils;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.scheduler.Task;
@@ -43,10 +44,6 @@ public class DefaultMachine implements Machine, Runnable {
         }
     });
 
-    private final Node node = Networks.newNode(this)
-            .withComponent("computer")
-            .create();
-
     private final nl.jk5.pumpkin.api.mappack.Map host;
     private final Architecture architecture;
     private final Stack<State> state;
@@ -65,7 +62,7 @@ public class DefaultMachine implements Machine, Runnable {
     private boolean inSynchronizedCall = false; // We want to ignore the call limit in synchronized calls to avoid errors.
     private Task shutdownTask = null;
 
-    private FileSystem fileSystem;
+    private FileSystemComponent tmpfs;
 
     public DefaultMachine(nl.jk5.pumpkin.api.mappack.Map map) {
         this.host = map;
@@ -75,6 +72,10 @@ public class DefaultMachine implements Machine, Runnable {
 
         this.architecture = new JNLuaArchitecture(this);
         this.architecture.onConnect();
+
+        FileSystem tmpfs = FileSystems.fromMemory(Pumpkin.instance().getSettings().getLuaVmSettings().tmpfsSize());
+        this.tmpfs = new FileSystemComponent(this.tmpAddress(), tmpfs);
+        this.addComponent(this.tmpfs);
     }
 
     @Override
@@ -94,7 +95,7 @@ public class DefaultMachine implements Machine, Runnable {
 
     @Override
     public String tmpAddress() {
-        return null;
+        return "/dev/tmpfs";
     }
 
     @Override
@@ -398,10 +399,8 @@ public class DefaultMachine implements Machine, Runnable {
                     break;
                 case RESTARTING: // Restarting
                     close();
-                    //if (Settings.get.eraseTmpOnReboot) {
                     //    tmp.foreach(_.node.remove()) // To force deleting contents.
                     //    tmp.foreach(tmp => node.connect(tmp.node))
-                    //}
                     //node.sendToVisible("computer.stopped");
                     start();
                     break;
@@ -662,11 +661,6 @@ public class DefaultMachine implements Machine, Runnable {
     }
 
     @Override
-    public FileSystem getFileSystem() {
-        return fileSystem;
-    }
-
-    @Override
     public Map<String, Component> getComponents() {
         return components;
     }
@@ -680,12 +674,16 @@ public class DefaultMachine implements Machine, Runnable {
     public void addComponent(Component component){
         this.components.put(component.address(), component);
         this.componentAddresses.put(component.type(), component.address());
+        signal("component_added", component.address(), component.type());
     }
 
     @Override
     public void removeComponent(Component component){
-        this.components.remove(component.address(), component);
-        this.componentAddresses.remove(component.type(), component.address());
+        if(this.components.containsKey(component.address()) && this.components.containsValue(component)){
+            this.components.remove(component.address(), component);
+            this.componentAddresses.remove(component.type(), component.address());
+            signal("component_removed", component.address(), component.type());
+        }
     }
 
     public enum State {

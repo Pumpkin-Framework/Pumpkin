@@ -9,6 +9,9 @@ public final class LuaVmSettings {
     private final boolean disableLocaleChanging;
     private final int threads;
     private final int threadPriority;
+    private final long tmpfsSize;
+    private final boolean allowBytecode;
+    private final double timeout;
 
     LuaVmSettings(CommentedConfigurationNode config){
         if(config.getNode("log-callback-errors").isVirtual()){
@@ -74,6 +77,35 @@ public final class LuaVmSettings {
         }else{
             this.threadPriority = Math.max(Math.min(customPriority, Thread.MAX_PRIORITY), Thread.MIN_PRIORITY);
         }
+
+        if(config.getNode("tmpfs-size").isVirtual()){
+            config.getNode("tmpfs-size")
+                    .setComment("The size of the temporary filesystem each VM gets, in bytes")
+                    .setValue(65536);
+        }
+        this.tmpfsSize = config.getNode("tmpfs-size").getLong();
+
+        if(config.getNode("allow-bytecode").isVirtual()){
+            config.getNode("allow-bytecode")
+                    .setComment("Whether to allow loading precompiled bytecode via Lua's `load`\n" +
+                            "function, or related functions (`loadfile`, `dofile`). Enable this\n" +
+                            "only if you absolutely trust all users on your server and all Lua\n" +
+                            "code you run. This can be a MASSIVE SECURITY RISK, since precompiled\n" +
+                            "code can easily be used for exploits, running arbitrary code on the\n" +
+                            "real server! I cannot stress this enough: only enable this if you\n" +
+                            "know what you're doing.")
+                    .setValue(false);
+        }
+        this.allowBytecode = config.getNode("allow-bytecode").getBoolean();
+
+        if(config.getNode("timeout").isVirtual()){
+            config.getNode("timeout")
+                    .setComment("The time in seconds a program may run without yielding before it is\n" +
+                            "forcibly aborted. This is used to avoid stupidly written or malicious\n" +
+                            "programs blocking other VMs by locking down the executor threads.")
+                    .setValue(5);
+        }
+        this.timeout = config.getNode("timeout").getDouble();
     }
 
     public boolean logLuaCallbackErrors() {
@@ -94,5 +126,17 @@ public final class LuaVmSettings {
 
     public int threadPriority() {
         return threadPriority;
+    }
+
+    public long tmpfsSize() {
+        return this.tmpfsSize;
+    }
+
+    public boolean allowBytecode() {
+        return this.allowBytecode;
+    }
+
+    public double timeout() {
+        return this.timeout;
     }
 }

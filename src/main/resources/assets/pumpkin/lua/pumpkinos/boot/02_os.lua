@@ -83,7 +83,6 @@ os.setenv("PATH", "/bin:/usr/bin:/home/bin:.")
 os.setenv("PS1", "$PWD# ")
 os.setenv("PWD", "/")
 os.setenv("SHELL", "/bin/sh")
-os.setenv("TMP", "/tmp") -- Deprecated
 os.setenv("TMPDIR", "/tmp")
 os.setenv("LS_COLORS",[[{FILE=0xFFFFFF,DIR=0x66CCFF,LINK=0xFFAA00,["*.lua"]=0x00FF00}]])
 

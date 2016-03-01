@@ -9,7 +9,12 @@ import nl.jk5.pumpkin.server.scripting.*;
 import nl.jk5.pumpkin.server.scripting.architecture.Architecture;
 import nl.jk5.pumpkin.server.scripting.architecture.ExecutionResult;
 import nl.jk5.pumpkin.server.scripting.architecture.jnlua.api.*;
+import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystem;
+import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystems;
+import nl.jk5.pumpkin.server.scripting.component.impl.fs.Handle;
+import nl.jk5.pumpkin.server.scripting.component.impl.fs.Mode;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -298,8 +303,17 @@ public class JNLuaArchitecture implements Architecture {
 
         this.apis.forEach(NativeLuaApi::initialize);
 
-        lua.load(DefaultMachine.class.getResourceAsStream("/assets/pumpkin/lua/kernel/kernel.lua"), "=kernel", "t");
+        FileSystem fs = FileSystems.fromClass(Pumpkin.class, "pumpkin", "lua");
+        int fd = fs.open("kernel/kernel.lua", Mode.Read);
+        Handle handle = fs.getHandle(fd);
+        byte[] buf = new byte[(int) handle.length()];
+        handle.read(buf);
+
+        lua.load(new ByteArrayInputStream(buf), "=kernel", "t");
         lua.newThread(); // Left as the first value on the stack.
+
+        handle.close();
+        fs.close();
 
         return true;
     }

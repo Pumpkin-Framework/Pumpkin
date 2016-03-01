@@ -9,11 +9,9 @@ import nl.jk5.pumpkin.api.mappack.Mappack;
 import nl.jk5.pumpkin.api.mappack.MappackAuthor;
 import nl.jk5.pumpkin.api.mappack.MappackTeam;
 import nl.jk5.pumpkin.api.mappack.MappackWorld;
-import nl.jk5.pumpkin.server.scripting.filesystem.IMount;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.Optional;
 
 @DatabaseTable(tableName = "mappack")
 @SuppressWarnings("unused")
@@ -98,10 +96,5 @@ public class DatabaseMappack implements Mappack {
                 .add("version", version)
                 .add("worlds", worlds)
                 .toString();
-    }
-
-    @Override
-    public Optional<IMount> createMount() {
-        return Optional.empty();
     }
 }

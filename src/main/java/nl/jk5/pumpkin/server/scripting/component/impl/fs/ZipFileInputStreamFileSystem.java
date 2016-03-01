@@ -170,7 +170,6 @@ public class ZipFileInputStreamFileSystem extends InputStreamFileSystem {
                         }
                         ArchiveDirectory root = null;
                         for (Archive e : ImmutableSet.<Archive>builder().addAll(directories).addAll(files).build()) {
-                            // TODO: 29-2-16
                             if (e.path.length() > 0) {
                                 String parent = e.path.substring(0, Math.max(e.path.lastIndexOf('/'), 0));
                                 Optional<ArchiveDirectory> first = directories.stream().filter(d -> d.path.equals(parent)).findFirst();
