@@ -1,6 +1,7 @@
 package nl.jk5.pumpkin.server.scripting;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
@@ -9,7 +10,10 @@ import nl.jk5.pumpkin.server.scripting.architecture.ExecutionResult;
 import nl.jk5.pumpkin.server.scripting.architecture.jnlua.JNLuaArchitecture;
 import nl.jk5.pumpkin.server.scripting.component.Component;
 import nl.jk5.pumpkin.server.scripting.filesystem.FileSystem;
+import nl.jk5.pumpkin.server.scripting.network.Message;
+import nl.jk5.pumpkin.server.scripting.network.Networks;
 import nl.jk5.pumpkin.server.scripting.network.Node;
+import nl.jk5.pumpkin.server.scripting.network.SimpleComponent;
 import org.apache.commons.lang3.ArrayUtils;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.scheduler.Task;
@@ -43,9 +47,11 @@ public class DefaultMachine implements Machine, Runnable {
         }
     });
 
-    private final Node node = Networks.newNode(this)
+    private final SimpleComponent node = Networks.newNode(this)
             .withComponent("computer")
             .create();
+
+    // TODO: 1-3-16 TMP filesystem
 
     private final nl.jk5.pumpkin.api.mappack.Map host;
     private final Architecture architecture;
@@ -64,8 +70,6 @@ public class DefaultMachine implements Machine, Runnable {
     private volatile double callBudget = 0.0;
     private boolean inSynchronizedCall = false; // We want to ignore the call limit in synchronized calls to avoid errors.
     private Task shutdownTask = null;
-
-    private FileSystem fileSystem;
 
     public DefaultMachine(nl.jk5.pumpkin.api.mappack.Map map) {
         this.host = map;
@@ -144,7 +148,7 @@ public class DefaultMachine implements Machine, Runnable {
                     }else{
                         switchTo(State.STARTING);
                         uptime = 0;
-                        //node.sendToReachable("computer.started");
+                        node.sendToAll("computer.started");
                         return true;
                     }
                 case PAUSED:
@@ -156,7 +160,6 @@ public class DefaultMachine implements Machine, Runnable {
                 case STOPPING:
                     switchTo(State.RESTARTING);
                     this.shutdownTask.cancel();
-                    //MachineEventHandler.unscheduleClose(this);
                     return true;
                 default: return false;
             }
@@ -209,7 +212,6 @@ public class DefaultMachine implements Machine, Runnable {
                             this.tryClose();
                         })
                         .submit(Pumpkin.instance());
-                //MachineEventHandler.scheduleClose(this);
                 return true;
             }
         }
@@ -236,53 +238,56 @@ public class DefaultMachine implements Machine, Runnable {
             State s = state.firstElement();
             if(s == State.STOPPED || s == State.STOPPING) {
                 return false;
-            }else{
-                synchronized (signals){
-                    if(signals.size() > 256){
-                        return false;
-                    }else if(args == null || args.length == 0){
-                        signals.offer(new SimpleSignal(name, ArrayUtils.EMPTY_OBJECT_ARRAY));
-                        return true;
+            }
+            synchronized (signals){
+                if(signals.size() > 256){
+                    return false;
+                }
+                if(args == null || args.length == 0){
+                    signals.offer(new SimpleSignal(name, ArrayUtils.EMPTY_OBJECT_ARRAY));
+                    return true;
+                }
+                List<Object> a = new ArrayList<>();
+                for(Object arg : args){
+                    if(arg == null){
+                        a.add(null);
+                    }else if(arg instanceof Boolean){
+                        a.add(arg);
+                    }else if(arg instanceof Byte){
+                        a.add(((Byte) arg).doubleValue());
+                    }else if(arg instanceof Character){
+                        //noinspection UnnecessaryBoxing,UnnecessaryUnboxing
+                        a.add(Double.valueOf(((Character) arg).charValue()));
+                    }else if(arg instanceof Short){
+                        a.add(((Short) arg).doubleValue());
+                    }else if(arg instanceof Integer){
+                        a.add(((Integer) arg).doubleValue());
+                    }else if(arg instanceof Long){
+                        a.add(((Long) arg).doubleValue());
+                    }else if(arg instanceof Float){
+                        a.add(((Float) arg).doubleValue());
+                    }else if(arg instanceof Double){
+                        a.add(arg);
+                    }else if(arg instanceof String){
+                        a.add(arg);
+                    }else if(arg instanceof byte[]){
+                        a.add(arg);
+                    }else if(arg instanceof java.util.Map<?, ?> && !((java.util.Map) arg).isEmpty() && ((java.util.Map) arg).keySet().iterator().next() instanceof String && ((java.util.Map) arg).values().iterator().next() instanceof String){
+                        a.add(arg);
+                    //}else if(arg instanceof NBTTagCompound){
+                    //    a.add(arg);
                     }else{
-                        List<Object> a = new ArrayList<>();
-                        for(Object arg : args){
-                            if(arg == null){
-                                a.add(null);
-                            }else if(arg instanceof Boolean){
-                                a.add(arg);
-                            }else if(arg instanceof Byte){
-                                a.add(((Byte) arg).doubleValue());
-                            }else if(arg instanceof Character){
-                                //noinspection UnnecessaryBoxing,UnnecessaryUnboxing
-                                a.add(Double.valueOf(((Character) arg).charValue()));
-                            }else if(arg instanceof Short){
-                                a.add(((Short) arg).doubleValue());
-                            }else if(arg instanceof Integer){
-                                a.add(((Integer) arg).doubleValue());
-                            }else if(arg instanceof Long){
-                                a.add(((Long) arg).doubleValue());
-                            }else if(arg instanceof Float){
-                                a.add(((Float) arg).doubleValue());
-                            }else if(arg instanceof Double){
-                                a.add(arg);
-                            }else if(arg instanceof String){
-                                a.add(arg);
-                            }else if(arg instanceof byte[]){
-                                a.add(arg);
-                            }else if(arg instanceof java.util.Map<?, ?> && !((java.util.Map) arg).isEmpty() && ((java.util.Map) arg).keySet().iterator().next() instanceof String && ((java.util.Map) arg).values().iterator().next() instanceof String){
-                                a.add(arg);
-                            //}else if(arg instanceof NBTTagCompound){
-                            //    a.add(arg);
-                            }else{
-                                Log.warn("Trying to push signal with an unsupported argument of type " + arg.getClass().getName());
-                                a.add(null);
-                            }
-                        }
-                        SimpleSignal sig = new SimpleSignal(name, a.toArray(new Object[a.size()]));
-                        signals.offer(sig);
-                        return true;
+                        Log.warn("Trying to push signal with an unsupported argument of type " + arg.getClass().getName());
+                        a.add(null);
                     }
                 }
+                SimpleSignal sig = new SimpleSignal(name, a.toArray(new Object[a.size()]));
+                signals.offer(sig);
+
+                if(architecture != null){
+                    architecture.onSignal();
+                }
+                return true;
             }
         }
     }
@@ -309,20 +314,10 @@ public class DefaultMachine implements Machine, Runnable {
     }
 
     @Override
-    public Object[] invoke(Value value, String method, Object[] args) throws Exception {
-        Callbacks.Callback cb = Callbacks.search(value).get(method);
-        if(cb == null){
-            throw new NoSuchMethodException();
-        }
-        boolean direct = cb.getAnnotation().direct();
-        if(direct && architecture.isInitialized()){
-            checkLimit(cb.getAnnotation().limit());
-        }
-        return Registry.convert(cb.apply(value, this, new ArgumentsImpl(args)));
-    }
-
-    @Override
     public Object[] invoke(String address, String method, Object[] args) throws Exception {
+        if(node == null || node.network() == null){
+            throw new LimitReachedException();
+        }
         Component component = this.components.get(address);
         if(component == null){
             throw new IllegalArgumentException("no such component");
@@ -333,6 +328,19 @@ public class DefaultMachine implements Machine, Runnable {
             checkLimit(annotation.limit());
         }
         return component.invoke(method, this, args);
+    }
+
+    @Override
+    public Object[] invoke(Value value, String method, Object[] args) throws Exception {
+        Callbacks.Callback cb = Callbacks.search(value).get(method);
+        if(cb == null){
+            throw new NoSuchMethodException();
+        }
+        boolean direct = cb.getAnnotation().direct();
+        if(direct && architecture.isInitialized()){
+            checkLimit(cb.getAnnotation().limit());
+        }
+        return Registry.convert(cb.apply(value, this, new ArgumentsImpl(args)));
     }
 
     public void checkLimit(int limit) throws LimitReachedException {
@@ -370,6 +378,12 @@ public class DefaultMachine implements Machine, Runnable {
         }
     }
 
+    @Override
+    public boolean canUpdate() {
+        return true;
+    }
+
+    @Override
     public void update(){
         synchronized (state){
             if(state.firstElement() == State.STOPPED){
@@ -484,6 +498,29 @@ public class DefaultMachine implements Machine, Runnable {
             default:
                 break;
         }
+    }
+
+    //////////////////////////////////////////////////
+
+
+    @Override
+    public void onMessage(Message message) {
+        if(message.name().equals("computer.signal")){
+            if(message.data().length > 1 && message.data()[0] instanceof String){
+                ImmutableList<Object> list = ImmutableList.builder().add(message.source().address()).addAll(ImmutableList.copyOf(message.data()).subList(1, message.data().length - 1)).build();
+                signal(((String) message.data()[0]), list.toArray(new Object[list.size()]));
+            }
+        }
+    }
+
+    @Override
+    public void onConnect(Node node) {
+
+    }
+
+    @Override
+    public void onDisconnect(Node node) {
+
     }
 
     //////////////////////////////////////////////////
@@ -686,6 +723,11 @@ public class DefaultMachine implements Machine, Runnable {
     public void removeComponent(Component component){
         this.components.remove(component.address(), component);
         this.componentAddresses.remove(component.type(), component.address());
+    }
+
+    @Override
+    public Node node() {
+        return this.node;
     }
 
     public enum State {
