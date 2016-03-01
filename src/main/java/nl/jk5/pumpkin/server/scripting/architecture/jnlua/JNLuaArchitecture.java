@@ -4,13 +4,12 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.naef.jnlua.*;
 import nl.jk5.pumpkin.server.Log;
+import nl.jk5.pumpkin.server.Pumpkin;
 import nl.jk5.pumpkin.server.scripting.*;
 import nl.jk5.pumpkin.server.scripting.architecture.Architecture;
 import nl.jk5.pumpkin.server.scripting.architecture.ExecutionResult;
 import nl.jk5.pumpkin.server.scripting.architecture.jnlua.api.*;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -18,6 +17,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 
+@Architecture.Name("Lua 5.2")
 public class JNLuaArchitecture implements Architecture {
 
     private final Machine machine;
@@ -31,11 +31,12 @@ public class JNLuaArchitecture implements Architecture {
         this.machine = machine;
         this.apis = ImmutableList.of(
                 new ComponentApi(this),
-                new BiosApi(this),
                 new ComputerApi(this),
                 new OSApi(this),
                 new SystemApi(this),
-                new UnicodeApi(this)
+                new UnicodeApi(this),
+                new UserdataApi(this),
+                new BiosApi(this) // TODO: 1-3-16 Move the bios to a EEPROM component
         );
     }
 
@@ -53,8 +54,7 @@ public class JNLuaArchitecture implements Architecture {
                 return 1 + args.length;
             }
         }catch(Throwable e){
-            // TODO: 28-2-16 Make this configurable:
-            if(/* LogLuaCallbackErrors */ true && !(e instanceof LimitReachedException)){
+            if(Pumpkin.instance().getSettings().getLuaVmSettings().logLuaCallbackErrors() && !(e instanceof LimitReachedException)){
                 Log.warn("Exception in Lua callback", e);
             }
             if(e instanceof LimitReachedException){
@@ -67,7 +67,7 @@ public class JNLuaArchitecture implements Architecture {
                 lua.pushBoolean(true);
                 lua.pushNil();
                 lua.pushString(e.getMessage());
-                if(/* LogLuaCallbackErrors TODO */ true){
+                if(Pumpkin.instance().getSettings().getLuaVmSettings().logLuaCallbackErrors()){
                     lua.pushString(Joiner.on('\n').join(e.getStackTrace()));
                     return 4;
                 }
@@ -241,10 +241,9 @@ public class JNLuaArchitecture implements Architecture {
                     Log.warn("Kernel stopped unexpectedly.");
                     return new ExecutionResult.Shutdown(false);
                 }else{
-                    // TODO: 28-2-16 Make this configurable
-                    //if(!Settings.lua.disableMemoryLimit){
-                    //    lua.setTotalMemory(Integer.MAX_VALUE);
-                    //}
+                    if(Pumpkin.instance().getSettings().getLuaVmSettings().limitMemory()){
+                        lua.setTotalMemory(Integer.MAX_VALUE);
+                    }
                     String error;
                     if(lua.isJavaObjectRaw(3)){
                         error = lua.toJavaObjectRaw(3).toString();
@@ -279,7 +278,14 @@ public class JNLuaArchitecture implements Architecture {
     }
 
     @Override
-    public boolean initialize() {
+    public void onSignal(){
+
+    }
+
+    ////////////////////////////////////////////////////
+
+    @Override
+    public boolean initialize() throws IOException {
         // At this point the state is unsandboxed
 
         Optional<LuaState> state = LuaStateFactory.create();
@@ -292,37 +298,34 @@ public class JNLuaArchitecture implements Architecture {
 
         this.apis.forEach(NativeLuaApi::initialize);
 
-        try{
-            File file = new File("/home/jk-5/development/pumpkin/pumpkin/src/main/resources/assets/pumpkin/lua/kernel.lua");
-            FileInputStream fis = new FileInputStream(file);
-            lua.load(fis, "=machine", "t");
-            fis.close();
-        }catch(IOException e){
-            machine.crash("could not load kernel script");
-            return false;
-        }
+        lua.load(DefaultMachine.class.getResourceAsStream("/assets/pumpkin/lua/kernel/kernel.lua"), "=kernel", "t");
         lua.newThread(); // Left as the first value on the stack.
 
         return true;
     }
 
     @Override
+    public void onConnect() {
+
+    }
+
+    @Override
     public void close() {
         if(lua != null){
-            // TODO: 28-2-16 Make this configurable
-            //if(!Settings.lua.disableMemoryLimit){
-            //    lua.setTotalMemory(Integer.MAX_VALUE);
-            //}
+            if(Pumpkin.instance().getSettings().getLuaVmSettings().limitMemory()){
+                lua.setTotalMemory(Integer.MAX_VALUE);
+            }
             lua.close();
             lua = null;
         }
         kernelMemory = 0;
     }
 
-    @Override
-    public void onConnect() {
 
-    }
+
+
+
+    //Mismatched methods:
 
     public Machine getMachine() {
         return machine;

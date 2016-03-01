@@ -26,7 +26,8 @@ public final class MountUtils {
                 IMount mount;
                 if(jar.getName().endsWith(".class")){
                     //Somehow we are not in a jar. Development environment?
-                    mounts.add(mount = new ReadOnlyDirMount(new File(jar.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile(), subPath)));
+                    mounts.add(mount = new ReadOnlyDirMount(new File("/home/jk-5/development/pumpkin/pumpkin/src/main/resources/" + subPath)));
+                    //mounts.add(mount = new ReadOnlyDirMount(new File(jar.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile(), subPath)));
                 }else{
                     mounts.add(mount = new ZipMount(jar, subPath));
                 }

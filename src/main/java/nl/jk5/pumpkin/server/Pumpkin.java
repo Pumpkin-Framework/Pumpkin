@@ -15,6 +15,7 @@ import nl.jk5.pumpkin.server.map.MapRegistry;
 import nl.jk5.pumpkin.server.mappack.MappackRegistry;
 import nl.jk5.pumpkin.server.player.PlayerRegistry;
 import nl.jk5.pumpkin.server.services.PumpkinServiceManger;
+import nl.jk5.pumpkin.server.settings.PumpkinSettings;
 import nl.jk5.pumpkin.server.sql.SqlTableManager;
 import nl.jk5.pumpkin.server.utils.WorldUtils;
 import nl.jk5.pumpkin.server.world.gen.empty.VoidWorldGeneratorModifier;
@@ -65,13 +66,12 @@ public class Pumpkin {
     @ConfigDir(sharedRoot = false)
     private Path configDir;
 
-    private CommentedConfigurationNode config;
-
     private PumpkinServiceManger serviceManager;
     private SqlTableManager tableManager;
     private MappackRegistry mappackRegistry;
     private MapRegistry mapRegistry;
     private PlayerRegistry playerRegistry;
+    private PumpkinSettings settings;
 
     private PumpkinBanService banService;
 
@@ -81,29 +81,7 @@ public class Pumpkin {
 
     @Listener
     public void onPreInit(GamePreInitializationEvent event) throws IOException {
-        config = configManager.load();
-
-        if(config.getNode("database", "connection-string").isVirtual()){
-            config.getNode("database", "connection-string")
-                    .setComment("The JDBC connection string for the database")
-                    .setValue("jdbc:postgresql://HOST/DATABASE?user=USER&password=PASSWORD");
-        }
-
-        if(config.getNode("lobby-mappack").isVirtual()){
-            config.getNode("lobby-mappack")
-                    .setComment("The mappack to use for the lobby. The lobby is the map where players will enter if they join the server for the first time")
-                    .setValue(-1);
-        }
-
-        String dbConn = config.getNode("database", "connection-string")
-                .setComment("The JDBC connection string for the database")
-                .getString();
-
-        try{
-            configManager.save(config);
-        }catch(IOException e){
-            Log.error("Could not save config", e);
-        }
+        this.settings = new PumpkinSettings(this.configManager);
 
         this.serviceManager = new PumpkinServiceManger(game);
 
@@ -111,7 +89,7 @@ public class Pumpkin {
 
         this.game.getServiceManager().setProvider(this, BanService.class, this.banService);
 
-        this.tableManager = new SqlTableManager(this, dbConn);
+        this.tableManager = new SqlTableManager(this, this.settings.getDatabaseConnectionString());
         this.tableManager.connect();
         this.tableManager.setupTables();
 
@@ -247,7 +225,7 @@ public class Pumpkin {
 
     @Listener
     public void onServerStarting(GameStartingServerEvent event){
-        int lobbyId = config.getNode("lobby-mappack").getInt();
+        int lobbyId = this.settings.getLobbyMappack();
         Optional<Mappack> lobby = this.getMappackRegistry().byId(lobbyId);
         if(!lobby.isPresent()){
             Log.error("Mappack with id " + lobbyId + " not found. Could not load lobby");
@@ -289,5 +267,9 @@ public class Pumpkin {
 
     public static Pumpkin instance(){
         return INSTANCE;
+    }
+
+    public PumpkinSettings getSettings() {
+        return settings;
     }
 }

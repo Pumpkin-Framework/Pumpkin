@@ -5,10 +5,11 @@ import nl.jk5.pumpkin.server.scripting.LuaStateUtils;
 import nl.jk5.pumpkin.server.scripting.architecture.jnlua.JNLuaArchitecture;
 import nl.jk5.pumpkin.server.scripting.architecture.jnlua.NativeLuaApi;
 import nl.jk5.pumpkin.server.scripting.component.Component;
-import nl.jk5.pumpkin.server.scripting.component.Node;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ComponentApi extends NativeLuaApi {
 
@@ -22,78 +23,59 @@ public class ComponentApi extends NativeLuaApi {
 
         lua().pushJavaFunction(lua -> {
             synchronized (getMachine().getComponents()) {
-                boolean exact;
-                String filter;
+                Collection<Component> components;
                 if(lua.isString(1)){
-                    filter = lua.toString(1);
+                    components = getMachine().getComponentAddresses().get(lua.checkString(1)).stream().map(n -> getMachine().getComponents().get(n)).collect(Collectors.toList());
                 }else{
-                    filter = null;
+                    components = getMachine().getComponents().values();
                 }
-                if(lua.isBoolean(2)){
-                    exact = lua.toBoolean(2);
-                }else{
-                    exact = true;
-                }
-
                 lua.newTable(0, getMachine().getComponents().size());
-                getMachine().getComponents().forEach((address, name) -> {
-                    if(filter != null){
-                        if(exact){
-                            if(!name.equals(filter)){
-                                return;
-                            }
-                        }else{
-                            if(!name.contains(filter)){
-                                return;
-                            }
-                        }
-                    }
-                    lua.pushString(address);
-                    lua.pushString(name);
+                components.forEach(c -> {
+                    lua.pushString(c.address());
+                    lua.pushString(c.type());
                     lua.rawSet(-3);
                 });
+                return 1;
             }
-            return 1;
         });
         lua().setField(-2, "list");
 
         lua().pushJavaFunction(lua -> {
-            synchronized (getMachine().getComponents()) {
-                String name = getMachine().getComponents().get(lua.checkString(1));
-                if(name != null){
-                    lua.pushString(name);
-                    return 1;
-                }else{
-                    lua.pushNil();
-                    lua.pushString("no such component");
-                    return 2;
-                }
+            String name = lua.checkString(1);
+            Component component = getMachine().getComponents().get(name);
+            if(component == null){
+                lua.pushNil();
+                lua.pushString("no such component");
+                return 2;
+            }else{
+                lua.pushString(component.type());
+                return 1;
             }
         });
         lua().setField(-2, "type");
 
         lua().pushJavaFunction(lua -> {
-            String address = lua.checkString(1);
-            Optional<Node> nodeOpt = getMachine().getNode().getNetwork().getNode(address);
-            if(!nodeOpt.isPresent() || !(nodeOpt.get() instanceof Component)){
+            String name = lua.checkString(1);
+            Component component = getMachine().getComponents().get(name);
+            if(component == null){
                 lua.pushNil();
                 lua.pushString("no such component");
                 return 2;
-            }
-            Component component = (Component) nodeOpt.get();
-            lua.newTable();
-            getMachine().getMethods(component).forEach((name, annotation) -> {
-                lua.pushString(name);
+            }else{
                 lua.newTable();
-                lua.pushBoolean(annotation.direct());
-                lua.setField(-2, "direct");
-                lua.pushBoolean(annotation.getter());
-                lua.setField(-2, "getter");
-                lua.pushBoolean(annotation.setter());
-                lua.setField(-2, "setter");
-                lua.rawSet(-3);
-            });
-            return 1;
+                getMachine().getMethods(component).forEach((n, annotation) -> {
+                    lua.pushString(n);
+                    lua.newTable();
+                    lua.pushBoolean(annotation.direct());
+                    lua.setField(-2, "direct");
+                    lua.pushBoolean(annotation.getter());
+                    lua.setField(-2, "getter");
+                    lua.pushBoolean(annotation.setter());
+                    lua.setField(-2, "setter");
+                    lua.rawSet(-3);
+                });
+                return 1;
+            }
         });
         lua().setField(-2, "methods");
 
@@ -107,15 +89,14 @@ public class ComponentApi extends NativeLuaApi {
 
         lua().pushJavaFunction(lua -> {
             String address = lua.checkString(1);
-            Optional<Node> nodeOpt = getMachine().getNode().getNetwork().getNode(address);
-            if(!nodeOpt.isPresent() || !(nodeOpt.get() instanceof Component)){
+            String method = lua.checkString(2);
+            Component component = getMachine().getComponents().get(address);
+            if(component == null){
                 lua.pushNil();
                 lua.pushString("no such component");
                 return 2;
             }
-            Component component = (Component) nodeOpt.get();
-            String method = lua.checkString(2);
-            Map<String, Callback> methods = getMachine().getMethods(component.getHost());
+            Map<String, Callback> methods = getMachine().getMethods(component);
             return getOwner().documentation(() -> Optional.ofNullable(methods.get(method)).map(Callback::doc).orElse(null));
         });
         lua().setField(-2, "doc");

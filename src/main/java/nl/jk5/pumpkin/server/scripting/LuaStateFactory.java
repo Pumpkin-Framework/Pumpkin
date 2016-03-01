@@ -3,6 +3,7 @@ package nl.jk5.pumpkin.server.scripting;
 import com.naef.jnlua.LuaState;
 import com.naef.jnlua.NativeSupport;
 import nl.jk5.pumpkin.server.Log;
+import nl.jk5.pumpkin.server.Pumpkin;
 
 import java.util.Optional;
 import java.util.Random;
@@ -11,11 +12,19 @@ public final class LuaStateFactory {
 
     static {
         NativeSupport.getInstance().setLoader(() -> System.load("/home/jk-5/development/pumpkin/jnlua/src/main/resources/libjnlua52.so"));
+
+        //TODO: create a system for automatically detecting and loading the library
+        // See OCLuaStateFactory
     }
 
     public static Optional<LuaState> create(){
         try{
-            LuaState state = new LuaState(); // TODO: 28-2-16 Allow max memory to be configured
+            LuaState state;
+            if(Pumpkin.instance().getSettings().getLuaVmSettings().limitMemory()){
+                state = new LuaState(Integer.MAX_VALUE);
+            }else{
+                state = new LuaState();
+            }
 
             state.openLib(LuaState.Library.BASE);
             state.openLib(LuaState.Library.BIT32);
@@ -26,13 +35,13 @@ public final class LuaStateFactory {
             state.openLib(LuaState.Library.TABLE);
             state.pop(7);
 
-            //if(!Settings.lua.disableLocaleChanging){
-            //    state.openLib(LuaState.Library.OS);
-            //    state.getField(-1, "setlocale");
-            //    state.pushString("C");
-            //    state.call(1, 0);
-            //    state.pop(1);
-            //}
+            if(!Pumpkin.instance().getSettings().getLuaVmSettings().disableLocaleChanging()){
+                state.openLib(LuaState.Library.OS);
+                state.getField(-1, "setlocale");
+                state.pushString("C");
+                state.call(1, 0);
+                state.pop(1);
+            }
 
             state.newTable();
             state.setGlobal("os");

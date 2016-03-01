@@ -1,6 +1,9 @@
 package nl.jk5.pumpkin.api.mappack;
 
+import nl.jk5.pumpkin.server.scripting.filesystem.IMount;
+
 import java.util.Collection;
+import java.util.Optional;
 
 public interface Mappack {
 
@@ -16,4 +19,6 @@ public interface Mappack {
 
     @SuppressWarnings("unchecked")
     Collection<MappackTeam> getTeams();
+
+    Optional<IMount> createMount();
 }

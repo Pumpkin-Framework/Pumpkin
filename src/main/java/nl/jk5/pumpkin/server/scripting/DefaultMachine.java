@@ -1,12 +1,15 @@
 package nl.jk5.pumpkin.server.scripting;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
 import nl.jk5.pumpkin.server.scripting.architecture.Architecture;
 import nl.jk5.pumpkin.server.scripting.architecture.ExecutionResult;
 import nl.jk5.pumpkin.server.scripting.architecture.jnlua.JNLuaArchitecture;
 import nl.jk5.pumpkin.server.scripting.component.Component;
-import nl.jk5.pumpkin.server.scripting.component.Node;
+import nl.jk5.pumpkin.server.scripting.filesystem.FileSystem;
+import nl.jk5.pumpkin.server.scripting.network.Node;
 import org.apache.commons.lang3.ArrayUtils;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.scheduler.Task;
@@ -19,10 +22,9 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class DefaultMachine implements Machine, Runnable, CallbackContainer {
+public class DefaultMachine implements Machine, Runnable {
 
-    // TODO: 28-2-16 Make the amount of threads configurable
-    private static final ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(8, new ThreadFactory() {
+    private static final ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(Pumpkin.instance().getSettings().getLuaVmSettings().threads(), new ThreadFactory() {
 
         private final String baseName = "Pumpkin-Machine-";
         private final AtomicInteger threadNumber = new AtomicInteger(1);
@@ -34,22 +36,23 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
             if (!thread.isDaemon()) {
                 thread.setDaemon(true);
             }
-            // TODO: 28-2-16 Make thread priority configurable
-            //if (thread.getPriority() != Settings.lua.threadPriority) {
-            //    thread.setPriority(Settings.lua.threadPriority);
-            //}
+            if (thread.getPriority() != Pumpkin.instance().getSettings().getLuaVmSettings().threadPriority()) {
+                thread.setPriority(Pumpkin.instance().getSettings().getLuaVmSettings().threadPriority());
+            }
             return thread;
         }
     });
 
-    private final Component node;
+    private final Node node = Networks.newNode(this)
+            .withComponent("computer")
+            .create();
 
     private final nl.jk5.pumpkin.api.mappack.Map host;
     private final Architecture architecture;
     private final Stack<State> state;
     private final Queue<SimpleSignal> signals = new LinkedList<>();
-    private final Map<String, String> components = new HashMap<>();
-    private final Set<Component> addedComponents = new HashSet<>();
+    private final Map<String, Component> components = new HashMap<>();
+    private final Multimap<String, String> componentAddresses = HashMultimap.create();
 
     private String lastErrorMessage = null;
 
@@ -62,10 +65,10 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
     private boolean inSynchronizedCall = false; // We want to ignore the call limit in synchronized calls to avoid errors.
     private Task shutdownTask = null;
 
+    private FileSystem fileSystem;
+
     public DefaultMachine(nl.jk5.pumpkin.api.mappack.Map map) {
         this.host = map;
-
-        this.node = Network.newNode(this, map).withComponent("computer").create();
 
         this.state = new Stack<>();
         this.state.push(State.STOPPED);
@@ -133,8 +136,6 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
             switch (top){
                 case STOPPED:
                     onHostChanged();
-                    processAddedComponents();
-                    verifyComponents();
                     if(architecture == null){
                         crash("gui.Error.NoCPU");
                         return false;
@@ -317,29 +318,24 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
         if(direct && architecture.isInitialized()){
             checkLimit(cb.getAnnotation().limit());
         }
-        return Registry.convert(this, cb.apply(value, this, new ArgumentsImpl(args)));
+        return Registry.convert(cb.apply(value, this, new ArgumentsImpl(args)));
     }
 
     @Override
     public Object[] invoke(String address, String method, Object[] args) throws Exception {
-        if(node != null && node.getNetwork() != null){
-            Optional<Node> nodeOpt = this.node.getNetwork().getNode(address);
-            if(!nodeOpt.isPresent() || !(nodeOpt.get() instanceof Component)){
-                throw new IllegalArgumentException("no such component");
-            }
-            Component component = (Component) nodeOpt.get();
-            Callback annotation = component.annotation(method);
-            if(annotation.direct()){
-                // TODO: 28-2-16 Consider implementing call budget system instead of limit?
-                checkLimit(annotation.limit());
-            }
-            return component.invoke(method, this, args);
-        }else{
-            throw new LimitReachedException();
+        Component component = this.components.get(address);
+        if(component == null){
+            throw new IllegalArgumentException("no such component");
         }
+        Callback annotation = component.annotation(method);
+        if(annotation.direct()){
+            // TODO: 28-2-16 Consider implementing call budget system instead of limit?
+            checkLimit(annotation.limit());
+        }
+        return component.invoke(method, this, args);
     }
 
-    private void checkLimit(int limit) throws LimitReachedException {
+    public void checkLimit(int limit) throws LimitReachedException {
         if(!inSynchronizedCall){
             double callCost = Math.max(1.0 / limit, 0.001);
             if(callCost >= callBudget){
@@ -381,16 +377,6 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
             }
         }
 
-        // Add components that were added since the last update to the actual list
-        // of components if we can see them. We use this delayed approach to avoid
-        // issues with components that have a visibility lower than their
-        // reachability, because in that case if they get connected in the wrong
-        // order we wouldn't add them (since they'd be invisible in their connect
-        // message, and only become visible with a later node-to-node connection,
-        // but that wouldn't trigger a connect message anymore due to the higher
-        // reachability).
-        this.processAddedComponents();
-
         // Update world time for time() and uptime().
         //worldTime = host.world.getWorldTime();
         uptime += 1;
@@ -408,7 +394,6 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
             State top = state.firstElement();
             switch (top){
                 case STARTING: // Booting up
-                    verifyComponents();
                     switchTo(State.YIELDED);
                     break;
                 case RESTARTING: // Restarting
@@ -417,7 +402,7 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
                     //    tmp.foreach(_.node.remove()) // To force deleting contents.
                     //    tmp.foreach(tmp => node.connect(tmp.node))
                     //}
-                    node.sendToVisible("computer.stopped");
+                    //node.sendToVisible("computer.stopped");
                     start();
                     break;
                 case SLEEPING:
@@ -429,7 +414,6 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
                     if(remainingPause > 0){
                         remainingPause --;
                     }else{
-                        verifyComponents();
                         state.pop();
                         switchTo(state.firstElement());
                     }
@@ -502,92 +486,6 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
         }
     }
 
-    ////////////////////////////////////////////////////
-
-    /*@Override
-    public void onMessage(Message message){
-        TODO
-    }*/
-
-    @Override
-    public void onConnect(Node node) {
-        if(node == this.node){
-            this.components.put(this.node.getAddress(), this.node.getName());
-            // TODO: 28-2-16 tmp.foreach(fs => node.connect(fs.node))
-            if(this.architecture != null){
-                this.architecture.onConnect();
-            }
-        }else{
-            if(node instanceof Component){
-                this.addComponent((Component) node);
-            }
-        }
-        host.onMachineConnect(node);
-    }
-
-    @Override
-    public void onDisconnect(Node node) {
-        if(node == this.node){
-            close();
-            // TODO: 28-2-16 tmp.foreach(_.node.remove())
-        }else{
-            if(node instanceof Component){
-                this.removeComponent((Component) node);
-            }
-        }
-        host.onMachineDisconnect(node);
-    }
-
-    ////////////////////////////////////////////////////////
-
-    public void addComponent(Component component){
-        if(!this.components.containsKey(component.getAddress())){
-            this.addedComponents.add(component);
-        }
-    }
-
-    public void removeComponent(Component component){
-        if(this.components.containsKey(component.getAddress())){
-            synchronized (this.components) {
-                this.components.remove(component.getAddress());
-            }
-            this.signal("component_removed", component.getAddress(), component.getName());
-        }
-        this.addedComponents.remove(component);
-    }
-
-    private void processAddedComponents(){
-        if(this.addedComponents.isEmpty()){
-            return;
-        }
-        for(Component component : this.addedComponents){
-            //if(component.canBeSeenFrom(node)){
-            synchronized (this.components) {
-                this.components.put(component.getAddress(), component.getName());
-            }
-            // Skip the signal if we're not initialized yet, since we'd generate a
-            // duplicate in the startup script otherwise.
-            if (architecture != null && architecture.isInitialized()) {
-                signal("component_added", component.getAddress(), component.getName());
-            }
-            //}
-        }
-        this.addedComponents.clear();
-    }
-
-    private void verifyComponents(){
-        Set<String> invalid = new HashSet<>();
-        this.components.forEach((address, name) -> {
-            Optional<Node> nodeOpt = node.getNetwork().getNode(address);
-            if(!nodeOpt.isPresent() || !(nodeOpt.get() instanceof Component) || !((Component) nodeOpt.get()).getName().equals(name)){
-                Log.warn("A component of type '" + name + "' disappeared (" + address + ")! This usually means that it didn't save its node.");
-                signal("component_removed", address, name);
-                invalid.add(address);
-            }
-        });
-        invalid.forEach(this.components::remove);
-    }
-
     //////////////////////////////////////////////////
 
     private boolean init(){
@@ -604,9 +502,9 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
 
         // Connect the `/tmp` node to our owner. We're not in a network in
         // case we're loading, which is why we have to check it here.
-        if(node.getNetwork() != null){
+        //if(node.getNetwork() != null){
             //TODO: tmp.foreach(fs => node.connect(fs.node))
-        }
+        //}
 
         try{
             return architecture.initialize();
@@ -624,10 +522,10 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
             close();
             // TODO: 28-2-16
             //tmp.foreach(_.node.remove()); // To force deleting contents.
-            if (node.getNetwork() != null) {
+            //if (node.getNetwork() != null) {
                 //tmp.foreach(tmp => node.connect(tmp.node));
-            }
-            node.sendToVisible("computer.stopped");
+            //}
+            //node.sendToVisible("computer.stopped");
             return true;
         }
     }
@@ -764,13 +662,30 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
     }
 
     @Override
-    public Map<String, String> getComponents() {
-        return this.components;
+    public FileSystem getFileSystem() {
+        return fileSystem;
     }
 
     @Override
-    public Node getNode() {
-        return this.node;
+    public Map<String, Component> getComponents() {
+        return components;
+    }
+
+    @Override
+    public Multimap<String, String> getComponentAddresses() {
+        return componentAddresses;
+    }
+
+    @Override
+    public void addComponent(Component component){
+        this.components.put(component.address(), component);
+        this.componentAddresses.put(component.type(), component.address());
+    }
+
+    @Override
+    public void removeComponent(Component component){
+        this.components.remove(component.address(), component);
+        this.componentAddresses.remove(component.type(), component.address());
     }
 
     public enum State {
@@ -798,16 +713,16 @@ public class DefaultMachine implements Machine, Runnable, CallbackContainer {
 
         @Override
         public String getName() {
-            return null;
+            return name;
         }
 
         @Override
         public Object[] getArgs() {
-            return new Object[0];
+            return this.args;
         }
 
-        public SimpleSignal convert(){                   //TODO
-            return new SimpleSignal(name, Registry.convert(null, args));
+        public SimpleSignal convert(){
+            return new SimpleSignal(name, Registry.convert(args));
         }
     }
 }

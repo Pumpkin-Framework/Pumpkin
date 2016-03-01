@@ -22,6 +22,7 @@ import org.spongepowered.api.world.storage.WorldProperties;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -60,7 +61,8 @@ public class MapRegistry {
         Preconditions.checkNotNull(mappack, "mappack");
 
         int id = nextMapId.getAndIncrement();
-        DefaultMap map = new DefaultMap(mappack, this.pumpkin);
+        File mapDir = new File("world/maps/map-" + id);
+        DefaultMap map = new DefaultMap(mappack, this.pumpkin, mapDir);
         Log.info("Loading mappack " + mappack.getName() + " (mappack id: " + mappack.getId() + ")(map id: " + id + ")");
 
         for (MappackWorld world : mappack.getWorlds()) {
@@ -82,7 +84,7 @@ public class MapRegistry {
                                     latch.countDown();
                                     return;
                                 }
-                                File dest = new File(new File("."), "world/maps/map-" + id + "/" + world.getName() + "/" + file.getPath());
+                                File dest = new File(mapDir, world.getName() + "/" + file.getPath());
                                 if(!dest.getParentFile().exists()) dest.getParentFile().mkdirs();
                                 MessageDigest md = MessageDigest.getInstance("MD5");
                                 try(
@@ -100,6 +102,8 @@ public class MapRegistry {
                                         failed.set(true);
                                     }
                                 }
+                            }catch(FileAlreadyExistsException e){
+                                Log.warn("File " + file.getPath() + " already exists");
                             }catch(IOException e){
                                 Log.error("Error while downloading file " + file.getPath(), e);
                                 failed.set(true);

@@ -375,8 +375,7 @@ public class FileSystem {
                     }
                 }
 
-                public void flush()
-                        throws IOException {
+                public void flush() throws IOException {
                     throw new UnsupportedOperationException();
                 }
             };

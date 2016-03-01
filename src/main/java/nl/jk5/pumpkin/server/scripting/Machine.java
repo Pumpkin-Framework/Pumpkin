@@ -1,12 +1,15 @@
 package nl.jk5.pumpkin.server.scripting;
 
+import com.google.common.collect.Multimap;
 import nl.jk5.pumpkin.server.scripting.architecture.Architecture;
-import nl.jk5.pumpkin.server.scripting.component.ManagedEnvironment;
+import nl.jk5.pumpkin.server.scripting.component.Component;
+import nl.jk5.pumpkin.server.scripting.filesystem.FileSystem;
+import nl.jk5.pumpkin.server.scripting.network.ManagedEnvironment;
 
 import java.util.Map;
 import java.util.Optional;
 
-public interface Machine extends Context, ManagedEnvironment {
+public interface Machine extends ManagedEnvironment, Context {
 
     /**
      * The owner of the machine, usually a mappack hosting the machine.
@@ -153,7 +156,15 @@ public interface Machine extends Context, ManagedEnvironment {
      */
     Object[] invoke(Value value, String method, Object[] args) throws Exception;
 
-    Map<String, String> getComponents();
-
     Optional<String> getLastErrorMessage();
+
+    FileSystem getFileSystem();
+
+    Map<String, Component> getComponents();
+
+    Multimap<String, String> getComponentAddresses();
+
+    void addComponent(Component component);
+
+    void removeComponent(Component component);
 }

@@ -4,6 +4,7 @@ import nl.jk5.pumpkin.server.scripting.MachineHost;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.channel.MessageChannel;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,4 +30,6 @@ public interface Map extends MessageChannel, MachineHost {
     java.util.Map<Player, Team> getPlayerTeams();
 
     void tick();
+
+    File getSaveDirectory();
 }

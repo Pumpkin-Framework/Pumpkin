@@ -15,7 +15,7 @@ public final class LuaStateUtils {
     }
 
     public static void pushValue(LuaState state, @Nullable Object value, Context ctx){
-        pushValue(state, value, new IdentityHashMap<Object, Integer>(), ctx);
+        pushValue(state, value, new IdentityHashMap<>(), ctx);
     }
 
     private static void pushValue(LuaState lua, @Nullable final Object value, final IdentityHashMap<Object, Integer> memo, final Context ctx){
@@ -56,28 +56,6 @@ public final class LuaStateUtils {
                 pushTable(lua, ((Map<?, ?>) value), memo, ctx);
             }else if(value instanceof JavaFunction){
                 lua.pushJavaFunction(((JavaFunction) value));
-            }else if(value instanceof CallbackContainer){
-                Map<String, Callbacks.Callback> cb = Callbacks.search(value);
-                //Map<String, JavaFunction> ret = new HashMap<String, JavaFunction>(cb.size());
-                lua.newTable();
-                for(final Map.Entry<String, Callbacks.Callback> e : cb.entrySet()){
-                    lua.pushJavaFunction(luaState -> {
-                        try{
-                            Arguments args = ArgumentsImpl.of(luaState);
-                            Object[] ret = e.getValue().apply(value, ctx, args);
-                            for (Object o : ret) {
-                                LuaStateUtils.pushValue(luaState, o, ctx);
-                            }
-                            return ret.length;
-                        }catch(Exception e1){
-                            //TODO: propagate the exception to lua
-                            Log.warn("Exception while invoking callback: ", e1);
-                            return 0;
-                        }
-                    });
-                    lua.setField(-2, e.getKey());
-                }
-                //pushTable(lua, ret, memo, ctx);
             }else{
                 Log.warn("Tried to push an unsupported value of type " + value.getClass().getName() + " to lua");
                 lua.pushNil();
@@ -145,9 +123,9 @@ public final class LuaStateUtils {
     }
 
     public static Object[] toSimpleJavaObjects(LuaState lua, int start){
-        List<Object> ret = new ArrayList<Object>();
+        List<Object> ret = new ArrayList<>();
         for(int i = start; i <= lua.getTop(); i++){
-            ret.add(toSimpleJavaObject(lua, start));
+            ret.add(toSimpleJavaObject(lua, i));
         }
         return ret.toArray(new Object[ret.size()]);
     }

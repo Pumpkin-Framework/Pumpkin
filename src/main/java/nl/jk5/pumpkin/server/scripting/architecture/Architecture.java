@@ -1,5 +1,8 @@
 package nl.jk5.pumpkin.server.scripting.architecture;
 
+import nl.jk5.pumpkin.server.scripting.Context;
+import nl.jk5.pumpkin.server.scripting.Machine;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -40,7 +43,7 @@ public interface Architecture {
      *
      * @return whether the architecture was initialized successfully.
      */
-    boolean initialize();
+    boolean initialize() throws Throwable;
 
     /**
      * Called when a machine stopped. Used to clean up any handles, memory and
@@ -89,6 +92,22 @@ public interface Architecture {
      * @return the result of the execution. Used to determine the new state.
      */
     ExecutionResult runThreaded(boolean isSynchronizedReturn);
+
+    /**
+     * Called when a new signal is queued in the hosting {@link Machine}.
+     * <p/>
+     * Depending on how you structure your architecture, you may not need this
+     * callback. For example, the Lua architectures simply pull the next signal
+     * from the queue whenever {@link #runThreaded} is called again. However,
+     * if you'd like to react to signals in a more timely manner, you can
+     * react to this <em>while</em> you are in a {@link #runThreaded} call,
+     * which is what it is intended to be used for.
+     * <p/>
+     * Keep in mind that this may be called from any random thread, since
+     * {@link Context#signal} does not require being called from a specific
+     * thread.
+     */
+    void onSignal();
 
     /**
      * Called when the owning machine was connected to the component network.

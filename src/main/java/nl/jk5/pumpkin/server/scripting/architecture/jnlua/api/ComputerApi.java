@@ -12,18 +12,14 @@ public class ComputerApi extends NativeLuaApi {
 
     @Override
     public void initialize() {
-        // Computer API, stuff that kinda belongs to os, but we don't want to
-        // clutter it.
         lua().newTable();
 
-        // Allow getting the real world time for timeouts.
         lua().pushJavaFunction(lua -> {
             lua.pushNumber(System.currentTimeMillis() / 1000.0);
             return 1;
         });
         lua().setField(-2, "realTime");
 
-        // The time the computer has been running, as opposed to the CPU time.
         lua().pushJavaFunction(lua -> {
             lua.pushNumber(getMachine().upTime());
             return 1;
@@ -48,7 +44,17 @@ public class ComputerApi extends NativeLuaApi {
         });
         lua().setField(-2, "pushSignal");
 
-        // Set the computer table.
+        lua().pushJavaFunction(lua -> {
+            String tmpAddress = getMachine().tmpAddress();
+            if(tmpAddress == null){
+                lua.pushNil();
+            }else{
+                lua.pushString(tmpAddress);
+            }
+            return 1;
+        });
+        lua().setField(-2, "tmpAddress");
+
         lua().setGlobal("computer");
     }
 }

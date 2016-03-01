@@ -17,7 +17,7 @@ public class BiosApi extends NativeLuaApi {
 
         lua().pushJavaFunction(lua -> {
             try(
-                    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("/home/jk-5/development/pumpkin/pumpkin/src/main/resources/assets/pumpkin/lua/bios.lua"))));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("/home/jk-5/development/pumpkin/pumpkin/src/main/resources/assets/pumpkin/lua/kernel/bios.lua"))));
             ){
                 String code = "";
                 String line;

@@ -8,6 +8,9 @@ import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
 import nl.jk5.pumpkin.server.scripting.DefaultMachine;
 import nl.jk5.pumpkin.server.scripting.Machine;
+import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystem;
+import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystemComponent;
+import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystems;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.scoreboard.Scoreboard;
 import org.spongepowered.api.scoreboard.TeamMember;
@@ -15,6 +18,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.channel.MessageReceiver;
 import org.spongepowered.api.text.format.TextColors;
 
+import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,6 +26,7 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
 
     private final Mappack mappack;
     private final Pumpkin pumpkin;
+    private final File saveDir;
 
     private final List<DefaultMapWorld> worlds = new ArrayList<>();
     private final List<MapTeam> teams = new ArrayList<>();
@@ -37,13 +42,20 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
 
     private boolean firstTick = true;
 
-    public DefaultMap(Mappack mappack, Pumpkin pumpkin){
+    public DefaultMap(Mappack mappack, Pumpkin pumpkin, File saveDir){
         this.mappack = mappack;
         this.pumpkin = pumpkin;
+        this.saveDir = saveDir;
 
         this.mappack.getTeams().forEach(t -> this.teams.add(new MapTeam(t, this)));
 
         this.machine = new DefaultMachine(this);
+
+        //FileSystem fs = FileSystems.fromDirectory(new File("machinetest"));
+        FileSystem fs = FileSystems.fromClass(Pumpkin.class, "pumpkin", "lua/pumpkinos");
+        FileSystemComponent rootfs = new FileSystemComponent("/dev/pknrootfs", fs);
+
+        this.machine.addComponent(rootfs);
     }
 
     public Mappack getMappack() {
@@ -66,7 +78,6 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
         ((DefaultMachine) this.machine).update();
     }
 
-    @Override
     public Machine getMachine() {
         return this.machine;
     }
@@ -153,6 +164,11 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
         return playerTeams;
     }
 
+    @Override
+    public File getSaveDirectory() {
+        return this.saveDir;
+    }
+
     public void onPlayerJoin(Player player) {
         Log.info("Player " + player.getName() + " joined map " + this.toString());
         this.players.add(player);
@@ -163,6 +179,8 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
         }
 
         this.initScoreboard(player);
+
+        this.machine.signal("player_join", player.getName());
     }
 
     public void onPlayerLeft(Player player) {
@@ -172,6 +190,8 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
         if(this.playerTeams.containsKey(player)){
             this.playerTeams.remove(player); //TODO: scoreboard update
         }
+
+        this.machine.signal("player_leave", player.getName());
     }
 
     private void initScoreboard(Player player){
