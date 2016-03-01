@@ -13,7 +13,7 @@ public interface Component {
 
     Collection<String> methods();
 
-    Callback annotation(String method) throws NoSuchMethodException;
+    Callback annotation(String method);
 
     Object[] invoke(String method, Context context, Object... arguments) throws Exception;
 }

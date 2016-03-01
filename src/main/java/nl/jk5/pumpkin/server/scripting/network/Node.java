@@ -93,11 +93,7 @@ public interface Node {
      * @throws NullPointerException if <tt>network</tt> is <tt>null</tt>.
      */
     default void connect(){
-        if(network() != null){
-            network().connect(this);
-        }else{
-            throw new NullPointerException("network");
-        }
+        network().connect(this);
     }
 
     /**
@@ -108,12 +104,11 @@ public interface Node {
      * If this node is not in a network, i.e. <tt>network</tt> is <tt>null</tt>,
      * this will do nothing.
      *
+     * @param node the node to connect to this node.
      * @throws NullPointerException if <tt>network</tt> is <tt>null</tt>.
      */
     default void disconnect(){
-        if(network() != null){
-            network().disconnect(this);
-        }
+        network().disconnect(this);
     }
 
     /**
@@ -125,9 +120,7 @@ public interface Node {
      * this will do nothing.
      */
     default void remove(){
-        if(network() != null){
-            network().remove(this);
-        }
+        network().remove(this);
     }
 
     // ----------------------------------------------------------------------- //
@@ -146,5 +139,42 @@ public interface Node {
      */
     void sendToAddress(String target, String name, Object... data);
 
-    void sendToAll(String name, Object... data);
+    /**
+     * Send a message to all neighbors of this node.
+     * <p/>
+     * This is a shortcut for <tt>node.network.sendToNeighbors(node, ...)</tt>.
+     * <p/>
+     * If this node is not in a network, i.e. <tt>network</tt> is <tt>null</tt>,
+     * this will do nothing.
+     *
+     * @param name the name of the message.
+     * @param data the data to pass along with the message.
+     */
+    void sendToNeighbors(String name, Object... data);
+
+    /**
+     * Send a message to all nodes reachable from this node.
+     * <p/>
+     * This is a shortcut for <tt>node.network.sendToReachable(node, ...)</tt>.
+     * <p/>
+     * If this node is not in a network, i.e. <tt>network</tt> is <tt>null</tt>,
+     * this will do nothing.
+     *
+     * @param name the name of the message.
+     * @param data the data to pass along with the message.
+     */
+    void sendToReachable(String name, Object... data);
+
+    /**
+     * Send a message to all nodes visible from this node.
+     * <p/>
+     * This is a shortcut for <tt>node.network.sendToVisible(node, ...)</tt>.
+     * <p/>
+     * If this node is not in a network, i.e. <tt>network</tt> is <tt>null</tt>,
+     * this will do nothing.
+     *
+     * @param name the name of the message.
+     * @param data the data to pass along with the message.
+     */
+    void sendToVisible(String name, Object... data);
 }
