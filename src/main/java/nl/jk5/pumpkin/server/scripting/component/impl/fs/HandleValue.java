@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 import nl.jk5.pumpkin.server.scripting.AbstractValue;
 import nl.jk5.pumpkin.server.scripting.Context;
 
-public final class HandleValue extends AbstractValue {
+public final class HandleValue implements AbstractValue {
 
     private final String address;
     private final int handle;
@@ -16,7 +16,6 @@ public final class HandleValue extends AbstractValue {
 
     @Override
     public void dispose(Context context) {
-        super.dispose(context);
         /*
         TODO
         if (context.node() != null && context.node().network() != null) {

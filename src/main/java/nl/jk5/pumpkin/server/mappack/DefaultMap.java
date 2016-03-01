@@ -8,8 +8,8 @@ import nl.jk5.pumpkin.api.mappack.game.Game;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
 import nl.jk5.pumpkin.server.mappack.game.MapGame;
-import nl.jk5.pumpkin.server.scripting.DefaultMachine;
-import nl.jk5.pumpkin.server.scripting.Machine;
+import nl.jk5.pumpkin.server.scripting.*;
+import nl.jk5.pumpkin.server.scripting.component.MapComponent;
 import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystem;
 import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystemComponent;
 import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystems;
@@ -24,7 +24,7 @@ import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
+public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue {
 
     private final Mappack mappack;
     private final Pumpkin pumpkin;
@@ -41,6 +41,7 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
     private final Machine machine;
     private final MapGame game;
 
+    @SuppressWarnings("NullableProblems")
     private MapWorld defaultWorld;
 
     private boolean firstTick = true;
@@ -64,6 +65,7 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
 
         this.machine.addComponent(rootfs);
         this.machine.addComponent(gamefs);
+        this.machine.addComponent(new MapComponent(this));
     }
 
     public Mappack getMappack() {
@@ -236,5 +238,11 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map {
         if(signal.getName().equals("game_finished")){
             this.game.onGameFinished();
         }
+    }
+
+    @Callback
+    public Object[] sendMessage(Context ctx, Arguments args){
+        this.send(MapComponent.getText(args, 0));
+        return new Object[0];
     }
 }
