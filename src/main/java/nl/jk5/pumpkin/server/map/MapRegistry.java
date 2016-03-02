@@ -4,8 +4,6 @@ import com.google.common.base.Preconditions;
 import nl.jk5.pumpkin.api.mappack.*;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
-import nl.jk5.pumpkin.server.mappack.DefaultMap;
-import nl.jk5.pumpkin.server.mappack.DefaultMapWorld;
 import nl.jk5.pumpkin.server.world.gen.empty.DummyVoidGenerator;
 import nl.jk5.pumpkin.server.world.gen.empty.VoidWorldGeneratorModifier;
 import org.apache.http.HttpResponse;

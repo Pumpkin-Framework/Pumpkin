@@ -1,4 +1,4 @@
-package nl.jk5.pumpkin.server.mappack;
+package nl.jk5.pumpkin.server.map;
 
 import com.google.common.base.Objects;
 import nl.jk5.pumpkin.api.mappack.Map;

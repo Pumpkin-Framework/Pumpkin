@@ -1,4 +1,4 @@
-package nl.jk5.pumpkin.server.mappack;
+package nl.jk5.pumpkin.server.map;
 
 import com.google.common.base.Objects;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
@@ -7,7 +7,7 @@ import nl.jk5.pumpkin.api.mappack.Team;
 import nl.jk5.pumpkin.api.mappack.game.Game;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
-import nl.jk5.pumpkin.server.mappack.game.MapGame;
+import nl.jk5.pumpkin.server.map.game.MapGame;
 import nl.jk5.pumpkin.server.scripting.*;
 import nl.jk5.pumpkin.server.scripting.component.MapComponent;
 import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystem;

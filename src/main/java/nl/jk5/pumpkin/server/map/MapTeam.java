@@ -1,4 +1,4 @@
-package nl.jk5.pumpkin.server.mappack;
+package nl.jk5.pumpkin.server.map;
 
 import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MappackTeam;

@@ -1,4 +1,4 @@
-package nl.jk5.pumpkin.server.mappack.game;
+package nl.jk5.pumpkin.server.map.game;
 
 import com.google.common.collect.ImmutableList;
 import nl.jk5.pumpkin.api.mappack.game.Game;
@@ -6,7 +6,7 @@ import nl.jk5.pumpkin.api.mappack.game.GameStartResult;
 import nl.jk5.pumpkin.api.mappack.game.Winnable;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
-import nl.jk5.pumpkin.server.mappack.DefaultMap;
+import nl.jk5.pumpkin.server.map.DefaultMap;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
