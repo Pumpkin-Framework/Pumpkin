@@ -9,4 +9,8 @@ public interface Game {
     boolean isRunning();
 
     boolean isInActiveGame(Player player);
+
+    void onPlayerJoin(Player player);
+
+    void onPlayerLeft(Player player);
 }

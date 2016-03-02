@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
 import nl.jk5.pumpkin.server.mappack.DefaultMap;
+import nl.jk5.pumpkin.server.mappack.game.MapGame;
 import nl.jk5.pumpkin.server.scripting.architecture.Architecture;
 import nl.jk5.pumpkin.server.scripting.architecture.ExecutionResult;
 import nl.jk5.pumpkin.server.scripting.architecture.jnlua.JNLuaArchitecture;
@@ -227,7 +228,9 @@ public class DefaultMachine implements Machine, Runnable {
                 state.clear();
                 state.push(State.STOPPING);
             }
-            Log.error("Machine crash: " + message);
+            if (this.host.getGame().isPresent()) {
+                ((MapGame) this.host.getGame().get()).onGameCrashed(message);
+            }
             return result;
         }
     }

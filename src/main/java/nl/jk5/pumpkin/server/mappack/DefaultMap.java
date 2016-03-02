@@ -190,6 +190,8 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue
 
         this.initScoreboard(player);
 
+        this.game.onPlayerJoin(player);
+
         this.machine.signal("player_join", player.getName());
     }
 
@@ -200,6 +202,8 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue
         if(this.playerTeams.containsKey(player)){
             this.playerTeams.remove(player); //TODO: scoreboard update
         }
+
+        this.game.onPlayerLeft(player);
 
         this.machine.signal("player_leave", player.getName());
     }
