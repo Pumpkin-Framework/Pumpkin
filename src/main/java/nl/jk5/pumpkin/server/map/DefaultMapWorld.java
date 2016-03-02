@@ -5,11 +5,14 @@ import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
 import nl.jk5.pumpkin.api.mappack.MappackWorld;
 import nl.jk5.pumpkin.server.Log;
+import nl.jk5.pumpkin.server.map.stat.StatEmitter;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
+
+import java.util.Collection;
 
 public class DefaultMapWorld implements MapWorld {
 
@@ -61,5 +64,9 @@ public class DefaultMapWorld implements MapWorld {
 
     public void onPlayerLeave(Player player){
 
+    }
+
+    public Collection<StatEmitter> getStatEmitters(){
+        return this.map.getStatManager().getStatEmitters(this);
     }
 }

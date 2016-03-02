@@ -26,6 +26,8 @@ public final class SqlTableManager {
     public Dao<DatabasePlayer, Integer> playerDao;
     public Dao<DatabaseZone, Integer> zoneDao;
     public Dao<DatabaseMappackTeam, Integer> mappackTeamDao;
+    public Dao<DatabaseMappackStat, Integer> mappackStatDao;
+    public Dao<DatabaseStatEmitter, Integer> statEmitterDao;
 
     public SqlTableManager(Pumpkin pumpkin, String connectionString) {
         this.pumpkin = pumpkin;
@@ -44,9 +46,6 @@ public final class SqlTableManager {
     }
 
     public void setupTables(){
-        //groupPermissionDao = createTable(DatabaseGroupPermission.class);
-        //userPermissionDao = createTable(DatabaseUserPermission.class);
-        //zoneDao = createTable(DatabaseZone.class);
         this.mappackDao = createTable(DatabaseMappack.class);
         this.mappackAuthorDao = createTable(DatabaseMappackAuthor.class);
         this.userDao = createTable(DatabaseUser.class);
@@ -54,11 +53,8 @@ public final class SqlTableManager {
         this.playerDao = createTable(DatabasePlayer.class);
         this.zoneDao = createTable(DatabaseZone.class);
         this.mappackTeamDao = createTable(DatabaseMappackTeam.class);
-        //gameruleDao = createTable(DatabaseGamerule.class);
-        //groupsDao = createTable(DatabaseGroup.class);
-        //userGroupDao = createTable(DatabaseGroupMembership.class);
-        //gameDao = createTable(DatabaseGame.class);
-        //gameEventDao = createTable(DatabaseGameEvent.class);
+        this.mappackStatDao = createTable(DatabaseMappackStat.class);
+        this.statEmitterDao = createTable(DatabaseStatEmitter.class);
     }
 
     private <T, ID> Dao<T, ID> createTable(Class<T> cls){

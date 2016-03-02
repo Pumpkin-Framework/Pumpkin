@@ -1,15 +1,13 @@
-package nl.jk5.pumpkin.server.scripting.component;
+package nl.jk5.pumpkin.server.scripting.component.map;
 
 import com.google.common.collect.ImmutableMap;
 import nl.jk5.pumpkin.api.mappack.Map;
-import nl.jk5.pumpkin.server.scripting.AbstractValue;
 import nl.jk5.pumpkin.server.scripting.Arguments;
 import nl.jk5.pumpkin.server.scripting.Callback;
 import nl.jk5.pumpkin.server.scripting.Context;
+import nl.jk5.pumpkin.server.scripting.component.AnnotatedComponent;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
-import org.spongepowered.api.text.format.TextStyle;
 import org.spongepowered.api.text.format.TextStyles;
 
 import java.util.LinkedList;
@@ -82,7 +80,7 @@ public class MapComponent extends AnnotatedComponent {
         List<Object> elements = new LinkedList<>();
         for(int i = index; i < args.count(); i++){
             Object e = args.checkAny(i);
-            if(e instanceof MapComponent.SimpleValue){
+            if(e instanceof SimpleValue){
                 elements.add(((SimpleValue) e).getValue());
             }else if(e instanceof byte[]){
                 elements.add(new String((byte[]) e));
@@ -101,45 +99,7 @@ public class MapComponent extends AnnotatedComponent {
         return ((Text) ((SimpleValue) e).getValue());
     }
 
-    public abstract static class SimpleValue<T> implements AbstractValue {
 
-        private final T value;
 
-        public SimpleValue(T value) {
-            this.value = value;
-        }
 
-        public T getValue() {
-            return value;
-        }
-    }
-
-    public static class TextColorValue extends SimpleValue<TextColor> {
-
-        public TextColorValue(TextColor value) {
-            super(value);
-        }
-    }
-
-    public static class TextStyleValue extends SimpleValue<TextStyle> {
-
-        public TextStyleValue(TextStyle value) {
-            super(value);
-        }
-    }
-
-    public static class TextValue extends SimpleValue<Text> {
-
-        public TextValue(Text value) {
-            super(value);
-        }
-    }
-
-    public static class TextCreateValue implements AbstractValue {
-
-        @Override
-        public Object[] call(Context context, Arguments args) {
-            return new Object[]{new TextValue(convertText(args, 0))};
-        }
-    }
 }

@@ -13,6 +13,7 @@ import nl.jk5.pumpkin.server.authentication.PumpkinBanService;
 import nl.jk5.pumpkin.server.command.element.MappackCommandElement;
 import nl.jk5.pumpkin.server.map.MapEventListener;
 import nl.jk5.pumpkin.server.map.MapRegistry;
+import nl.jk5.pumpkin.server.map.stat.StatEmitter;
 import nl.jk5.pumpkin.server.mappack.MappackRegistry;
 import nl.jk5.pumpkin.server.player.PlayerRegistry;
 import nl.jk5.pumpkin.server.services.PumpkinServiceManger;
@@ -243,10 +244,40 @@ public class Pumpkin {
                 .child(gameStartCommand, "start")
                 .build();
 
+        CommandSpec statEmitterCreateCommand = CommandSpec.builder()
+                .description(Text.of("Create a stat emitter"))
+                .arguments(GenericArguments.integer(Text.of("x")), GenericArguments.integer(Text.of("y")), GenericArguments.integer(Text.of("z")))
+                .executor((src, args) -> {
+                    if(!(src instanceof Player)){
+                        return CommandResult.success();
+                    }
+                    Player player = (Player) src;
+                    Optional<MapWorld> mapWorld = mapRegistry.getMapWorld(player.getWorld());
+                    if(!mapWorld.isPresent()){
+                        src.sendMessage(Text.of(TextColors.RED, "You are not in a valid pumpkin world"));
+                        return CommandResult.empty();
+                    }
+                    Map map = mapWorld.get().getMap();
+                    int x = args.<Integer>getOne("x").get();
+                    int y = args.<Integer>getOne("y").get();
+                    int z = args.<Integer>getOne("z").get();
+                    Optional<StatEmitter> emitter = StatEmitter.create(mapWorld.get(), new Location<>(mapWorld.get().getWorld(), x, y, z));
+                    if(emitter.isPresent()){
+                        map.getStatManager().addStatEmitter(emitter.get());
+                    }
+                    return CommandResult.success();
+                }).build();
+
+        CommandSpec statEmitterCommand = CommandSpec.builder()
+                .description(Text.of("Stat emitter commands"))
+                .child(statEmitterCreateCommand, "create")
+                .build();
+
         game.getCommandManager().register(this, mappackCommand, "mappack");
         game.getCommandManager().register(this, gotoCommand, "goto");
         game.getCommandManager().register(this, teamCommand, "team");
         game.getCommandManager().register(this, gameCommand, "game");
+        game.getCommandManager().register(this, statEmitterCommand, "statemitter");
     }
 
     @Listener

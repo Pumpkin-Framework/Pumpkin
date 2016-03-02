@@ -1,18 +1,21 @@
 package nl.jk5.pumpkin.server.map;
 
 import com.google.common.base.Objects;
-import nl.jk5.pumpkin.api.mappack.MapWorld;
-import nl.jk5.pumpkin.api.mappack.Mappack;
-import nl.jk5.pumpkin.api.mappack.Team;
+import nl.jk5.pumpkin.api.mappack.*;
 import nl.jk5.pumpkin.api.mappack.game.Game;
+import nl.jk5.pumpkin.api.mappack.game.stat.StatManager;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
 import nl.jk5.pumpkin.server.map.game.MapGame;
+import nl.jk5.pumpkin.server.map.stat.MapStatManager;
 import nl.jk5.pumpkin.server.scripting.*;
-import nl.jk5.pumpkin.server.scripting.component.MapComponent;
 import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystem;
 import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystemComponent;
 import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystems;
+import nl.jk5.pumpkin.server.scripting.component.map.MapComponent;
+import nl.jk5.pumpkin.server.scripting.component.map.StatValue;
+import nl.jk5.pumpkin.server.scripting.component.map.TeamValue;
+import nl.jk5.pumpkin.server.scripting.component.map.WorldValue;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.scoreboard.Scoreboard;
 import org.spongepowered.api.scoreboard.TeamMember;
@@ -22,6 +25,7 @@ import org.spongepowered.api.text.format.TextColors;
 
 import java.io.File;
 import java.util.*;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue {
@@ -40,6 +44,7 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue
 
     private final Machine machine;
     private final MapGame game;
+    private final MapStatManager statManager;
 
     @SuppressWarnings("NullableProblems")
     private MapWorld defaultWorld;
@@ -55,6 +60,8 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue
 
         this.mappack.getTeams().forEach(t -> this.teams.add(new MapTeam(t, this)));
 
+        this.statManager = new MapStatManager(this);
+
         this.machine = new DefaultMachine(this);
 
         FileSystem fs = FileSystems.fromClass(Pumpkin.class, "pumpkin", "lua/pumpkinos");
@@ -68,6 +75,7 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue
         this.machine.addComponent(new MapComponent(this));
     }
 
+    @Override
     public Mappack getMappack() {
         return mappack;
     }
@@ -77,6 +85,7 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue
         if(world.getConfig().isDefault()){
             this.defaultWorld = world;
         }
+        this.statManager.onWorldAdded(world);
     }
 
     @Override
@@ -244,9 +253,43 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue
         }
     }
 
+    @Override
+    public StatManager getStatManager() {
+        return this.statManager;
+    }
+
     @Callback
     public Object[] sendMessage(Context ctx, Arguments args){
         this.send(MapComponent.getText(args, 0));
         return new Object[0];
+    }
+
+    @Callback
+    public Object[] getStat(Context ctx, Arguments args){
+        return new Object[]{new StatValue(this.statManager.byName(args.checkString(0)))};
+    }
+
+    @Callback
+    public Object[] getTeam(Context ctx, Arguments args){
+        Optional<Team> team = this.teamByName(args.checkString(0));
+        if(team.isPresent()){
+            return new Object[]{new TeamValue(team.get())};
+        }else{
+            return new Object[0];
+        }
+    }
+
+    @Callback
+    public Object[] getWorld(Context ctx, Arguments args){
+        Optional<MapWorld> world = this.getWorlds().stream().filter(w -> w.getConfig().getName().equals(args.checkString(0))).findAny();
+        if(world.isPresent()){
+            return new Object[]{new WorldValue(world.get())};
+        }else{
+            return new Object[0];
+        }
+    }
+
+    public void onSubtitleTick() {
+        this.teams.forEach(MapTeam::onSubtitleTick);
     }
 }

@@ -174,14 +174,6 @@ public class MapRegistry {
         this.maps.remove(map);
     }
 
-    @Listener // TODO: 1-3-16 Move event handlers out of MapRegistry
-    public void onRespawn(RespawnPlayerEvent event){
-        MapWorld world = this.mapWorlds.get(event.getTargetEntity().getWorld());
-        if(world == null) return;
-        Player player = event.getTargetEntity();
-        // TODO: 15-2-16  
-    }
-
     public Optional<MapWorld> getMapWorld(World world){
         return Optional.ofNullable(this.mapWorlds.get(world));
     }
@@ -210,5 +202,9 @@ public class MapRegistry {
 
     public Map getLobby() {
         return lobby;
+    }
+
+    public void onSubtitleTick() {
+        this.maps.forEach(m -> ((DefaultMap) m).onSubtitleTick());
     }
 }

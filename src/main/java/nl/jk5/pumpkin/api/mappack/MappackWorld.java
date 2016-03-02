@@ -1,5 +1,6 @@
 package nl.jk5.pumpkin.api.mappack;
 
+import nl.jk5.pumpkin.api.mappack.game.stat.StatEmitterConfig;
 import nl.jk5.pumpkin.api.utils.PlayerLocation;
 import org.spongepowered.api.entity.living.player.gamemode.GameMode;
 import org.spongepowered.api.world.DimensionType;
@@ -35,4 +36,6 @@ public interface MappackWorld {
     Collection<WorldFile> getFiles();
 
     Collection<Zone> getZones();
+
+    Collection<StatEmitterConfig> getStatEmitters();
 }

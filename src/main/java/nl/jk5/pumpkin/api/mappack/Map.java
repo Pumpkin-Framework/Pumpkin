@@ -1,6 +1,7 @@
 package nl.jk5.pumpkin.api.mappack;
 
 import nl.jk5.pumpkin.api.mappack.game.Game;
+import nl.jk5.pumpkin.api.mappack.game.stat.StatManager;
 import nl.jk5.pumpkin.server.scripting.MachineHost;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.channel.MessageChannel;
@@ -39,4 +40,8 @@ public interface Map extends MessageChannel, MachineHost {
     Optional<Game> getGame();
 
     boolean isInActiveGame(Player player);
+
+    StatManager getStatManager();
+
+    Mappack getMappack();
 }

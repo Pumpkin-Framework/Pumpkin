@@ -7,6 +7,8 @@ import nl.jk5.pumpkin.api.mappack.game.Winnable;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
 import nl.jk5.pumpkin.server.map.DefaultMap;
+import nl.jk5.pumpkin.server.map.stat.type.GameDoneStatType;
+import nl.jk5.pumpkin.server.map.stat.type.GameRunningStatType;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
@@ -15,6 +17,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.title.Title;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -29,8 +32,8 @@ public class MapGame implements Game {
     private boolean starting = false;
     private boolean running = false;
 
-    private Task startTask;
-    private Winnable winner;
+    @Nullable private Task startTask;
+    @Nullable private Winnable winner;
 
     private List<UUID> participantIds = Collections.emptyList();
     private List<Player> participants = Collections.emptyList();
@@ -82,10 +85,15 @@ public class MapGame implements Game {
     }
 
     private void doStart(){
-        this.startTask.cancel();
+        if(this.startTask != null){
+            this.startTask.cancel();
+        }
         this.starting = false;
         this.running = true;
         this.winner = null;
+
+        this.map.getStatManager().with(GameRunningStatType.class, GameRunningStatType::setRunning);
+        this.map.getStatManager().with(GameDoneStatType.class, GameDoneStatType::reset);
 
         this.participants.forEach(p -> {
             p.offer(Keys.HEALTH, p.maxHealth().get());
@@ -117,6 +125,9 @@ public class MapGame implements Game {
     public void onGameFinished() {
         this.running = false;
 
+        this.map.getStatManager().with(GameRunningStatType.class, GameRunningStatType::setNotRunning);
+        this.map.getStatManager().with(GameDoneStatType.class, GameDoneStatType::setDone);
+
         if(this.winner == null){
             // No winner known. Just send a 'Game over' message
             Title title = Title.builder().stay(80).fadeIn(0).fadeOut(20).title(Text.of(TextColors.GOLD, "Game Over!")).build();
@@ -135,6 +146,7 @@ public class MapGame implements Game {
             return;
         }
         this.running = false;
+        this.map.getStatManager().with(GameRunningStatType.class, GameRunningStatType::setNotRunning);
 
         this.map.send(Text.of(TextColors.RED, "The game script crashed. Game stopped"));
         Log.error("Game script crashed: " + reason);

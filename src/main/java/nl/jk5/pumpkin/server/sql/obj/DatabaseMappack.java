@@ -9,6 +9,7 @@ import nl.jk5.pumpkin.api.mappack.Mappack;
 import nl.jk5.pumpkin.api.mappack.MappackAuthor;
 import nl.jk5.pumpkin.api.mappack.MappackTeam;
 import nl.jk5.pumpkin.api.mappack.MappackWorld;
+import nl.jk5.pumpkin.api.mappack.game.stat.StatConfig;
 
 import java.util.Collection;
 import java.util.Date;
@@ -46,6 +47,9 @@ public class DatabaseMappack implements Mappack {
 
     @ForeignCollectionField
     private ForeignCollection<DatabaseMappackWorld> worlds;
+
+    @ForeignCollectionField
+    private ForeignCollection<DatabaseMappackStat> stats;
 
     //@ForeignCollectionField
     //private ForeignCollection<DatabaseGamerule> gamerules;
@@ -85,6 +89,12 @@ public class DatabaseMappack implements Mappack {
     @Override
     public Collection<MappackTeam> getTeams() {
         return ((Collection) teams);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Collection<StatConfig> getStats() {
+        return ((Collection) stats);
     }
 
     @Override

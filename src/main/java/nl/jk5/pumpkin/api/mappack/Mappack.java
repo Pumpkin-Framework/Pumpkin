@@ -1,5 +1,7 @@
 package nl.jk5.pumpkin.api.mappack;
 
+import nl.jk5.pumpkin.api.mappack.game.stat.StatConfig;
+
 import java.util.Collection;
 
 public interface Mappack {
@@ -8,14 +10,13 @@ public interface Mappack {
 
     String getName();
 
-    @SuppressWarnings("unchecked")
-    abstract Collection<MappackAuthor> getAuthors();
+    Collection<MappackAuthor> getAuthors();
 
-    @SuppressWarnings("unchecked")
     Collection<MappackWorld> getWorlds();
 
-    @SuppressWarnings("unchecked")
     Collection<MappackTeam> getTeams();
+
+    Collection<StatConfig> getStats();
 
     //Optional<IMount> createMount();
 }
