@@ -25,6 +25,8 @@ public class MapTeam implements Team {
     @Nullable
     private Text subtitle;
 
+    private int fastRespawnTimer = -1;
+
     public MapTeam(MappackTeam config, Map map){
         this.config = config;
         this.map = map;
@@ -80,5 +82,17 @@ public class MapTeam implements Team {
 
     public void onSubtitleTick() {
         this.updateSubtitle();
+    }
+
+    public void setFastRespawnTimer(int fastRespawnTimer) {
+        this.fastRespawnTimer = fastRespawnTimer;
+    }
+
+    public int getFastRespawnTimer() {
+        return fastRespawnTimer;
+    }
+
+    public Map getMap() {
+        return map;
     }
 }

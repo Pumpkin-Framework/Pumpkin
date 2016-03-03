@@ -1,6 +1,7 @@
 package nl.jk5.pumpkin.server.scripting.component.map;
 
 import nl.jk5.pumpkin.api.mappack.MapWorld;
+import nl.jk5.pumpkin.server.map.MapEventListener;
 import nl.jk5.pumpkin.server.scripting.Arguments;
 import nl.jk5.pumpkin.server.scripting.Callback;
 import nl.jk5.pumpkin.server.scripting.Context;
@@ -40,5 +41,14 @@ public class WorldValue extends SimpleValue<MapWorld> {
         }
         getValue().getWorld().getProperties().setDifficulty(difficulty);
         return new Object[0];
+    }
+
+    @Callback
+    public Object[] watchBlockDestroy(Context ctx, Arguments args){
+        int x = args.checkInteger(0);
+        int y = args.checkInteger(1);
+        int z = args.checkInteger(2);
+        MapEventListener.registerBlockDestroyWatcher(this.getValue(), x, y, z);
+        return new Object[]{"block_break_" + getValue().getConfig().getName() + "_" + x + "," + y + "," + z};
     }
 }

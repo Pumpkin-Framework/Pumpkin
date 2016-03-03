@@ -3,6 +3,8 @@ package nl.jk5.pumpkin.server.map;
 import com.google.common.base.Objects;
 import nl.jk5.pumpkin.api.mappack.*;
 import nl.jk5.pumpkin.api.mappack.game.Game;
+import nl.jk5.pumpkin.api.mappack.game.Winnable;
+import nl.jk5.pumpkin.api.mappack.game.WinnablePlayerWrapper;
 import nl.jk5.pumpkin.api.mappack.game.stat.StatManager;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
@@ -12,10 +14,7 @@ import nl.jk5.pumpkin.server.scripting.*;
 import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystem;
 import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystemComponent;
 import nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystems;
-import nl.jk5.pumpkin.server.scripting.component.map.MapComponent;
-import nl.jk5.pumpkin.server.scripting.component.map.StatValue;
-import nl.jk5.pumpkin.server.scripting.component.map.TeamValue;
-import nl.jk5.pumpkin.server.scripting.component.map.WorldValue;
+import nl.jk5.pumpkin.server.scripting.component.map.*;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.scoreboard.Scoreboard;
 import org.spongepowered.api.scoreboard.TeamMember;
@@ -287,6 +286,33 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue
         }else{
             return new Object[0];
         }
+    }
+
+    @Callback
+    public Object[] setWinTimeout(Context ctx, Arguments args){
+        int timeout = args.checkInteger(0);
+        Object e = args.checkAny(1);
+        if(!(e instanceof SimpleValue) || !(((SimpleValue) e).getValue() instanceof Team)){
+            throw new IllegalArgumentException("#2: expected team object");
+        }
+        game.setWinTimeout(timeout, ((Team) ((SimpleValue) e).getValue()));
+        return new Object[]{};
+    }
+
+    @Callback
+    public Object[] setWinner(Context ctx, Arguments args){
+        Object e = args.checkAny(0);
+        if(!(e instanceof SimpleValue) || (!(((SimpleValue) e).getValue() instanceof Team) && !(((SimpleValue) e).getValue() instanceof Player))){
+            throw new IllegalArgumentException("#1: expected player/team object");
+        }
+        Winnable winner;
+        if(((SimpleValue) e).getValue() instanceof Player){
+            winner = new WinnablePlayerWrapper((Player) ((SimpleValue) e).getValue());
+        }else if(((SimpleValue) e).getValue() instanceof Team){
+            winner = ((Team) ((SimpleValue) e).getValue());
+        }else throw new IllegalArgumentException("#1: expected player/team object");
+        game.setWinner(winner);
+        return new Object[]{};
     }
 
     public void onSubtitleTick() {

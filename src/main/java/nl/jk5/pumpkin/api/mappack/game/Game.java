@@ -10,6 +10,8 @@ public interface Game {
 
     boolean isInActiveGame(Player player);
 
+    void setWinner(Winnable winner);
+
     void onPlayerJoin(Player player);
 
     void onPlayerLeft(Player player);

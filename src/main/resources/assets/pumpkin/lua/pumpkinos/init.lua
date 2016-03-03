@@ -141,6 +141,7 @@ end
 local event = require "event"
 local computer = require "computer"
 repeat
+    -- TODO: If the game script crashes, everything crashes
     event.pull("game_start")
     print("Running game script")
     local game = loadfile("/opt/mappack/game.lua")

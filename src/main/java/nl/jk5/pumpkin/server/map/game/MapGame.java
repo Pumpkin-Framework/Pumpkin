@@ -1,6 +1,7 @@
 package nl.jk5.pumpkin.server.map.game;
 
 import com.google.common.collect.ImmutableList;
+import nl.jk5.pumpkin.api.mappack.Team;
 import nl.jk5.pumpkin.api.mappack.game.Game;
 import nl.jk5.pumpkin.api.mappack.game.GameStartResult;
 import nl.jk5.pumpkin.api.mappack.game.Winnable;
@@ -33,6 +34,7 @@ public class MapGame implements Game {
     private boolean running = false;
 
     @Nullable private Task startTask;
+    @Nullable private Task winTimeoutTask;
     @Nullable private Winnable winner;
 
     private List<UUID> participantIds = Collections.emptyList();
@@ -122,6 +124,21 @@ public class MapGame implements Game {
         return this.participants.contains(player);
     }
 
+    @Override
+    public void setWinner(Winnable winner){
+        if(this.winTimeoutTask != null){
+            this.winTimeoutTask.cancel();
+        }
+        this.winner = winner;
+        if(winner instanceof Team){
+            //this.map.getMachine().signal("game_won", new TeamValue((Team) winner));
+            this.map.getMachine().signal("game_won");
+        }else if(winner instanceof Player){
+            //this.map.getMachine().signal("game_won", new PlayerValue((Player) winner));
+            this.map.getMachine().signal("game_won");
+        }
+    }
+
     public void onGameFinished() {
         this.running = false;
 
@@ -130,12 +147,12 @@ public class MapGame implements Game {
 
         if(this.winner == null){
             // No winner known. Just send a 'Game over' message
-            Title title = Title.builder().stay(80).fadeIn(0).fadeOut(20).title(Text.of(TextColors.GOLD, "Game Over!")).build();
+            Title title = Title.builder().stay(200).fadeIn(0).fadeOut(20).title(Text.of(TextColors.GOLD, "Game Over!")).build();
             this.participants.forEach(p -> p.sendTitle(title));
         }else{
             // TODO: 2-3-16 Seperate message for spectators
-            Title winTitle = Title.builder().stay(80).fadeIn(0).fadeOut(20).title(Text.of(TextColors.GREEN, "You Win!")).build();
-            Title loseTitle = Title.builder().stay(80).fadeIn(0).fadeOut(20).title(Text.of(TextColors.RED, "You Lost!")).subtitle(Text.of(this.winner.getWinnableDescription(), TextColors.GOLD, " won the game")).build();
+            Title winTitle = Title.builder().stay(200).fadeIn(0).fadeOut(20).title(Text.of(TextColors.GREEN, "You Win!")).build();
+            Title loseTitle = Title.builder().stay(200).fadeIn(0).fadeOut(20).title(Text.of(TextColors.RED, "You Lost!")).subtitle(Text.of(this.winner.getWinnableDescription(), TextColors.GOLD, " won the game")).build();
             this.winner.getWinners().forEach(p -> p.sendTitle(winTitle));
             this.participants.stream().filter(e -> !this.winner.getWinners().contains(e)).forEach(p -> p.sendTitle(loseTitle));
         }
@@ -174,5 +191,15 @@ public class MapGame implements Game {
             this.participantIds = ImmutableList.copyOf(this.participantIds.stream().filter(p -> p != player.getUniqueId()).collect(Collectors.toList()));
             this.participants = ImmutableList.copyOf(this.participants.stream().filter(p -> p != player).collect(Collectors.toList()));
         }
+    }
+
+    public void setWinTimeout(int timeout, Team team) {
+        this.winTimeoutTask = Sponge.getScheduler().createTaskBuilder()
+                .async()
+                .delay(timeout, TimeUnit.SECONDS)
+                .execute(() -> {
+                    this.setWinner(team);
+                })
+                .submit(Pumpkin.instance());
     }
 }

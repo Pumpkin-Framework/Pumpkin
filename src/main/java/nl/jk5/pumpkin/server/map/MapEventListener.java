@@ -28,13 +28,16 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.title.Title;
 
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class MapEventListener {
 
+    private static final List<BlockDestroyWatcher> watchers = new LinkedList<>();
+
     private final Pumpkin pumpkin;
+    private final Set<Player> fastRespawnPlayers = new HashSet<>();
 
     public MapEventListener(Pumpkin pumpkin) {
         this.pumpkin = pumpkin;
@@ -185,13 +188,17 @@ public final class MapEventListener {
                     event.setCancelled(true);
                     return;
                 }else{
+                    if(fastRespawnPlayers.contains(event.getTargetEntity())){ // If the player is fast respawning, do not apply void damage, so it doesn't die twice
+                        event.setCancelled(true);
+                        return;
+                    }
                     // Let the void damage happen so the player does not fall forever
                     ignore = true;
                 }
             }
         }
 
-        // Handle * -> player when player not in game
+        // Handle * -> player when player not infastRespawnPlayers game
         if(!ignore && event.getTargetEntity() instanceof Player){
             Player target = (Player) event.getTargetEntity();
             if(!map.isInActiveGame(target)){
@@ -244,53 +251,59 @@ public final class MapEventListener {
 
         if(event.getTargetEntity() instanceof Player){
             Player player = (Player) event.getTargetEntity();
-            if(!event.willCauseDeath()){
-                return;
-            }
+            if(event.willCauseDeath()){
+                Optional<Team> t = map.getPlayerTeam(player);
+                if(t.isPresent() && ((MapTeam) t.get()).getFastRespawnTimer() >= 0){
+                    MapTeam team = ((MapTeam) t.get());
+                    fastRespawnPlayers.add(player);
 
-            double defaultFlySpeed = player.get(Keys.FLYING_SPEED).get();
-            double defaultWalkSpeed = player.get(Keys.WALKING_SPEED).get();
-            GameMode gameMode = player.get(Keys.GAME_MODE).get();
+                    double defaultFlySpeed = player.get(Keys.FLYING_SPEED).get();
+                    double defaultWalkSpeed = player.get(Keys.WALKING_SPEED).get();
+                    GameMode gameMode = player.get(Keys.GAME_MODE).get();
 
-            // TODO: 2-3-16 Make respawn time configurable
-            // TODO: 2-3-16 Only do fast respawn if allowed
-            // TODO: 2-3-16 Drop all items
-            // TODO: 2-3-16 Prevent spectator player tracking
-            // TODO: 2-3-16 World border red warning
-            // TODO: 2-3-16 Death message
-            // TODO: 2-3-16 Count as a death in the death system
-            // TODO: 2-3-16 Maybe even fire the respawn event?
+                    // TODO: 2-3-16 Drop all items
+                    // TODO: 2-3-16 Prevent spectator player tracking
+                    // TODO: 2-3-16 World border red warning
+                    // TODO: 2-3-16 Death message
+                    // TODO: 2-3-16 Count as a death in the death system
+                    // TODO: 2-3-16 Maybe even fire the respawn event?
 
-            event.setCancelled(true);
-            player.offer(Keys.HEALTH, player.maxHealth().get());
-            player.offer(Keys.FOOD_LEVEL, player.foodLevel().getMaxValue());
-            player.offer(Keys.GAME_MODE, GameModes.SPECTATOR);
-            player.offer(Keys.FLYING_SPEED, 0d);
-            player.offer(Keys.WALKING_SPEED, 0d);
-
-            Title.Builder title = Title.builder().title(Text.of(TextColors.RED, "You died!")).fadeIn(0).fadeOut(0).stay(10);
-            AtomicInteger timeLeft = new AtomicInteger(25 * 10);
-            Task[] task = new Task[1];
-            Task.Builder builder = Sponge.getScheduler().createTaskBuilder().intervalTicks(2).execute(() -> {
-                int ticksLeft = timeLeft.getAndDecrement();
-                if (!player.isOnline()) {
-                    return;
-                }
-                if (ticksLeft == 0) {
-                    task[0].cancel();
+                    event.setCancelled(true);
                     player.offer(Keys.HEALTH, player.maxHealth().get());
                     player.offer(Keys.FOOD_LEVEL, player.foodLevel().getMaxValue());
-                    player.offer(Keys.GAME_MODE, gameMode);
-                    player.offer(Keys.FLYING_SPEED, defaultFlySpeed);
-                    player.offer(Keys.WALKING_SPEED, defaultWalkSpeed);
-                    PlayerLocation spawnPoint = getSpawnPoint(player);
-                    player.setLocationAndRotation(spawnPoint.toLocation(player.getWorld()), spawnPoint.getRotation());
-                    return;
+                    player.offer(Keys.GAME_MODE, GameModes.SPECTATOR);
+                    player.offer(Keys.FLYING_SPEED, 0d);
+                    player.offer(Keys.WALKING_SPEED, 0d);
+                    player.offer(Keys.FALL_DISTANCE, 0f);
+
+                    Title.Builder titleBuilder = Title.builder().title(Text.of(TextColors.RED, "You died!")).fadeIn(0).fadeOut(0).stay(10);
+                    AtomicInteger timeLeft = new AtomicInteger(team.getFastRespawnTimer() * 10);
+                    Task[] task = new Task[1];
+                    Task.Builder builder = Sponge.getScheduler().createTaskBuilder().intervalTicks(2).execute(() -> {
+                        int ticksLeft = timeLeft.getAndDecrement();
+                        if (!player.isOnline()) {
+                            return;
+                        }
+                        // TODO: 3-3-16 If the player is logged out at the point they respawn this breaks
+                        if (ticksLeft == 0) {
+                            fastRespawnPlayers.remove(player);
+                            task[0].cancel();
+                            player.offer(Keys.HEALTH, player.maxHealth().get());
+                            player.offer(Keys.FOOD_LEVEL, player.foodLevel().getMaxValue());
+                            player.offer(Keys.GAME_MODE, gameMode);
+                            player.offer(Keys.FLYING_SPEED, defaultFlySpeed);
+                            player.offer(Keys.WALKING_SPEED, defaultWalkSpeed);
+                            player.offer(Keys.FALL_DISTANCE, 0f);
+                            PlayerLocation spawnPoint = getSpawnPoint(player);
+                            player.setLocationAndRotation(spawnPoint.toLocation(player.getWorld()), spawnPoint.getRotation());
+                            return;
+                        }
+                        Title title = titleBuilder.subtitle(Text.of(TextColors.GOLD, "Respawning in " + decimal((double) ticksLeft / 10d) + " seconds")).build();
+                        player.sendTitle(title);
+                    });
+                    task[0] = builder.submit(Pumpkin.instance());
                 }
-                Title t = title.subtitle(Text.of(TextColors.GOLD, "Respawning in " + decimal((double) ticksLeft / 10d) + " seconds")).build();
-                player.sendTitle(t);
-            });
-            task[0] = builder.submit(Pumpkin.instance());
+            }
         }
     }
 
@@ -316,5 +329,72 @@ public final class MapEventListener {
             return false;
         }
         return true;
+    }
+
+    @Listener
+    public void watcherBlockBreak(ChangeBlockEvent.Break event){
+        Optional<MapWorld> mapWorld = pumpkin.getMapRegistry().getMapWorld(event.getTargetWorld());
+        if(!mapWorld.isPresent()){
+            return;
+        }
+        for(Transaction<BlockSnapshot> transaction : event.getTransactions()){
+            Vector3i position = transaction.getOriginal().getPosition();
+            BlockDestroyWatcher watcher = new BlockDestroyWatcher(mapWorld.get(), position.getX(), position.getY(), position.getZ());
+            Optional<BlockDestroyWatcher> match = watchers.stream().filter(w -> w.equals(watcher)).findAny();
+            if(match.isPresent()){
+                match.get().call();
+            }
+        }
+    }
+
+    public static void registerBlockDestroyWatcher(MapWorld world, int x, int y, int z) {
+        BlockDestroyWatcher watcher = new BlockDestroyWatcher(world, x, y, z);
+        watchers.add(watcher);
+    }
+
+    private static class BlockDestroyWatcher {
+
+        private final MapWorld world;
+        private final int x;
+        private final int y;
+        private final int z;
+        private final String name;
+
+        public BlockDestroyWatcher(MapWorld world, int x, int y, int z) {
+            this.world = world;
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.name = "block_break_" + world.getConfig().getName() + "_" + x + "," + y + "," + z;
+        }
+
+        public void call(){
+            world.getMap().getMachine().signal(this.name);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            BlockDestroyWatcher watcher = (BlockDestroyWatcher) o;
+
+            if (x != watcher.x) return false;
+            if (y != watcher.y) return false;
+            if (z != watcher.z) return false;
+            if (!world.equals(watcher.world)) return false;
+            return name.equals(watcher.name);
+
+        }
+
+        @Override
+        public int hashCode() {
+            int result = world.hashCode();
+            result = 31 * result + x;
+            result = 31 * result + y;
+            result = 31 * result + z;
+            result = 31 * result + name.hashCode();
+            return result;
+        }
     }
 }
