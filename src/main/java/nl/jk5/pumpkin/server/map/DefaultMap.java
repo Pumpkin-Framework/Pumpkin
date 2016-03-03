@@ -200,6 +200,8 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue
 
         this.game.onPlayerJoin(player);
 
+        this.pumpkin.getMapEventListener().onPlayerJoinMap(player, this);
+
         this.machine.signal("player_join", player.getName());
     }
 

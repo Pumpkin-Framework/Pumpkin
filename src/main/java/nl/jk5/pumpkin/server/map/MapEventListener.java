@@ -1,5 +1,6 @@
 package nl.jk5.pumpkin.server.map;
 
+import com.flowpowered.math.vector.Vector3d;
 import com.flowpowered.math.vector.Vector3i;
 import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
@@ -12,22 +13,28 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.data.Transaction;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.entity.Entity;
+import org.spongepowered.api.entity.EntityTypes;
+import org.spongepowered.api.entity.Item;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.gamemode.GameMode;
 import org.spongepowered.api.entity.living.player.gamemode.GameModes;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
+import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.entity.damage.DamageTypes;
 import org.spongepowered.api.event.cause.entity.damage.source.DamageSource;
 import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.entity.living.humanoid.player.RespawnPlayerEvent;
 import org.spongepowered.api.event.filter.cause.Root;
+import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.title.Title;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -37,7 +44,7 @@ public final class MapEventListener {
     private static final List<BlockDestroyWatcher> watchers = new LinkedList<>();
 
     private final Pumpkin pumpkin;
-    private final Set<Player> fastRespawnPlayers = new HashSet<>();
+    private final java.util.Map<Map, java.util.Map<Player, FastRespawnInfo>> fastRespawnPlayers = new HashMap<>();
 
     public MapEventListener(Pumpkin pumpkin) {
         this.pumpkin = pumpkin;
@@ -108,8 +115,10 @@ public final class MapEventListener {
                 if(zone.isPresent()){
                     if(zone.get().getActionBlockBreak() != null && zone.get().getActionBlockBreak().equals("deny")){
                         transaction.setValid(false);
+                        //noinspection UnnecessaryContinue
                         continue;
                     }else if(zone.get().getActionBlockBreak() != null && zone.get().getActionBlockBreak().equals("allow")){
+                        //noinspection UnnecessaryContinue
                         continue;
                     }
                 }
@@ -152,15 +161,15 @@ public final class MapEventListener {
     }
 
     @Listener
-    public void onAttack(DamageEntityEvent event){
+    public void onAttack(DamageEntityEvent event) {
         Optional<DamageSource> damageSourceOpt = event.getCause().first(DamageSource.class);
-        if(!damageSourceOpt.isPresent()){
+        if (!damageSourceOpt.isPresent()) {
             return;
         }
         DamageSource damageSource = damageSourceOpt.get();
 
         Optional<MapWorld> mapWorldOpt = this.pumpkin.getMapRegistry().getMapWorld(event.getTargetEntity().getWorld());
-        if(!mapWorldOpt.isPresent()){
+        if (!mapWorldOpt.isPresent()) {
             return;
         }
         MapWorld world = mapWorldOpt.get();
@@ -168,11 +177,11 @@ public final class MapEventListener {
         boolean ignore = false;
 
         // Handle player -> entity when player not in game
-        if(damageSource instanceof EntityDamageSource){ // If the damage is caused by an entity
+        if (damageSource instanceof EntityDamageSource) { // If the damage is caused by an entity
             EntityDamageSource entityDamageSource = (EntityDamageSource) damageSource;
-            if(entityDamageSource.getSource() instanceof Player){ // A player attacked something
+            if (entityDamageSource.getSource() instanceof Player) { // A player attacked something
                 Player sourcePlayer = (Player) entityDamageSource.getSource();
-                if(!map.isInActiveGame(sourcePlayer)){ // If the player is not in an active game, cancel the damage
+                if (!map.isInActiveGame(sourcePlayer)) { // If the player is not in an active game, cancel the damage
                     event.setCancelled(true);
                     return;
                 }
@@ -180,17 +189,20 @@ public final class MapEventListener {
         }
 
         // Handle void -> player when player not in game
-        if(!ignore && event.getTargetEntity() instanceof Player){
+        if (event.getTargetEntity() instanceof Player) {
             Player target = (Player) event.getTargetEntity();
-            if(damageSource.getType() == DamageTypes.VOID){ // Void damage
-                if(!map.isInActiveGame(target)){ // If the player is not in an active game, respawn it quickly
+            if (damageSource.getType() == DamageTypes.VOID) { // Void damage
+                if (!map.isInActiveGame(target)) { // If the player is not in an active game, respawn it quickly
                     target.setLocationAndRotation(world.getSpawnPoint(), world.getConfig().getSpawnpoint().getRotation());
                     event.setCancelled(true);
                     return;
-                }else{
-                    if(fastRespawnPlayers.contains(event.getTargetEntity())){ // If the player is fast respawning, do not apply void damage, so it doesn't die twice
-                        event.setCancelled(true);
-                        return;
+                } else {
+                    if(fastRespawnPlayers.containsKey(map) && fastRespawnPlayers.get(map).containsKey(event.getTargetEntity())){ // If the player is fast respawning, do not apply void damage, so he doesn't die twice
+                        FastRespawnInfo respawnInfo = fastRespawnPlayers.get(map).get(event.getTargetEntity());
+                        if(!respawnInfo.isRestored()){
+                            event.setCancelled(true);
+                            return;
+                        }
                     }
                     // Let the void damage happen so the player does not fall forever
                     ignore = true;
@@ -199,16 +211,16 @@ public final class MapEventListener {
         }
 
         // Handle * -> player when player not infastRespawnPlayers game
-        if(!ignore && event.getTargetEntity() instanceof Player){
+        if (!ignore && event.getTargetEntity() instanceof Player) {
             Player target = (Player) event.getTargetEntity();
-            if(!map.isInActiveGame(target)){
+            if (!map.isInActiveGame(target)) {
                 event.setCancelled(true);
                 return;
             }
         }
 
         // Handle player -> player
-        if(!ignore && event.getTargetEntity() instanceof Player && damageSource instanceof EntityDamageSource && ((EntityDamageSource) damageSource).getSource() instanceof Player){
+        if (!ignore && event.getTargetEntity() instanceof Player && damageSource instanceof EntityDamageSource && ((EntityDamageSource) damageSource).getSource() instanceof Player) {
             Player target = (Player) event.getTargetEntity();
             Player source = (Player) ((EntityDamageSource) damageSource).getSource();
 
@@ -216,14 +228,14 @@ public final class MapEventListener {
             boolean sourceActive = map.isInActiveGame(source);
 
             // Handle a spectator attacking a player
-            if(targetActive && !sourceActive){
+            if (targetActive && !sourceActive) {
                 event.setCancelled(true);
                 source.sendMessage(Text.of(TextColors.RED, "Please don't attack players that are in game"));
                 return;
             }
 
             // Handle the target being inactive
-            if(!targetActive){
+            if (!targetActive) {
                 event.setCancelled(true);
                 return;
             }
@@ -234,13 +246,13 @@ public final class MapEventListener {
             Optional<Team> targetTeam = map.getPlayerTeam(target);
 
             // When both players are in a team
-            if(sourceTeam.isPresent() && targetTeam.isPresent()){
+            if (sourceTeam.isPresent() && targetTeam.isPresent()) {
 
                 // If the players are in the same team
-                if(sourceTeam.get() == targetTeam.get()){
+                if (sourceTeam.get() == targetTeam.get()) {
 
                     // Handle friendly fire
-                    if(sourceTeam.get().isFriendlyFireEnabled()){
+                    if (sourceTeam.get().isFriendlyFireEnabled()) {
                         event.setCancelled(true);
                         //noinspection UnnecessaryReturnStatement
                         return;
@@ -249,24 +261,58 @@ public final class MapEventListener {
             }
         }
 
-        if(event.getTargetEntity() instanceof Player){
+        if (event.getTargetEntity() instanceof Player) {
             Player player = (Player) event.getTargetEntity();
-            if(event.willCauseDeath()){
+            if (event.willCauseDeath()) {
                 Optional<Team> t = map.getPlayerTeam(player);
-                if(t.isPresent() && ((MapTeam) t.get()).getFastRespawnTimer() >= 0){
+                if (t.isPresent() && ((MapTeam) t.get()).getFastRespawnTimer() >= 0) {
                     MapTeam team = ((MapTeam) t.get());
-                    fastRespawnPlayers.add(player);
+                    FastRespawnInfo respawnInfo = new FastRespawnInfo(player, map, team.getFastRespawnTimer());
 
-                    double defaultFlySpeed = player.get(Keys.FLYING_SPEED).get();
-                    double defaultWalkSpeed = player.get(Keys.WALKING_SPEED).get();
-                    GameMode gameMode = player.get(Keys.GAME_MODE).get();
+                    java.util.Map<Player, FastRespawnInfo> infoMap;
+                    if(this.fastRespawnPlayers.containsKey(map)){
+                        infoMap = this.fastRespawnPlayers.get(map);
+                    }else{
+                        infoMap = new HashMap<>();
+                        this.fastRespawnPlayers.put(map, infoMap);
+                    }
 
-                    // TODO: 2-3-16 Drop all items
+                    infoMap.put(player, respawnInfo);
+
+                    player.getInventory().slots().forEach(slot -> {
+                        Optional<ItemStack> stack = slot.peek();
+                        if (stack.isPresent()) {
+                            Vector3d position = player.getLocation().getPosition();
+                            position = position.add(0, 1.3, 0);
+                            Optional<Entity> entity = player.getWorld().createEntity(EntityTypes.ITEM, position);
+                            if (entity.isPresent()) {
+                                Item item = (Item) entity.get();
+                                item.offer(Keys.REPRESENTED_ITEM, stack.get().createSnapshot());
+
+                                double m1 = player.getRandom().nextDouble() * 0.5d;
+                                double m2 = player.getRandom().nextDouble() * Math.PI * 2d;
+                                double mX = -Math.sin(m2) * m1;
+                                double mZ = Math.cos(m2) * m1;
+                                item.setVelocity(new Vector3d(mX, 0.2, mZ));
+
+                                player.getWorld().spawnEntity(item, Cause.of(player));
+                            }
+                            slot.clear();
+                        }
+                    });
+
+                    map.send(Text.of(player.getTranslation(), " died")); // TODO: 3-3-16 Improve death message
+
                     // TODO: 2-3-16 Prevent spectator player tracking
                     // TODO: 2-3-16 World border red warning
-                    // TODO: 2-3-16 Death message
                     // TODO: 2-3-16 Count as a death in the death system
                     // TODO: 2-3-16 Maybe even fire the respawn event?
+
+                    // TODO: 3-3-16 If a player switches a map while doing fast respawn, its walk speed stays 0
+
+                    respawnInfo.setOldFlySpeed(player.get(Keys.FLYING_SPEED).get());
+                    respawnInfo.setOldWalkSpeed(player.get(Keys.WALKING_SPEED).get());
+                    respawnInfo.setOldGameMode(player.get(Keys.GAME_MODE).get());
 
                     event.setCancelled(true);
                     player.offer(Keys.HEALTH, player.maxHealth().get());
@@ -277,23 +323,23 @@ public final class MapEventListener {
                     player.offer(Keys.FALL_DISTANCE, 0f);
 
                     Title.Builder titleBuilder = Title.builder().title(Text.of(TextColors.RED, "You died!")).fadeIn(0).fadeOut(0).stay(10);
-                    AtomicInteger timeLeft = new AtomicInteger(team.getFastRespawnTimer() * 10);
                     Task[] task = new Task[1];
                     Task.Builder builder = Sponge.getScheduler().createTaskBuilder().intervalTicks(2).execute(() -> {
-                        int ticksLeft = timeLeft.getAndDecrement();
+                        int ticksLeft = respawnInfo.getAndDecrement();
+                        if(ticksLeft <= 0){
+                            task[0].cancel();
+                        }
                         if (!player.isOnline()) {
                             return;
                         }
-                        // TODO: 3-3-16 If the player is logged out at the point they respawn this breaks
-                        if (ticksLeft == 0) {
-                            fastRespawnPlayers.remove(player);
-                            task[0].cancel();
-                            player.offer(Keys.HEALTH, player.maxHealth().get());
-                            player.offer(Keys.FOOD_LEVEL, player.foodLevel().getMaxValue());
-                            player.offer(Keys.GAME_MODE, gameMode);
-                            player.offer(Keys.FLYING_SPEED, defaultFlySpeed);
-                            player.offer(Keys.WALKING_SPEED, defaultWalkSpeed);
-                            player.offer(Keys.FALL_DISTANCE, 0f);
+                        Optional<Map> currentMap = pumpkin.getMapRegistry().getMap(player);
+                        if(currentMap.isPresent() && currentMap.get() != map){
+                            // Player is in a different map. Ignore it
+                            return;
+                        }
+                        if(respawnInfo.mayRespawn()){
+                            infoMap.remove(player);
+                            respawnInfo.restore();
                             PlayerLocation spawnPoint = getSpawnPoint(player);
                             player.setLocationAndRotation(spawnPoint.toLocation(player.getWorld()), spawnPoint.getRotation());
                             return;
@@ -303,6 +349,25 @@ public final class MapEventListener {
                     });
                     task[0] = builder.submit(Pumpkin.instance());
                 }
+            }
+        }
+    }
+
+    public void onPlayerJoinMap(Player player, DefaultMap map) {
+        if(this.fastRespawnPlayers.containsKey(map) && this.fastRespawnPlayers.get(map).containsKey(player)){
+            java.util.Map<Player, FastRespawnInfo> infoMap = this.fastRespawnPlayers.get(map);
+            FastRespawnInfo respawnInfo = infoMap.get(player);
+
+            Optional<Map> currentMap = pumpkin.getMapRegistry().getMap(player);
+            if(currentMap.isPresent() && currentMap.get() != map){
+                // Player is in a different map. Ignore it
+                return;
+            }
+            if(!respawnInfo.isRestored()){
+                infoMap.remove(player);
+                respawnInfo.restore();
+                PlayerLocation spawnPoint = getSpawnPoint(player);
+                player.setLocationAndRotation(spawnPoint.toLocation(player.getWorld()), spawnPoint.getRotation());
             }
         }
     }
@@ -375,6 +440,7 @@ public final class MapEventListener {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
+            //noinspection ConstantConditions
             if (o == null || getClass() != o.getClass()) return false;
 
             BlockDestroyWatcher watcher = (BlockDestroyWatcher) o;
@@ -382,9 +448,9 @@ public final class MapEventListener {
             if (x != watcher.x) return false;
             if (y != watcher.y) return false;
             if (z != watcher.z) return false;
+            //noinspection SimplifiableIfStatement
             if (!world.equals(watcher.world)) return false;
             return name.equals(watcher.name);
-
         }
 
         @Override
@@ -395,6 +461,76 @@ public final class MapEventListener {
             result = 31 * result + z;
             result = 31 * result + name.hashCode();
             return result;
+        }
+    }
+
+    private class FastRespawnInfo {
+
+        private final Player player;
+        private final Map map;
+        private final AtomicInteger timeLeft;
+
+        private boolean restored = false;
+        private double oldFlySpeed;
+        private double oldWalkSpeed;
+        @Nullable private GameMode oldGameMode;
+        private boolean mayRespawn = false;
+
+        public FastRespawnInfo(Player player, Map map, int respawnTime) {
+            this.player = player;
+            this.map = map;
+            this.timeLeft = new AtomicInteger(respawnTime * 10);
+        }
+
+        public boolean isRestored() {
+            return restored;
+        }
+
+        public void setRestored(boolean restored) {
+            this.restored = restored;
+        }
+
+        public Player getPlayer() {
+            return player;
+        }
+
+        public void setOldFlySpeed(double oldFlySpeed) {
+            this.oldFlySpeed = oldFlySpeed;
+        }
+
+        public void setOldWalkSpeed(double oldWalkSpeed) {
+            this.oldWalkSpeed = oldWalkSpeed;
+        }
+
+        public void setOldGameMode(GameMode oldGameMode) {
+            this.oldGameMode = oldGameMode;
+        }
+
+        public int getAndDecrement(){
+            int ret = this.timeLeft.getAndDecrement();
+            if(ret <= 0){
+                this.mayRespawn = true;
+            }
+            return ret;
+        }
+
+        public Map getMap() {
+            return map;
+        }
+
+        public void restore(){
+            this.setRestored(true);
+
+            if(oldGameMode != null) player.offer(Keys.GAME_MODE, oldGameMode);
+            player.offer(Keys.FLYING_SPEED, oldFlySpeed);
+            player.offer(Keys.WALKING_SPEED, oldWalkSpeed);
+            player.offer(Keys.HEALTH, player.maxHealth().get());
+            player.offer(Keys.FOOD_LEVEL, player.foodLevel().getMaxValue());
+            player.offer(Keys.FALL_DISTANCE, 0f);
+        }
+
+        public boolean mayRespawn() {
+            return mayRespawn;
         }
     }
 }

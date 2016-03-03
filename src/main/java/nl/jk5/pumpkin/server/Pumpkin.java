@@ -76,6 +76,7 @@ public class Pumpkin {
     private PumpkinSettings settings;
 
     private PumpkinBanService banService;
+    private MapEventListener mapEventListener;
 
     public Pumpkin() {
         INSTANCE = this;
@@ -97,11 +98,12 @@ public class Pumpkin {
 
         this.mappackRegistry = new MappackRegistry(this);
         this.mapRegistry = new MapRegistry(this);
+        this.mapEventListener = new MapEventListener(this);
         this.playerRegistry = new PlayerRegistry(this);
 
         this.game.getRegistry().register(WorldGeneratorModifier.class, new VoidWorldGeneratorModifier());
         this.game.getEventManager().registerListeners(this, this.mapRegistry);
-        this.game.getEventManager().registerListeners(this, new MapEventListener(this));
+        this.game.getEventManager().registerListeners(this, this.mapEventListener);
         this.game.getEventManager().registerListeners(this, this.playerRegistry);
     }
 
@@ -328,5 +330,9 @@ public class Pumpkin {
 
     public PumpkinSettings getSettings() {
         return settings;
+    }
+
+    public MapEventListener getMapEventListener() {
+        return mapEventListener;
     }
 }
