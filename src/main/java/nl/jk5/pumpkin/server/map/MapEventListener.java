@@ -35,7 +35,10 @@ import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.title.Title;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -300,8 +303,9 @@ public final class MapEventListener {
                             slot.clear();
                         }
                     });
+                    player.getInventory().clear(); // TODO: 3-3-16 Fix armor not being dropped
 
-                    map.send(Text.of(player.getTranslation(), " died")); // TODO: 3-3-16 Improve death message
+                    map.send(Text.of(player.getName(), " died")); // TODO: 3-3-16 Improve death message
 
                     // TODO: 2-3-16 Prevent spectator player tracking
                     // TODO: 2-3-16 World border red warning

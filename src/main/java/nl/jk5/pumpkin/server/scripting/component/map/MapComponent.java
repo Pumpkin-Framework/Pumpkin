@@ -2,16 +2,10 @@ package nl.jk5.pumpkin.server.scripting.component.map;
 
 import com.google.common.collect.ImmutableMap;
 import nl.jk5.pumpkin.api.mappack.Map;
-import nl.jk5.pumpkin.api.mappack.Team;
-import nl.jk5.pumpkin.api.mappack.game.Winnable;
-import nl.jk5.pumpkin.api.mappack.game.WinnablePlayerWrapper;
-import nl.jk5.pumpkin.server.Log;
-import nl.jk5.pumpkin.server.map.game.MapGame;
 import nl.jk5.pumpkin.server.scripting.Arguments;
 import nl.jk5.pumpkin.server.scripting.Callback;
 import nl.jk5.pumpkin.server.scripting.Context;
 import nl.jk5.pumpkin.server.scripting.component.AnnotatedComponent;
-import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
@@ -104,8 +98,4 @@ public class MapComponent extends AnnotatedComponent {
         }
         return ((Text) ((SimpleValue) e).getValue());
     }
-
-
-
-
 }

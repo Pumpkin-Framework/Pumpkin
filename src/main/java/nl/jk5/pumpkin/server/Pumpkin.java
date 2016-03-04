@@ -27,7 +27,6 @@ import org.spongepowered.api.Game;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
-import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -45,7 +44,6 @@ import org.spongepowered.api.world.gen.WorldGeneratorModifier;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -64,18 +62,12 @@ public class Pumpkin {
     @DefaultConfig(sharedRoot = false)
     private ConfigurationLoader<CommentedConfigurationNode> configManager;
 
-    @Inject
-    @ConfigDir(sharedRoot = false)
-    private Path configDir;
-
     private PumpkinServiceManger serviceManager;
     private SqlTableManager tableManager;
     private MappackRegistry mappackRegistry;
     private MapRegistry mapRegistry;
-    private PlayerRegistry playerRegistry;
     private PumpkinSettings settings;
 
-    private PumpkinBanService banService;
     private MapEventListener mapEventListener;
 
     public Pumpkin() {
@@ -88,9 +80,9 @@ public class Pumpkin {
 
         this.serviceManager = new PumpkinServiceManger(game);
 
-        this.banService = new PumpkinBanService(this);
+        PumpkinBanService banService = new PumpkinBanService(this);
 
-        this.game.getServiceManager().setProvider(this, BanService.class, this.banService);
+        this.game.getServiceManager().setProvider(this, BanService.class, banService);
 
         this.tableManager = new SqlTableManager(this, this.settings.getDatabaseConnectionString());
         this.tableManager.connect();
@@ -99,12 +91,12 @@ public class Pumpkin {
         this.mappackRegistry = new MappackRegistry(this);
         this.mapRegistry = new MapRegistry(this);
         this.mapEventListener = new MapEventListener(this);
-        this.playerRegistry = new PlayerRegistry(this);
+        PlayerRegistry playerRegistry = new PlayerRegistry(this);
 
         this.game.getRegistry().register(WorldGeneratorModifier.class, new VoidWorldGeneratorModifier());
         this.game.getEventManager().registerListeners(this, this.mapRegistry);
         this.game.getEventManager().registerListeners(this, this.mapEventListener);
-        this.game.getEventManager().registerListeners(this, this.playerRegistry);
+        this.game.getEventManager().registerListeners(this, playerRegistry);
     }
 
     @Listener
@@ -270,6 +262,18 @@ public class Pumpkin {
                     return CommandResult.success();
                 }).build();
 
+        CommandSpec tpworldCommand = CommandSpec.builder()
+                .description(Text.of("Tp to a world"))
+                .executor((src, args) -> {
+                    if(!(src instanceof Player)){
+                        return CommandResult.success();
+                    }
+                    World world = game.getServer().getWorld("world").get();
+                    Player player = (Player) src;
+                    player.setLocation(new Location<>(world, 0, 64, 0));
+                    return CommandResult.success();
+                }).build();
+
         CommandSpec statEmitterCommand = CommandSpec.builder()
                 .description(Text.of("Stat emitter commands"))
                 .child(statEmitterCreateCommand, "create")
@@ -280,6 +284,7 @@ public class Pumpkin {
         game.getCommandManager().register(this, teamCommand, "team");
         game.getCommandManager().register(this, gameCommand, "game");
         game.getCommandManager().register(this, statEmitterCommand, "statemitter");
+        game.getCommandManager().register(this, tpworldCommand, "tpworld");
     }
 
     @Listener

@@ -194,12 +194,44 @@ public class MapGame implements Game {
     }
 
     public void setWinTimeout(int timeout, Team team) {
+        AtomicInteger secondsLeft = new AtomicInteger(timeout);
         this.winTimeoutTask = Sponge.getScheduler().createTaskBuilder()
                 .async()
-                .delay(timeout, TimeUnit.SECONDS)
+                .interval(1, TimeUnit.SECONDS)
                 .execute(() -> {
-                    this.setWinner(team);
+                    int left = secondsLeft.getAndDecrement();
+                    if(left == 0){
+                        this.setWinner(team);
+                        return;
+                    }
+                    if((left >= 1 && left <= 10) || (left == 10) || (left == 20) || (left == 30) || (left % 60) == 0){
+                        this.map.send(Text.of("Time left: " + secondsToTimeString(left)));
+                    }
                 })
                 .submit(Pumpkin.instance());
+    }
+
+    private static String secondsToTimeString(int seconds){
+        int hours = 0;
+        int minutes = 0;
+        int s = 0;
+
+        hours = seconds / 3600;
+        minutes = (seconds - (hours * 3600)) / 60;
+        seconds = seconds % 60;
+
+        if(hours > 1){
+            return hours + ":" + leadingZero(minutes) + ":" + leadingZero(seconds);
+        }else{
+            return minutes + ":" + leadingZero(seconds);
+        }
+    }
+
+    private static String leadingZero(int number){
+        if(number < 10){
+            return "0" + number;
+        }else{
+            return "" + number;
+        }
     }
 }
