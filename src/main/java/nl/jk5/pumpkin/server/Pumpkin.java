@@ -49,7 +49,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
-@Plugin(id = "pumpkin", name = "Pumpkin")
+@Plugin(id = "nl.jk5.pumpkin")
 public class Pumpkin {
 
     private static final UUID SERVER_ID = UUID.randomUUID();

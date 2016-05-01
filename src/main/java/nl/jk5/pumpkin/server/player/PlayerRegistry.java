@@ -4,6 +4,7 @@ import com.flowpowered.math.vector.Vector3d;
 import com.google.common.base.Charsets;
 import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
+import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
 import nl.jk5.pumpkin.server.map.DefaultMap;
 import nl.jk5.pumpkin.server.map.DefaultMapWorld;
@@ -39,7 +40,11 @@ public class PlayerRegistry {
             boolean offline = offlineId.equals(event.getProfile().getUniqueId());
             player = new DatabasePlayer();
             player.setOnlineMode(!offline);
-            player.setUsername(event.getProfile().getName());
+            if(event.getProfile().getName().isPresent()){
+                player.setUsername(event.getProfile().getName().get());
+            }else{
+                Log.error("Regression in PlayerRegistry.onLogin. Profile name is empty!");
+            }
             player.setUuid(event.getProfile().getUniqueId());
             player.setServer(Pumpkin.getServerId());
             player.setWorldId(lobbyWorld.getConfig().getId());

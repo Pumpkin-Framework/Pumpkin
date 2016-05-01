@@ -298,7 +298,7 @@ public final class MapEventListener {
                                 double mZ = Math.cos(m2) * m1;
                                 item.setVelocity(new Vector3d(mX, 0.2, mZ));
 
-                                player.getWorld().spawnEntity(item, Cause.of(player));
+                                player.getWorld().spawnEntity(item, Cause.builder().owner(player).build());
                             }
                             slot.clear();
                         }

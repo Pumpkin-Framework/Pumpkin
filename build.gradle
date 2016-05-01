@@ -23,7 +23,7 @@ configurations {
 }
 
 dependencies {
-    compile "org.spongepowered:spongeapi:3.1.0-SNAPSHOT"
+    compile "org.spongepowered:spongeapi:4.1.0-SNAPSHOT"
 
     compile 'org.postgresql:postgresql:9.4-1206-jdbc41'
     compile 'org.javassist:javassist:3.19.0-GA'
