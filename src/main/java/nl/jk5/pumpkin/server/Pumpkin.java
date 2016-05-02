@@ -1,19 +1,13 @@
 package nl.jk5.pumpkin.server;
 
-import com.flowpowered.math.vector.Vector3d;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 import nl.jk5.pumpkin.api.mappack.Map;
-import nl.jk5.pumpkin.api.mappack.MapWorld;
 import nl.jk5.pumpkin.api.mappack.Mappack;
-import nl.jk5.pumpkin.api.mappack.Team;
-import nl.jk5.pumpkin.api.mappack.game.GameStartResult;
-import nl.jk5.pumpkin.api.utils.PlayerLocation;
 import nl.jk5.pumpkin.server.authentication.PumpkinBanService;
-import nl.jk5.pumpkin.server.command.element.MappackCommandElement;
+import nl.jk5.pumpkin.server.command.Commands;
 import nl.jk5.pumpkin.server.map.MapEventListener;
 import nl.jk5.pumpkin.server.map.MapRegistry;
-import nl.jk5.pumpkin.server.map.stat.StatEmitter;
 import nl.jk5.pumpkin.server.mappack.MappackRegistry;
 import nl.jk5.pumpkin.server.player.PlayerRegistry;
 import nl.jk5.pumpkin.server.services.PumpkinServiceManger;
@@ -24,11 +18,7 @@ import nl.jk5.pumpkin.server.world.gen.empty.VoidWorldGeneratorModifier;
 import org.postgresql.Driver;
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
-import org.spongepowered.api.command.CommandResult;
-import org.spongepowered.api.command.args.GenericArguments;
-import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.config.DefaultConfig;
-import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameAboutToStartServerEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
@@ -36,10 +26,6 @@ import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartingServerEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.service.ban.BanService;
-import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.format.TextColors;
-import org.spongepowered.api.world.Location;
-import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.gen.WorldGeneratorModifier;
 
 import javax.inject.Inject;
@@ -110,6 +96,10 @@ public class Pumpkin {
 
     @Listener
     public void onServerAboutToStart(GameAboutToStartServerEvent event) throws SQLException {
+        /*
+         * Not really technically needed to have these worlds unloaded, it's just for performance improvements,
+         * as the default worlds are always loaded.
+         */
         WorldUtils.unregisterDimension(-1);
         WorldUtils.unregisterDimension(1);
         WorldUtils.releaseDimensionId(-1);
@@ -120,171 +110,7 @@ public class Pumpkin {
         //Void generator setting: 3;minecraft:air;127;decoration
         //Lava generator setting: 3;minecraft:bedrock,16*minecraft:lava;8;
 
-        CommandSpec mappackLoadCommand = CommandSpec.builder()
-                .description(Text.of("Load a mappack"))
-                .arguments(new MappackCommandElement(this, Text.of("mappack")))
-                //.arguments(GenericArguments.choices(Text.of("mappack"), this.mappackRegistry.getAllMappacks().stream().collect(Collectors.toMap(Mappack::getName, Function.identity()))))
-                .executor((src, args) -> {
-                    Optional<Mappack> mappack = args.getOne("mappack");
-                    if(mappack.isPresent()){
-                        this.mapRegistry.load(mappack.get());
-                    }
-                    return CommandResult.success();
-                })
-                .build();
-
-        CommandSpec mappackCommand = CommandSpec.builder()
-                .description(Text.of("Mappack commands"))
-                .child(mappackLoadCommand, "load")
-                .build();
-
-        CommandSpec gotoCommand = CommandSpec.builder()
-                .description(Text.of("Go to a world"))
-                .arguments(GenericArguments.string(Text.of("world name")))
-                .executor((src, args) -> {
-                    String name = args.<String>getOne("world name").get();
-                    if(!(src instanceof Player)){
-                        return CommandResult.success();
-                    }
-                    Player player = (Player) src;
-                    World world = game.getServer().getWorld(name).get();
-                    Optional<MapWorld> mapWorld = mapRegistry.getMapWorld(world);
-                    if(!mapWorld.isPresent()){
-                        src.sendMessage(Text.of(TextColors.RED, "That is not a valid world"));
-                        return CommandResult.empty();
-                    }
-                    PlayerLocation spawn = mapWorld.get().getConfig().getSpawnpoint();
-                    player.setLocationAndRotation(new Location<>(world, spawn.getX(), spawn.getY(), spawn.getZ()), new Vector3d(spawn.getPitch(), spawn.getYaw(), 0));
-                    return CommandResult.success();
-                })
-                .build();
-
-        CommandSpec teamJoinCommand = CommandSpec.builder()
-                .description(Text.of("Add a player to a team"))
-                .arguments(GenericArguments.player(Text.of("player")), GenericArguments.string(Text.of("team")))
-                .executor((src, args) -> {
-                    if(!(src instanceof Player)){
-                        return CommandResult.success();
-                    }
-                    Player player = (Player) src;
-                    Optional<MapWorld> mapWorld = mapRegistry.getMapWorld(player.getWorld());
-                    if(!mapWorld.isPresent()){
-                        src.sendMessage(Text.of(TextColors.RED, "You are not in a valid pumpkin world"));
-                        return CommandResult.empty();
-                    }
-                    Optional<Team> team = mapWorld.get().getMap().teamByName(args.<String>getOne("team").get());
-                    if(!team.isPresent()){
-                        src.sendMessage(Text.of(TextColors.RED, "That team does not exist"));
-                        return CommandResult.empty();
-                    }
-                    Player teamPlayer = args.<Player>getOne("player").get();
-                    mapWorld.get().getMap().addPlayerToTeam(teamPlayer, team.get());
-                    //src.sendMessage(Text.of(TextColors.GREEN, "Player " + teamPlayer.getName() + " added to team " + team.get().getName()));
-                    return CommandResult.success();
-                }).build();
-
-        CommandSpec teamRemoveCommand = CommandSpec.builder()
-                .description(Text.of("Remove a player from a team"))
-                .arguments(GenericArguments.player(Text.of("player")))
-                .executor((src, args) -> {
-                    if(!(src instanceof Player)){
-                        return CommandResult.success();
-                    }
-                    Player player = (Player) src;
-                    Optional<MapWorld> mapWorld = mapRegistry.getMapWorld(player.getWorld());
-                    if(!mapWorld.isPresent()){
-                        src.sendMessage(Text.of(TextColors.RED, "You are not in a valid pumpkin world"));
-                        return CommandResult.empty();
-                    }
-                    Player teamPlayer = args.<Player>getOne("player").get();
-                    Optional<Team> team = mapWorld.get().getMap().getPlayerTeam(teamPlayer);
-                    if(!team.isPresent()){
-                        src.sendMessage(Text.of(TextColors.RED, "That player is not in a team"));
-                        return CommandResult.empty();
-                    }
-                    mapWorld.get().getMap().removePlayerFromTeam(teamPlayer);
-                    //src.sendMessage(Text.of(TextColors.GREEN, "Player " + teamPlayer.getName() + " has been removed from team " + team.get().getName()));
-                    return CommandResult.success();
-                }).build();
-
-        CommandSpec teamCommand = CommandSpec.builder()
-                .description(Text.of("Team commands"))
-                .child(teamJoinCommand, "join")
-                .child(teamRemoveCommand, "remove")
-                .build();
-
-        CommandSpec gameStartCommand = CommandSpec.builder()
-                .description(Text.of("Start the game in this map"))
-                .executor((src, args) -> {
-                    if(!(src instanceof Player)){
-                        return CommandResult.success();
-                    }
-                    Player player = (Player) src;
-                    Optional<MapWorld> mapWorld = mapRegistry.getMapWorld(player.getWorld());
-                    if(!mapWorld.isPresent()){
-                        src.sendMessage(Text.of(TextColors.RED, "You are not in a valid pumpkin world"));
-                        return CommandResult.empty();
-                    }
-                    Map map = mapWorld.get().getMap();
-                    map.getGame().ifPresent(game -> {
-                        GameStartResult result = game.start();
-                        src.sendMessage(result.message());
-                    });
-                    return CommandResult.success();
-                }).build();
-
-        CommandSpec gameCommand = CommandSpec.builder()
-                .description(Text.of("Game commands"))
-                .child(gameStartCommand, "start")
-                .build();
-
-        CommandSpec statEmitterCreateCommand = CommandSpec.builder()
-                .description(Text.of("Create a stat emitter"))
-                .arguments(GenericArguments.integer(Text.of("x")), GenericArguments.integer(Text.of("y")), GenericArguments.integer(Text.of("z")))
-                .executor((src, args) -> {
-                    if(!(src instanceof Player)){
-                        return CommandResult.success();
-                    }
-                    Player player = (Player) src;
-                    Optional<MapWorld> mapWorld = mapRegistry.getMapWorld(player.getWorld());
-                    if(!mapWorld.isPresent()){
-                        src.sendMessage(Text.of(TextColors.RED, "You are not in a valid pumpkin world"));
-                        return CommandResult.empty();
-                    }
-                    Map map = mapWorld.get().getMap();
-                    int x = args.<Integer>getOne("x").get();
-                    int y = args.<Integer>getOne("y").get();
-                    int z = args.<Integer>getOne("z").get();
-                    Optional<StatEmitter> emitter = StatEmitter.create(mapWorld.get(), new Location<>(mapWorld.get().getWorld(), x, y, z));
-                    if(emitter.isPresent()){
-                        map.getStatManager().addStatEmitter(emitter.get());
-                    }
-                    return CommandResult.success();
-                }).build();
-
-        CommandSpec tpworldCommand = CommandSpec.builder()
-                .description(Text.of("Tp to a world"))
-                .executor((src, args) -> {
-                    if(!(src instanceof Player)){
-                        return CommandResult.success();
-                    }
-                    World world = game.getServer().getWorld("world").get();
-                    Player player = (Player) src;
-                    player.setLocation(new Location<>(world, 0, 64, 0));
-                    return CommandResult.success();
-                }).build();
-
-        CommandSpec statEmitterCommand = CommandSpec.builder()
-                .description(Text.of("Stat emitter commands"))
-                .child(statEmitterCreateCommand, "create")
-                .build();
-
-        game.getCommandManager().register(this, mappackCommand, "mappack");
-        game.getCommandManager().register(this, gotoCommand, "goto");
-        game.getCommandManager().register(this, teamCommand, "team");
-        game.getCommandManager().register(this, gameCommand, "game");
-        game.getCommandManager().register(this, statEmitterCommand, "statemitter");
-        game.getCommandManager().register(this, tpworldCommand, "tpworld");
+        Commands.register(this);
     }
 
     @Listener
