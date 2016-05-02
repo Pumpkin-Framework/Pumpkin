@@ -34,6 +34,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 @Plugin(id = "nl.jk5.pumpkin")
 public class Pumpkin {
@@ -122,13 +123,24 @@ public class Pumpkin {
             throw new RuntimeException("Mappack with id " + lobbyId + " not found. Could not load lobby");
         }
 
-        Optional<Map> lobbyMap = this.mapRegistry.load(lobby.get());
-        if(!lobbyMap.isPresent()){
-            Log.error("Could not load lobby map");
-            throw new RuntimeException("Could not load lobby map");
+        try {
+            Map lobbyMap = this.mapRegistry.load(lobby.get(), true).get();
+            this.mapRegistry.setLobby(lobbyMap);
+        } catch (InterruptedException ignored) {
+
+        } catch (ExecutionException e) {
+            Log.error("Error while loading lobby map", e);
+            throw new RuntimeException("Error while loading lobby map", e);
         }
 
-        this.mapRegistry.setLobby(lobbyMap.get());
+
+        /*this.mapRegistry.load(lobby.get()).whenComplete((res, e) -> {
+            if(e != null){
+                Log.error("Could not load lobby map", e);
+                throw new RuntimeException("Could not load lobby map", e);
+            }
+            this.mapRegistry.setLobby(res);
+        });*/
     }
 
     public PumpkinServiceManger getServiceManager() {

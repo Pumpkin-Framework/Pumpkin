@@ -7,6 +7,7 @@ import nl.jk5.pumpkin.api.mappack.Mappack;
 import nl.jk5.pumpkin.api.mappack.Team;
 import nl.jk5.pumpkin.api.mappack.game.GameStartResult;
 import nl.jk5.pumpkin.api.utils.PlayerLocation;
+import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
 import nl.jk5.pumpkin.server.command.element.MappackCommandElement;
 import nl.jk5.pumpkin.server.map.stat.StatEmitter;
@@ -15,6 +16,7 @@ import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.action.TextActions;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
@@ -34,7 +36,18 @@ public final class Commands {
                 .executor((src, args) -> {
                     Optional<Mappack> mappack = args.getOne("mappack");
                     if(mappack.isPresent()){
-                        pumpkin.getMapRegistry().load(mappack.get());
+                        pumpkin.getMapRegistry().load(mappack.get()).whenComplete((res, e) -> {
+                            if(e != null){
+                                Log.error("Could not load map " + mappack.get().getName() + " (" + mappack.get().getId() + ")", e);
+                                src.sendMessage(Text.of(TextColors.RED, "Failed to load map ", TextColors.GOLD, mappack.get().getName()));
+                            }else{
+                                Text.Builder builder = Text.builder();
+                                builder.append(Text.of(TextColors.GREEN, "Successfully loaded map ", TextColors.GOLD, mappack.get().getName(), TextColors.GREEN, ". Click "));
+                                builder.append(Text.of(TextColors.GOLD, TextActions.runCommand("/goto "), "here"));
+                                builder.append(Text.of(TextColors.GREEN, " to teleport to it"));
+                                src.sendMessage(builder.build());
+                            }
+                        });
                     }
                     return CommandResult.success();
                 })
