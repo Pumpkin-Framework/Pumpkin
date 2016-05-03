@@ -22,6 +22,7 @@ import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public final class Commands {
 
@@ -36,14 +37,14 @@ public final class Commands {
                 .executor((src, args) -> {
                     Optional<Mappack> mappack = args.getOne("mappack");
                     if(mappack.isPresent()){
-                        pumpkin.getMapRegistry().load(mappack.get()).whenComplete((res, e) -> {
+                        pumpkin.getMapRegistry().load(mappack.get()).whenComplete((map, e) -> {
                             if(e != null){
                                 Log.error("Could not load map " + mappack.get().getName() + " (" + mappack.get().getId() + ")", e);
                                 src.sendMessage(Text.of(TextColors.RED, "Failed to load map ", TextColors.GOLD, mappack.get().getName()));
                             }else{
                                 Text.Builder builder = Text.builder();
-                                builder.append(Text.of(TextColors.GREEN, "Successfully loaded map ", TextColors.GOLD, mappack.get().getName(), TextColors.GREEN, ". Click "));
-                                builder.append(Text.of(TextColors.GOLD, TextActions.runCommand("/goto "), "here"));
+                                builder.append(Text.of(TextColors.GREEN, "Successfully loaded mappack ", TextColors.GOLD, mappack.get().getName(), TextColors.GREEN, ". Click "));
+                                builder.append(Text.of(TextColors.GOLD, TextActions.runCommand("/goto " + map.getDefaultWorld().getWorld().getUniqueId().toString()), TextActions.showText(Text.of("/goto " + map.getDefaultWorld().getWorld().getUniqueId().toString())), "here"));
                                 builder.append(Text.of(TextColors.GREEN, " to teleport to it"));
                                 src.sendMessage(builder.build());
                             }
@@ -67,7 +68,18 @@ public final class Commands {
                         return CommandResult.success();
                     }
                     Player player = (Player) src;
-                    Optional<World> world = pumpkin.game.getServer().getWorld(name);
+                    Optional<World> world;
+                    try{
+                        UUID uuid = UUID.fromString(name);
+                        world = pumpkin.game.getServer().getWorld(uuid);
+                        if(world.isPresent() && pumpkin.getMapRegistry().getMapWorld(world.get()).isPresent()){
+                            Optional<MapWorld> mapWorld = pumpkin.getMapRegistry().getMapWorld(world.get());
+                            PlayerLocation spawn = mapWorld.get().getConfig().getSpawnpoint();
+                            player.setLocationAndRotation(new Location<>(world.get(), spawn.getX(), spawn.getY(), spawn.getZ()), new Vector3d(spawn.getPitch(), spawn.getYaw(), 0));
+                            return CommandResult.success();
+                        }
+                    }catch(IllegalArgumentException ignored){}
+                    world = pumpkin.game.getServer().getWorld(name);
                     if(!world.isPresent() || !pumpkin.getMapRegistry().getMapWorld(world.get()).isPresent()){
                         src.sendMessage(Text.of(TextColors.RED, "No world found with name ", TextColors.GOLD, name));
                         return CommandResult.empty();

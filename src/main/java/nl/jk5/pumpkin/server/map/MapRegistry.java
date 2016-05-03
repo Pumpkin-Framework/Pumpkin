@@ -143,7 +143,6 @@ public class MapRegistry {
             }, asyncExecutor);
 
             loadFutures.add(prepareFuture.thenApplyAsync((properties) -> {
-                // TODO: 2-5-16 Load the world on the game thread
                 Optional<World> generatedWorld = this.pumpkin.getGame().getServer().loadWorld(properties);
                 if(!generatedWorld.isPresent()){
                     Log.warn("World could not be generated. Map loading canceled (mappack id: " + mappack.getId() + ")(map id: " + id + ")(world id: " + world.getId() + ")");
@@ -161,7 +160,7 @@ public class MapRegistry {
         return doneFuture.thenApplyAsync((worlds) -> {
             this.maps.add(map);
             return map;
-        });
+        }, asyncExecutor);
     }
 
     private void tick(){
