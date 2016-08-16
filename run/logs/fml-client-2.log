@@ -1,0 +1,1398 @@
+[10:23:06] [main/DEBUG] [FML/]: Injecting tracing printstreams for STDOUT/STDERR.
+[10:23:06] [main/INFO] [FML/]: Forge Mod Loader version 11.15.1.1722 for Minecraft 1.8.9 loading
+[10:23:06] [main/INFO] [FML/]: Java is Java HotSpot(TM) 64-Bit Server VM, version 1.8.0_72, running on Linux:amd64:4.2.0-30-generic, installed at /usr/lib/jvm/java-8-oracle/jre
+[10:23:06] [main/DEBUG] [FML/]: Java classpath at launch is /usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar:/usr/lib/jvm/java-8-oracle/jre/lib/deploy.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/cldrdata.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/dnsns.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jaccess.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jfxrt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/localedata.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/nashorn.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunec.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunjce_provider.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunpkcs11.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/zipfs.jar:/usr/lib/jvm/java-8-oracle/jre/lib/javaws.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfxswt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar:/usr/lib/jvm/java-8-oracle/jre/lib/management-agent.jar:/usr/lib/jvm/java-8-oracle/jre/lib/plugin.jar:/usr/lib/jvm/java-8-oracle/jre/lib/resources.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/home/jk-5/development/spongedev/SpongeForge/out/production/SpongeForge:/home/jk-5/development/spongedev/SpongeForge/out/production/SpongeCommon:/home/jk-5/development/spongedev/SpongeForge/SpongeCommon/SpongeAPI/build/classes/main:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.14/862a5bc736005d68727d1387844d09d62efdb6cb/slf4j-api-1.7.14.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/17.0/9c6ef172e8de35fd8d4d8783e4821e57cdef7445/guava-17.0.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.3.2/90a3822c38ec8c996e84c16a3477ef632cbc87a3/commons-lang3-3.3.2.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.google.inject/guice/4.0/f990a43d3725781b6db7cd0acf0a8b62dfd1649/guice-4.0.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/ninja.leaping.configurate/configurate-hocon/3.1.1/ff1de2625a3053cd9766b8cabf78b0f8c10eea00/configurate-hocon-3.1.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/ninja.leaping.configurate/configurate-gson/3.1.1/565c157f78461307f857a94832ccf91d97cea817/configurate-gson-3.1.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/ninja.leaping.configurate/configurate-yaml/3.1.1/2e9760338a1011198d5cb89294b83e86c9418510/configurate-yaml-3.1.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.flowpowered/flow-math/1.0.1/4f4c8b81032466f01d85925364dd633475a6e1ea/flow-math-1.0.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.flowpowered/flow-noise/1.0.1-SNAPSHOT/bfddff85287441521fb66ec22b59a463190966e1/flow-noise-1.0.1-SNAPSHOT.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.0.3/dcc2193db20e19e1feca8b1240dbbc4e190824fa/asm-5.0.3.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.spongepowered/event-gen-core/1.0.0/fe4b590ca97b0b24e7fe70887c93d778fb661128/event-gen-core-1.0.0.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/aopalliance/aopalliance/1.0/235ba8b489512805ac13a8f9ea77a1ca5ebe3e8/aopalliance-1.0.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.typesafe/config/1.3.0/f533aa6ea13e443b50e639d070986c42d03efc35/config-1.3.0.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/ninja.leaping.configurate/configurate-core/3.1.1/4a40e177579139a138b439f2e34e8009966cf103/configurate-core-3.1.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/1.16/d64fb662c9e42789149f5078a62a22edda786c6a/snakeyaml-1.16.jar:/home/jk-5/.gradle/caches/minecraft/deobfedDeps/compileDummy.jar:/home/jk-5/.gradle/caches/minecraft/deobfedDeps/providedDummy.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.4.17-SNAPSHOT/5f9918cb52164c07c0af9fcbda54c5e0d6204665/mixin-0.4.17-SNAPSHOT.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/net.sf.trove4j/trove4j/3.0.3/42ccaf4761f0dfdfa805c9e340d99a755907e2dd/trove4j-3.0.3.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.zaxxer/HikariCP/2.4.3/9f92ff5b04c7fcfb1c2fbcf551406d0a79cd3619/HikariCP-2.4.3.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/5.0.3/a7111830132c7f87d08fe48cb0ca07630f8cb91c/asm-commons-5.0.3.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.googlecode.jarjar/jarjar/1.1/88085e95e0c9cf49e29116bd467a5dccd07d40a0/jarjar-1.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/5.0.3/287749b48ba7162fb67c93a026d690b29f410bed/asm-tree-5.0.3.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-slf4j-impl/2.0-beta9/e970fc3c10144a521d691db4ac38027cc1935b74/log4j-slf4j-impl-2.0-beta9.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.mariadb.jdbc/mariadb-java-client/1.3.4/7a491a4fcd6416ca29dd4f35d3625c4205f6ecbd/mariadb-java-client-1.3.4.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.h2database/h2/1.4.191/dec3540178ea889b2871b0ed56db14bbec9cfdfc/h2-1.4.191.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.xerial/sqlite-jdbc/3.8.11.2/dec208cba8debb0a8b9204b08d8d887d63041f0f/sqlite-jdbc-3.8.11.2.jar:/home/jk-5/.gradle/caches/minecraft/net/minecraftforge/forge/1.8.9-11.15.1.1722/start:/home/jk-5/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.9/9ce04e34240f674bc72680f8b843b1457383161a/commons-codec-1.9.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.0-beta9/1dd66e68cccd907880229f9e2de1314bd13ff785/log4j-api-2.0-beta9.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/oshi-project/oshi-core/1.1/9ddf7b048a8d701be231c0f4f95fd986198fd2d8/oshi-core-1.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/3.4.0/803ff252fedbd395baffd43b37341dc4a150a554/jna-3.4.0.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/platform/3.4.0/e3f70017be8100d3d6923f50b3d2ee17714e9c13/platform-3.4.0.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.ibm.icu/icu4j-core-mojang/51.2/63d216a9311cca6be337c1e458e587f99d382b84/icu4j-core-mojang-51.2.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/net.sf.jopt-simple/jopt-simple/4.6/306816fb57cf94f108a43c95731b08934dcae15c/jopt-simple-4.6.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.paulscode/codecjorbis/20101023/c73b5636faf089d9f00e8732a829577de25237ee/codecjorbis-20101023.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.paulscode/codecwav/20101023/12f031cfe88fef5c1dd36c563c0a3a69bd7261da/codecwav-20101023.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.paulscode/libraryjavasound/20101123/5c5e304366f75f9eaa2e8cca546a1fb6109348b3/libraryjavasound-20101123.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.paulscode/librarylwjglopenal/20100824/73e80d0794c39665aec3f62eee88ca91676674ef/librarylwjglopenal-20100824.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.paulscode/soundsystem/20120107/419c05fe9be71f792b2d76cfc9b67f1ed0fec7f6/soundsystem-20120107.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/io.netty/netty-all/4.0.23.Final/294104aaf1781d6a56a07d561e792c5d0c95f45/netty-all-4.0.23.Final.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.jinput/jinput/2.0.5/39c7796b469a600f72380316f6b1f11db6c2c7c4/jinput-2.0.5.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.jutils/jutils/1.0.0/e12fe1fda814bd348c1579329c86943d2cd3c6a6/jutils-1.0.0.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.mojang/authlib/1.5.21/aefba0d5b53fbcb70860bc8046ab95d5854c07a5/authlib-1.5.21.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.mojang/realms/1.7.57/2612d98b2daf072c30fed22bee2c2680ede5104e/realms-1.7.57.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-compress/1.8.1/a698750c16740fd5b3871425f4cb3bbaa87f529d/commons-compress-1.8.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.3.3/18f4247ff4572a074444572cee34647c43e7c9c7/httpclient-4.3.3.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.3/f6f66e966c70a83ffbdb6f17a0919eaf7c8aca7f/commons-logging-1.1.3.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.3.2/31fbbff1ddbf98f3aa7377c94d33b0447c646b6e/httpcore-4.3.2.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-core/2.0-beta9/678861ba1b2e1fccb594bb0ca03114bb05da9695/log4j-core-2.0-beta9.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl/2.9.4-nightly-20150209/697517568c68e78ae0b4544145af031c81082dfe/lwjgl-2.9.4-nightly-20150209.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl_util/2.9.4-nightly-20150209/d51a7c040a721d13efdfbd34f8b257b2df882ad0/lwjgl_util-2.9.4-nightly-20150209.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch/6.5/320a2dfd18513a5f41b4e75729df684488cbd925/twitch-6.5.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/net.minecraft/launchwrapper/1.12/111e7bea9c968cdb3d06ef4632bf7ff0824d0f36/launchwrapper-1.12.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/jline/jline/2.13/2d9530d0a25daffaffda7c35037b046b627bb171/jline-2.13.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-debug-all/5.0.3/f9e364ae2a66ce2a543012a4668856e84e5dab74/asm-debug-all-5.0.3.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.typesafe.akka/akka-actor_2.11/2.3.3/ed62e9fc709ca0f2ff1a3220daa8b70a2870078e/akka-actor_2.11-2.3.3.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.typesafe/config/1.2.1/f771f71fdae3df231bcd54d5ca2d57f0bf93f467/config-1.2.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-actors-migration_2.11/1.1.0/dfa8bc42b181d5b9f1a5dd147f8ae308b893eb6f/scala-actors-migration_2.11-1.1.0.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-compiler/2.11.1/56ea2e6c025e0821f28d73ca271218b8dd04926a/scala-compiler-2.11.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang.plugins/scala-continuations-library_2.11/1.0.2/e517c53a7e9acd6b1668c5a35eccbaa3bab9aac/scala-continuations-library_2.11-1.0.2.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang.plugins/scala-continuations-plugin_2.11.1/1.0.2/f361a3283452c57fa30c1ee69448995de23c60f7/scala-continuations-plugin_2.11.1-1.0.2.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-library/2.11.1/e11da23da3eabab9f4777b9220e60d44c1aab6a/scala-library-2.11.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang.modules/scala-parser-combinators_2.11/1.0.1/f05d7345bf5a58924f2837c6c1f4d73a938e1ff0/scala-parser-combinators_2.11-1.0.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-reflect/2.11.1/6580347e61cc7f8e802941e7fde40fa83b8badeb/scala-reflect-2.11.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang.modules/scala-swing_2.11/1.0.1/b1cdd92bd47b1e1837139c1c53020e86bb9112ae/scala-swing_2.11-1.0.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang.modules/scala-xml_2.11/1.0.2/820fbca7e524b530fdadc594c39d49a21ea0337e/scala-xml_2.11-1.0.2.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/lzma/lzma/0.0.1/521616dc7487b42bef0e803bd2fa3faf668101d7/lzma-0.0.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/java3d/vecmath/1.5.2/79846ba34cbd89e2422d74d53752f993dcc2ccaf/vecmath-1.5.2.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.jinput/jinput-platform/2.0.5/7ff832a6eb9ab6a767f1ade2b548092d0fa64795/jinput-platform-2.0.5-natives-linux.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.jinput/jinput-platform/2.0.5/385ee093e01f587f30ee1c8a2ee7d408fd732e16/jinput-platform-2.0.5-natives-windows.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.jinput/jinput-platform/2.0.5/53f9c919f34d2ca9de8c51fc4e1e8282029a9232/jinput-platform-2.0.5-natives-osx.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-platform/6.5/206c4ccaecdbcfd2a1631150c69a97bbc9c20c11/twitch-platform-6.5-natives-windows-32.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-platform/6.5/9fdd0fd5aed0817063dcf95b69349a171f447ebd/twitch-platform-6.5-natives-windows-64.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-platform/6.5/5f9d1ee26257b3a33f0ca06fed335ef462af659f/twitch-platform-6.5-natives-osx.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-external-platform/4.5/18215140f010c05b9f86ef6f0f8871954d2ccebf/twitch-external-platform-4.5-natives-windows-32.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-external-platform/4.5/c3cde57891b935d41b6680a9c5e1502eeab76d86/twitch-external-platform-4.5-natives-windows-64.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.fusesource.jansi/jansi/1.11/655c643309c2f45a56a747fda70e3fadf57e9f11/jansi-1.11.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-actors/2.11.0/8ccfb6541de179bb1c4d45cf414acee069b7f78b/scala-actors-2.11.0.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl-platform/2.9.4-nightly-20150209/b84d5102b9dbfabfeb5e43c7e2828d98a7fc80e0/lwjgl-platform-2.9.4-nightly-20150209-natives-windows.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl-platform/2.9.4-nightly-20150209/931074f46c795d2f7b30ed6395df5715cfd7675b/lwjgl-platform-2.9.4-nightly-20150209-natives-linux.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl-platform/2.9.4-nightly-20150209/bcab850f8f487c3f4c4dbabde778bb82bd1a40ed/lwjgl-platform-2.9.4-nightly-20150209-natives-osx.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/2.0.1/516c03b21d50a644d538de0f0369c620989cd8f0/jsr305-2.0.1.jar:/home/jk-5/development/spongedev/SpongeForge/.gradle/minecraft/forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar:/home/jk-5/development/pumpkin/pumpkin/build/classes/main:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.spongepowered/spongeapi/3.1.0-SNAPSHOT/115e581eb46a12a80a71f07cb3f41af9648b56ef/spongeapi-3.1.0-SNAPSHOT.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.postgresql/postgresql/9.4-1206-jdbc41/4ef3d9bcf654c24783aa50cda10d29e1a9d40711/postgresql-9.4-1206-jdbc41.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.javassist/javassist/3.19.0-GA/50120f69224dd8684b445a6f3a5b08fe9b5c60f6/javassist-3.19.0-GA.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.j256.ormlite/ormlite-jdbc/4.48/b915ebd2c4b901eec32e4df44e5503752e92ce38/ormlite-jdbc-4.48.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/com.j256.ormlite/ormlite-core/4.48/e579bd2905d0399af5029aaaf9817d5fa0ca88a5/ormlite-core-4.48.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.1/7e3cecc566df91338c6c67883b89ddd05a17db43/httpclient-4.5.1.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.3/e876a79d561e5c6207b78d347e198c8c4531a5e5/httpcore-4.4.3.jar:/home/jk-5/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.2/4bfc12adfe4842bf07b657f0369c4cb522955686/commons-logging-1.2.jar:/opt/jetbrains/intellij/lib/idea_rt.jar
+[10:23:06] [main/DEBUG] [FML/]: Java library path at launch is /opt/jetbrains/intellij/bin::/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib:/home/jk-5/.gradle/caches/minecraft/net/minecraft/natives/1.8.9
+[10:23:06] [main/INFO] [FML/]: Managed to load a deobfuscated Minecraft name- we are in a deobfuscated environment. Skipping runtime deobfuscation
+[10:23:06] [main/DEBUG] [FML/]: Instantiating coremod class FMLCorePlugin
+[10:23:06] [main/DEBUG] [FML/]: Added access transformer class net.minecraftforge.fml.common.asm.transformers.AccessTransformer to enqueued access transformers
+[10:23:06] [main/DEBUG] [FML/]: Enqueued coremod FMLCorePlugin
+[10:23:06] [main/DEBUG] [FML/]: Instantiating coremod class FMLForgePlugin
+[10:23:06] [main/DEBUG] [FML/]: Enqueued coremod FMLForgePlugin
+[10:23:06] [main/DEBUG] [FML/]: All fundamental core mods are successfully located
+[10:23:06] [main/DEBUG] [FML/]: Attempting to load commandline specified mods, relative to /home/jk-5/development/spongedev/SpongeForge/run/.
+[10:23:06] [main/DEBUG] [FML/]: Discovering coremods
+[10:23:06] [main/DEBUG] [FML/]: Examining for coremod candidacy Waila-1.6.0-B3_1.8.8.jar
+[10:23:06] [main/DEBUG] [FML/]: Not found coremod data in Waila-1.6.0-B3_1.8.8.jar
+[10:23:06] [main/DEBUG] [FML/]: Examining for coremod candidacy worldedit-forge-mc1.8.9-6.1.1-dist.jar
+[10:23:06] [main/DEBUG] [FML/]: Not found coremod data in worldedit-forge-mc1.8.9-6.1.1-dist.jar
+[10:23:06] [main/INFO] [LaunchWrapper/]: Calling tweak class net.minecraftforge.gradle.tweakers.CoremodTweaker
+[10:23:06] [main/INFO] [GradleStart/]: Injecting location in coremod net.minecraftforge.fml.relauncher.FMLCorePlugin
+[10:23:06] [main/INFO] [GradleStart/]: Injecting location in coremod net.minecraftforge.classloading.FMLForgePlugin
+[10:23:06] [main/INFO] [LaunchWrapper/]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[10:23:06] [main/INFO] [LaunchWrapper/]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
+[10:23:06] [main/INFO] [LaunchWrapper/]: Loading tweak class name net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
+[10:23:06] [main/INFO] [LaunchWrapper/]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[10:23:06] [main/INFO] [LaunchWrapper/]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[10:23:06] [main/INFO] [LaunchWrapper/]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[10:23:06] [main/DEBUG] [FML/]: Injecting coremod FMLCorePlugin {net.minecraftforge.fml.relauncher.FMLCorePlugin} class transformers
+[10:23:06] [main/TRACE] [FML/]: Registering transformer net.minecraftforge.fml.common.asm.transformers.BlamingTransformer
+[10:23:06] [main/TRACE] [FML/]: Registering transformer net.minecraftforge.fml.common.asm.transformers.SideTransformer
+[10:23:06] [main/TRACE] [FML/]: Registering transformer net.minecraftforge.fml.common.asm.transformers.EventSubscriptionTransformer
+[10:23:06] [main/TRACE] [FML/]: Registering transformer net.minecraftforge.fml.common.asm.transformers.EventSubscriberTransformer
+[10:23:06] [main/DEBUG] [FML/]: Injection complete
+[10:23:06] [main/DEBUG] [FML/]: Running coremod plugin for FMLCorePlugin {net.minecraftforge.fml.relauncher.FMLCorePlugin}
+[10:23:06] [main/DEBUG] [FML/]: Running coremod plugin FMLCorePlugin
+[10:23:06] [main/ERROR] [FML/]: The binary patch set is missing. Either you are in a development environment, or things are not going to work!
+[10:23:06] [main/DEBUG] [FML/]: Loading deobfuscation resource /home/jk-5/.gradle/caches/minecraft/de/oceanlabs/mcp/mcp_snapshot/20160109/srgs/srg-mcp.srg with 27884 records
+[10:23:08] [main/ERROR] [FML/]: FML appears to be missing any signature data. This is not a good thing
+[10:23:08] [main/DEBUG] [FML/]: Coremod plugin class FMLCorePlugin run successfully
+[10:23:08] [main/INFO] [LaunchWrapper/]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[10:23:08] [main/DEBUG] [FML/]: Injecting coremod FMLForgePlugin {net.minecraftforge.classloading.FMLForgePlugin} class transformers
+[10:23:08] [main/DEBUG] [FML/]: Injection complete
+[10:23:08] [main/DEBUG] [FML/]: Running coremod plugin for FMLForgePlugin {net.minecraftforge.classloading.FMLForgePlugin}
+[10:23:08] [main/DEBUG] [FML/]: Running coremod plugin FMLForgePlugin
+[10:23:08] [main/DEBUG] [FML/]: Coremod plugin class FMLForgePlugin run successfully
+[10:23:08] [main/INFO] [LaunchWrapper/]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
+[10:23:08] [main/DEBUG] [FML/]: Loaded 163 rules from AccessTransformer config file forge_at.cfg
+[10:23:08] [main/DEBUG] [FML/]: Loaded 4 rules from AccessTransformer mod jar file /home/jk-5/development/spongedev/SpongeForge/run/mods/worldedit-forge-mc1.8.9-6.1.1-dist.jar!META-INF/worldedit_at.cfg
+
+[10:23:08] [main/DEBUG] [FML/]: Validating minecraft
+[10:23:08] [main/DEBUG] [FML/]: Minecraft validated, launching...
+[10:23:08] [main/INFO] [LaunchWrapper/]: Calling tweak class net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
+[10:23:08] [main/DEBUG] [GradleStart/]: Reading CSV file: /home/jk-5/.gradle/caches/minecraft/de/oceanlabs/mcp/mcp_snapshot/20160109/fields.csv
+[10:23:08] [main/DEBUG] [GradleStart/]: Reading CSV file: /home/jk-5/.gradle/caches/minecraft/de/oceanlabs/mcp/mcp_snapshot/20160109/methods.csv
+[10:23:08] [main/INFO] [GradleStart/]: Remapping AccessTransformer rules...
+[10:23:08] [main/INFO] [LaunchWrapper/]: Loading tweak class name net.minecraftforge.fml.common.launcher.TerminalTweaker
+[10:23:08] [main/INFO] [LaunchWrapper/]: Calling tweak class net.minecraftforge.fml.common.launcher.TerminalTweaker
+[10:23:08] [main/INFO] [LaunchWrapper/]: Launching wrapped minecraft {net.minecraft.client.main.Main}
+[10:23:16] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - LanguageManager took 0.005s
+[10:23:16] [Client thread/INFO] [STDOUT/]: [net.minecraftforge.fml.client.SplashProgress:start:246]: ---- Minecraft Crash Report ----
+// Don't be sad, have a hug! <3
+
+Time: 2/28/16 10:23 AM
+Description: Loading screen debug info
+
+This is just a prompt for computer specs to be printed. THIS IS NOT A ERROR
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Linux (amd64) version 4.2.0-30-generic
+	Java Version: 1.8.0_72, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 315412880 bytes (300 MB) / 705691648 bytes (673 MB) up to 3707764736 bytes (3536 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: 
+	Loaded coremods (and transformers): 
+	GL info: ' Vendor: 'NVIDIA Corporation' Version: '4.5.0 NVIDIA 352.63' Renderer: 'GeForce GTX 970/PCIe/SSE2'
+[10:23:16] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - Animation took 0.000s
+[10:23:16] [Client thread/INFO] [FML/]: MinecraftForge v11.15.1.1722 Initialized
+[10:23:16] [Client thread/INFO] [FML/]: Replaced 204 ore recipies
+[10:23:17] [Client thread/DEBUG] [FML/]: File /home/jk-5/development/spongedev/SpongeForge/run/config/injectedDependencies.json not found. No dependencies injected
+[10:23:17] [Client thread/DEBUG] [FML/]: Building injected Mod Containers [net.minecraftforge.fml.common.FMLContainer, net.minecraftforge.common.ForgeModContainer]
+[10:23:17] [Client thread/DEBUG] [FML/]: Attempting to load mods contained in the minecraft jar file and associated classes
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/deploy.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/ext/cldrdata.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/ext/dnsns.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/ext/jaccess.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/ext/jfxrt.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/ext/localedata.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/ext/nashorn.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/ext/sunec.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/ext/sunjce_provider.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/ext/sunpkcs11.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/ext/zipfs.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/javaws.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/jce.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/jfxswt.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/management-agent.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/plugin.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /usr/lib/jvm/java-8-oracle/jre/lib/resources.jar, examining for mod candidates
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /usr/lib/jvm/java-8-oracle/jre/lib/rt.jar
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related directory at /home/jk-5/development/spongedev/SpongeForge/out/production/SpongeForge, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related directory at /home/jk-5/development/spongedev/SpongeForge/out/production/SpongeCommon, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related directory at /home/jk-5/development/spongedev/SpongeForge/SpongeCommon/SpongeAPI/build/classes/main, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.14/862a5bc736005d68727d1387844d09d62efdb6cb/slf4j-api-1.7.14.jar, examining for mod candidates
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/17.0/9c6ef172e8de35fd8d4d8783e4821e57cdef7445/guava-17.0.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.3.2/90a3822c38ec8c996e84c16a3477ef632cbc87a3/commons-lang3-3.3.2.jar
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/com.google.inject/guice/4.0/f990a43d3725781b6db7cd0acf0a8b62dfd1649/guice-4.0.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/ninja.leaping.configurate/configurate-hocon/3.1.1/ff1de2625a3053cd9766b8cabf78b0f8c10eea00/configurate-hocon-3.1.1.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/ninja.leaping.configurate/configurate-gson/3.1.1/565c157f78461307f857a94832ccf91d97cea817/configurate-gson-3.1.1.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/ninja.leaping.configurate/configurate-yaml/3.1.1/2e9760338a1011198d5cb89294b83e86c9418510/configurate-yaml-3.1.1.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/com.flowpowered/flow-math/1.0.1/4f4c8b81032466f01d85925364dd633475a6e1ea/flow-math-1.0.1.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/com.flowpowered/flow-noise/1.0.1-SNAPSHOT/bfddff85287441521fb66ec22b59a463190966e1/flow-noise-1.0.1-SNAPSHOT.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.0.3/dcc2193db20e19e1feca8b1240dbbc4e190824fa/asm-5.0.3.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.spongepowered/event-gen-core/1.0.0/fe4b590ca97b0b24e7fe70887c93d778fb661128/event-gen-core-1.0.0.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/aopalliance/aopalliance/1.0/235ba8b489512805ac13a8f9ea77a1ca5ebe3e8/aopalliance-1.0.jar, examining for mod candidates
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/com.typesafe/config/1.3.0/f533aa6ea13e443b50e639d070986c42d03efc35/config-1.3.0.jar
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/ninja.leaping.configurate/configurate-core/3.1.1/4a40e177579139a138b439f2e34e8009966cf103/configurate-core-3.1.1.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/1.16/d64fb662c9e42789149f5078a62a22edda786c6a/snakeyaml-1.16.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/minecraft/deobfedDeps/compileDummy.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/minecraft/deobfedDeps/providedDummy.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.4.17-SNAPSHOT/5f9918cb52164c07c0af9fcbda54c5e0d6204665/mixin-0.4.17-SNAPSHOT.jar, examining for mod candidates
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/net.sf.trove4j/trove4j/3.0.3/42ccaf4761f0dfdfa805c9e340d99a755907e2dd/trove4j-3.0.3.jar
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/com.zaxxer/HikariCP/2.4.3/9f92ff5b04c7fcfb1c2fbcf551406d0a79cd3619/HikariCP-2.4.3.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/5.0.3/a7111830132c7f87d08fe48cb0ca07630f8cb91c/asm-commons-5.0.3.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/com.googlecode.jarjar/jarjar/1.1/88085e95e0c9cf49e29116bd467a5dccd07d40a0/jarjar-1.1.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/5.0.3/287749b48ba7162fb67c93a026d690b29f410bed/asm-tree-5.0.3.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-slf4j-impl/2.0-beta9/e970fc3c10144a521d691db4ac38027cc1935b74/log4j-slf4j-impl-2.0-beta9.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.mariadb.jdbc/mariadb-java-client/1.3.4/7a491a4fcd6416ca29dd4f35d3625c4205f6ecbd/mariadb-java-client-1.3.4.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/com.h2database/h2/1.4.191/dec3540178ea889b2871b0ed56db14bbec9cfdfc/h2-1.4.191.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.xerial/sqlite-jdbc/3.8.11.2/dec208cba8debb0a8b9204b08d8d887d63041f0f/sqlite-jdbc-3.8.11.2.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related directory at /home/jk-5/.gradle/caches/minecraft/net/minecraftforge/forge/1.8.9-11.15.1.1722/start, examining for mod candidates
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.9/9ce04e34240f674bc72680f8b843b1457383161a/commons-codec-1.9.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.0-beta9/1dd66e68cccd907880229f9e2de1314bd13ff785/log4j-api-2.0-beta9.jar
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/oshi-project/oshi-core/1.1/9ddf7b048a8d701be231c0f4f95fd986198fd2d8/oshi-core-1.1.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/3.4.0/803ff252fedbd395baffd43b37341dc4a150a554/jna-3.4.0.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/platform/3.4.0/e3f70017be8100d3d6923f50b3d2ee17714e9c13/platform-3.4.0.jar, examining for mod candidates
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/com.ibm.icu/icu4j-core-mojang/51.2/63d216a9311cca6be337c1e458e587f99d382b84/icu4j-core-mojang-51.2.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/net.sf.jopt-simple/jopt-simple/4.6/306816fb57cf94f108a43c95731b08934dcae15c/jopt-simple-4.6.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/com.paulscode/codecjorbis/20101023/c73b5636faf089d9f00e8732a829577de25237ee/codecjorbis-20101023.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/com.paulscode/codecwav/20101023/12f031cfe88fef5c1dd36c563c0a3a69bd7261da/codecwav-20101023.jar
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/com.paulscode/libraryjavasound/20101123/5c5e304366f75f9eaa2e8cca546a1fb6109348b3/libraryjavasound-20101123.jar, examining for mod candidates
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/com.paulscode/librarylwjglopenal/20100824/73e80d0794c39665aec3f62eee88ca91676674ef/librarylwjglopenal-20100824.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/com.paulscode/soundsystem/20120107/419c05fe9be71f792b2d76cfc9b67f1ed0fec7f6/soundsystem-20120107.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/io.netty/netty-all/4.0.23.Final/294104aaf1781d6a56a07d561e792c5d0c95f45/netty-all-4.0.23.Final.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.jinput/jinput/2.0.5/39c7796b469a600f72380316f6b1f11db6c2c7c4/jinput-2.0.5.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.jutils/jutils/1.0.0/e12fe1fda814bd348c1579329c86943d2cd3c6a6/jutils-1.0.0.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/com.mojang/authlib/1.5.21/aefba0d5b53fbcb70860bc8046ab95d5854c07a5/authlib-1.5.21.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/com.mojang/realms/1.7.57/2612d98b2daf072c30fed22bee2c2680ede5104e/realms-1.7.57.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-compress/1.8.1/a698750c16740fd5b3871425f4cb3bbaa87f529d/commons-compress-1.8.1.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.3.3/18f4247ff4572a074444572cee34647c43e7c9c7/httpclient-4.3.3.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.3/f6f66e966c70a83ffbdb6f17a0919eaf7c8aca7f/commons-logging-1.1.3.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.3.2/31fbbff1ddbf98f3aa7377c94d33b0447c646b6e/httpcore-4.3.2.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-core/2.0-beta9/678861ba1b2e1fccb594bb0ca03114bb05da9695/log4j-core-2.0-beta9.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl/2.9.4-nightly-20150209/697517568c68e78ae0b4544145af031c81082dfe/lwjgl-2.9.4-nightly-20150209.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl_util/2.9.4-nightly-20150209/d51a7c040a721d13efdfbd34f8b257b2df882ad0/lwjgl_util-2.9.4-nightly-20150209.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch/6.5/320a2dfd18513a5f41b4e75729df684488cbd925/twitch-6.5.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/net.minecraft/launchwrapper/1.12/111e7bea9c968cdb3d06ef4632bf7ff0824d0f36/launchwrapper-1.12.jar
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/jline/jline/2.13/2d9530d0a25daffaffda7c35037b046b627bb171/jline-2.13.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-debug-all/5.0.3/f9e364ae2a66ce2a543012a4668856e84e5dab74/asm-debug-all-5.0.3.jar, examining for mod candidates
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/com.typesafe.akka/akka-actor_2.11/2.3.3/ed62e9fc709ca0f2ff1a3220daa8b70a2870078e/akka-actor_2.11-2.3.3.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/com.typesafe/config/1.2.1/f771f71fdae3df231bcd54d5ca2d57f0bf93f467/config-1.2.1.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-actors-migration_2.11/1.1.0/dfa8bc42b181d5b9f1a5dd147f8ae308b893eb6f/scala-actors-migration_2.11-1.1.0.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-compiler/2.11.1/56ea2e6c025e0821f28d73ca271218b8dd04926a/scala-compiler-2.11.1.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang.plugins/scala-continuations-library_2.11/1.0.2/e517c53a7e9acd6b1668c5a35eccbaa3bab9aac/scala-continuations-library_2.11-1.0.2.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang.plugins/scala-continuations-plugin_2.11.1/1.0.2/f361a3283452c57fa30c1ee69448995de23c60f7/scala-continuations-plugin_2.11.1-1.0.2.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-library/2.11.1/e11da23da3eabab9f4777b9220e60d44c1aab6a/scala-library-2.11.1.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang.modules/scala-parser-combinators_2.11/1.0.1/f05d7345bf5a58924f2837c6c1f4d73a938e1ff0/scala-parser-combinators_2.11-1.0.1.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-reflect/2.11.1/6580347e61cc7f8e802941e7fde40fa83b8badeb/scala-reflect-2.11.1.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang.modules/scala-swing_2.11/1.0.1/b1cdd92bd47b1e1837139c1c53020e86bb9112ae/scala-swing_2.11-1.0.1.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang.modules/scala-xml_2.11/1.0.2/820fbca7e524b530fdadc594c39d49a21ea0337e/scala-xml_2.11-1.0.2.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/lzma/lzma/0.0.1/521616dc7487b42bef0e803bd2fa3faf668101d7/lzma-0.0.1.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/java3d/vecmath/1.5.2/79846ba34cbd89e2422d74d53752f993dcc2ccaf/vecmath-1.5.2.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.jinput/jinput-platform/2.0.5/7ff832a6eb9ab6a767f1ade2b548092d0fa64795/jinput-platform-2.0.5-natives-linux.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.jinput/jinput-platform/2.0.5/385ee093e01f587f30ee1c8a2ee7d408fd732e16/jinput-platform-2.0.5-natives-windows.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/net.java.jinput/jinput-platform/2.0.5/53f9c919f34d2ca9de8c51fc4e1e8282029a9232/jinput-platform-2.0.5-natives-osx.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-platform/6.5/206c4ccaecdbcfd2a1631150c69a97bbc9c20c11/twitch-platform-6.5-natives-windows-32.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-platform/6.5/9fdd0fd5aed0817063dcf95b69349a171f447ebd/twitch-platform-6.5-natives-windows-64.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-platform/6.5/5f9d1ee26257b3a33f0ca06fed335ef462af659f/twitch-platform-6.5-natives-osx.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-external-platform/4.5/18215140f010c05b9f86ef6f0f8871954d2ccebf/twitch-external-platform-4.5-natives-windows-32.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch-external-platform/4.5/c3cde57891b935d41b6680a9c5e1502eeab76d86/twitch-external-platform-4.5-natives-windows-64.jar
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.fusesource.jansi/jansi/1.11/655c643309c2f45a56a747fda70e3fadf57e9f11/jansi-1.11.jar, examining for mod candidates
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-actors/2.11.0/8ccfb6541de179bb1c4d45cf414acee069b7f78b/scala-actors-2.11.0.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl-platform/2.9.4-nightly-20150209/b84d5102b9dbfabfeb5e43c7e2828d98a7fc80e0/lwjgl-platform-2.9.4-nightly-20150209-natives-windows.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl-platform/2.9.4-nightly-20150209/931074f46c795d2f7b30ed6395df5715cfd7675b/lwjgl-platform-2.9.4-nightly-20150209-natives-linux.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl-platform/2.9.4-nightly-20150209/bcab850f8f487c3f4c4dbabde778bb82bd1a40ed/lwjgl-platform-2.9.4-nightly-20150209-natives-osx.jar
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/2.0.1/516c03b21d50a644d538de0f0369c620989cd8f0/jsr305-2.0.1.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/development/spongedev/SpongeForge/.gradle/minecraft/forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related directory at /home/jk-5/development/pumpkin/pumpkin/build/classes/main, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.spongepowered/spongeapi/3.1.0-SNAPSHOT/115e581eb46a12a80a71f07cb3f41af9648b56ef/spongeapi-3.1.0-SNAPSHOT.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.postgresql/postgresql/9.4-1206-jdbc41/4ef3d9bcf654c24783aa50cda10d29e1a9d40711/postgresql-9.4-1206-jdbc41.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/org.javassist/javassist/3.19.0-GA/50120f69224dd8684b445a6f3a5b08fe9b5c60f6/javassist-3.19.0-GA.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/com.j256.ormlite/ormlite-jdbc/4.48/b915ebd2c4b901eec32e4df44e5503752e92ce38/ormlite-jdbc-4.48.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /home/jk-5/.gradle/caches/modules-2/files-2.1/com.j256.ormlite/ormlite-core/4.48/e579bd2905d0399af5029aaaf9817d5fa0ca88a5/ormlite-core-4.48.jar, examining for mod candidates
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.1/7e3cecc566df91338c6c67883b89ddd05a17db43/httpclient-4.5.1.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.3/e876a79d561e5c6207b78d347e198c8c4531a5e5/httpcore-4.4.3.jar
+[10:23:17] [Client thread/TRACE] [FML/]: Skipping known library file /home/jk-5/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.2/4bfc12adfe4842bf07b657f0369c4cb522955686/commons-logging-1.2.jar
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a minecraft related file at /opt/jetbrains/intellij/lib/idea_rt.jar, examining for mod candidates
+[10:23:17] [Client thread/DEBUG] [FML/]: Minecraft jar mods loaded successfully
+[10:23:17] [Client thread/INFO] [FML/]: Found 0 mods from the command line. Injecting into mod discoverer
+[10:23:17] [Client thread/INFO] [FML/]: Searching /home/jk-5/development/spongedev/SpongeForge/run/mods for mods
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a candidate zip or jar file Waila-1.6.0-B3_1.8.8.jar
+[10:23:17] [Client thread/DEBUG] [FML/]: Found a candidate zip or jar file worldedit-forge-mc1.8.9-6.1.1-dist.jar
+[10:23:17] [Client thread/DEBUG] [FML/]: Examining file charsets.jar for potential mods
+[10:23:17] [Client thread/DEBUG] [FML/]: The mod container charsets.jar appears to be missing an mcmod.info file
+[10:23:17] [Client thread/DEBUG] [FML/]: Examining file deploy.jar for potential mods
+[10:23:17] [Client thread/DEBUG] [FML/]: The mod container deploy.jar appears to be missing an mcmod.info file
+[10:23:18] [Client thread/DEBUG] [FML/]: Examining file cldrdata.jar for potential mods
+[10:23:18] [Client thread/DEBUG] [FML/]: The mod container cldrdata.jar appears to be missing an mcmod.info file
+[10:23:18] [Client thread/DEBUG] [FML/]: Examining file dnsns.jar for potential mods
+[10:23:18] [Client thread/DEBUG] [FML/]: The mod container dnsns.jar appears to be missing an mcmod.info file
+[10:23:18] [Client thread/DEBUG] [FML/]: Examining file jaccess.jar for potential mods
+[10:23:18] [Client thread/DEBUG] [FML/]: The mod container jaccess.jar appears to be missing an mcmod.info file
+[10:23:18] [Client thread/DEBUG] [FML/]: Examining file jfxrt.jar for potential mods
+[10:23:18] [Client thread/DEBUG] [FML/]: The mod container jfxrt.jar appears to be missing an mcmod.info file
+[10:23:19] [Client thread/DEBUG] [FML/]: Examining file localedata.jar for potential mods
+[10:23:19] [Client thread/DEBUG] [FML/]: The mod container localedata.jar appears to be missing an mcmod.info file
+[10:23:19] [Client thread/DEBUG] [FML/]: Examining file nashorn.jar for potential mods
+[10:23:19] [Client thread/DEBUG] [FML/]: The mod container nashorn.jar appears to be missing an mcmod.info file
+[10:23:19] [Client thread/DEBUG] [FML/]: Examining file sunec.jar for potential mods
+[10:23:19] [Client thread/DEBUG] [FML/]: The mod container sunec.jar appears to be missing an mcmod.info file
+[10:23:19] [Client thread/DEBUG] [FML/]: Examining file sunjce_provider.jar for potential mods
+[10:23:19] [Client thread/DEBUG] [FML/]: The mod container sunjce_provider.jar appears to be missing an mcmod.info file
+[10:23:19] [Client thread/DEBUG] [FML/]: Examining file sunpkcs11.jar for potential mods
+[10:23:19] [Client thread/DEBUG] [FML/]: The mod container sunpkcs11.jar appears to be missing an mcmod.info file
+[10:23:20] [Client thread/DEBUG] [FML/]: Examining file zipfs.jar for potential mods
+[10:23:20] [Client thread/DEBUG] [FML/]: The mod container zipfs.jar appears to be missing an mcmod.info file
+[10:23:20] [Client thread/DEBUG] [FML/]: Examining file javaws.jar for potential mods
+[10:23:20] [Client thread/DEBUG] [FML/]: The mod container javaws.jar appears to be missing an mcmod.info file
+[10:23:20] [Client thread/DEBUG] [FML/]: Examining file jce.jar for potential mods
+[10:23:20] [Client thread/DEBUG] [FML/]: The mod container jce.jar appears to be missing an mcmod.info file
+[10:23:20] [Client thread/DEBUG] [FML/]: Examining file jfr.jar for potential mods
+[10:23:20] [Client thread/DEBUG] [FML/]: The mod container jfr.jar appears to be missing an mcmod.info file
+[10:23:20] [Client thread/DEBUG] [FML/]: Examining file jfxswt.jar for potential mods
+[10:23:20] [Client thread/DEBUG] [FML/]: The mod container jfxswt.jar appears to be missing an mcmod.info file
+[10:23:20] [Client thread/DEBUG] [FML/]: Examining file jsse.jar for potential mods
+[10:23:20] [Client thread/DEBUG] [FML/]: The mod container jsse.jar appears to be missing an mcmod.info file
+[10:23:20] [Client thread/DEBUG] [FML/]: Examining file management-agent.jar for potential mods
+[10:23:20] [Client thread/DEBUG] [FML/]: The mod container management-agent.jar appears to be missing an mcmod.info file
+[10:23:20] [Client thread/DEBUG] [FML/]: Examining file plugin.jar for potential mods
+[10:23:20] [Client thread/DEBUG] [FML/]: The mod container plugin.jar appears to be missing an mcmod.info file
+[10:23:20] [Client thread/DEBUG] [FML/]: Examining file resources.jar for potential mods
+[10:23:20] [Client thread/DEBUG] [FML/]: The mod container resources.jar appears to be missing an mcmod.info file
+[10:23:20] [Client thread/DEBUG] [FML/]: Examining directory SpongeForge for potential mods
+[10:23:20] [Client thread/DEBUG] [FML/]: Found an mcmod.info file in directory SpongeForge
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package assets
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package assets.sponge
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package assets.sponge.lang
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.launch
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.launch.gui
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.asm
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.asm.transformer
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.asm.transformer.adapter
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.client
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.client.interfaces
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.command
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.data
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.event
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.guice
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.interfaces
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.bungee
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.bungee.network
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.api
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.api.event
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.block
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.client
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.client.gui
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.client.network
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.client.server
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.common
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.common.fluid
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.common.world
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.entity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.entity.ai
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.entity.boss
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.entity.item
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.entity.living
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.entity.player
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.entity.vehicle
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.event
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.event.block
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.event.entity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.event.entity.living
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.event.inventory
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.event.player
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.event.state
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.event.world
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.fml
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.fml.common
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.fml.common.eventhandler
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.fml.common.gameevent
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.fml.common.registry
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.forge
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.forge.event
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.forge.fluids
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.item
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.network
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.network.packet
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.server
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.server.management
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.world
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.world.biome
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.world.gen
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.world.gen.feature
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.core.world.storage
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.entityactivation
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.handler
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.plugin
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.plugin.bungee
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.mixin.plugin.entityactivation
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.network
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.plugin
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.registry
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.service
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.service.world
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.text
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.util
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.world
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.mod.world.gen
+[10:23:20] [Client thread/DEBUG] [FML/]: Examining directory SpongeCommon for potential mods
+[10:23:20] [Client thread/DEBUG] [FML/]: No mcmod.info file found in directory SpongeCommon
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package META-INF
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package co
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package co.aikar
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package co.aikar.timings
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package co.aikar.util
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.ban
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.block
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.command
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.config
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder.block
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder.block.tileentity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder.data
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder.data.meta
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder.item
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder.manipulator
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder.manipulator.immutable
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder.manipulator.immutable.block
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder.manipulator.immutable.item
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder.util
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder.util.weighted
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.builder.world
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.key
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.immutable
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.immutable.block
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.immutable.common
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.immutable.common.collection
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.immutable.entity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.immutable.extra
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.immutable.item
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.immutable.tileentity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.mutable
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.mutable.block
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.mutable.common
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.mutable.common.collection
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.mutable.entity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.mutable.extra
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.mutable.item
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.manipulator.mutable.tileentity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.meta
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.common
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.data
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.data.block
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.data.entity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.data.extra
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.data.item
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.data.tileentity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.multi
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.multi.block
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.multi.entity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.multi.item
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.multi.tileentity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.value
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.value.block
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.value.entity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.value.item
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.processor.value.tileentity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.property
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.property.store
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.property.store.block
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.property.store.common
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.property.store.entity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.property.store.item
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.type
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.util
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.value
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.value.immutable
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.value.immutable.common
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.value.mutable
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.data.value.mutable.common
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.economy
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.effect
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.effect.particle
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.effect.potion
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.effect.sound
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.entity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.entity.ai
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.entity.ai.target
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.entity.living
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.entity.living.human
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.entity.player
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.entity.projectile
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.event
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.event.damage
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.event.filter
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.event.filter.delegate
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.event.gen
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.extra
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.extra.fluid
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.guice
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.ai
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.block
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.block.tile
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.command
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.data
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.entity
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.entity.player
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.inventory
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.inventory.trait
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.item
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.network
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.text
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.world
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.world.biome
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.interfaces.world.gen
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.adapter
+[10:23:20] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.adapter.impl
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.adapter.impl.comp
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.adapter.impl.slots
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.lens
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.lens.comp
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.lens.impl
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.lens.impl.collections
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.lens.impl.comp
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.lens.impl.fabric
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.lens.impl.minecraft
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.lens.impl.slots
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.lens.impl.struct
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.lens.slots
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.observer
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.query
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.query.result
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.query.strategy
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.query.strategy.expression
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.inventory.util
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.item.merchant
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.launch
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.launch.transformer
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.api
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.api.ai
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.api.event
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.api.event.cause
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.api.event.cause.damage
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.api.text
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.api.text.title
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.bungee
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.bungee.network
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.bungee.network.packet
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.ban
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.block
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.block.properties
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.block.state
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.block.tiles
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.command
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.data
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.data.types
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.entity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.entity.ai
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.entity.boss
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.entity.effect
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.entity.human
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.entity.item
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.entity.monster
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.entity.passive
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.entity.player
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.entity.projectile
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.event
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.event.cause
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.event.cause.entity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.event.cause.entity.damage
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.item
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.item.data
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.item.inventory
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.item.merchant
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.nbt
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.network
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.network.packet
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.network.play
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.network.play.client
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.network.rcon
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.potion
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.scoreboard
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.server
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.server.network
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.status
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.text
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.util
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.whitelist
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.world
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.world.biome
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.world.chunk
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.world.chunk.storage
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.world.extent
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.world.gen
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.world.gen.populators
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.core.world.storage
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.exploit
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.plugin
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.mixin.timings
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.network
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.network.message
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.network.status
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.plugin
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.profile
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.factory
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.provider
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.type
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.type.block
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.type.economy
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.type.effect
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.type.entity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.type.event
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.type.extra
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.type.item
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.type.scoreboard
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.type.text
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.type.world
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.type.world.gen
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.registry.util
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.resourcepack
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.rotation
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.scheduler
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.scoreboard
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.scoreboard.builder
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.service
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.service.ban
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.service.pagination
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.service.permission
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.service.permission.base
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.service.rcon
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.service.sql
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.service.user
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.service.whitelist
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.text
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.text.action
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.text.chat
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.text.format
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.text.selector
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.text.serializer
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.text.serializer.xml
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.text.translation
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.util
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.util.gen
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.util.graph
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.util.observer
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.util.persistence
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.weather
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.world
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.world.biome
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.world.border
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.world.extent
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.world.extent.worker
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.world.gen
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.world.gen.builders
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.world.gen.populators
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.world.gen.type
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.world.storage
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.common.world.type
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.launch
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining directory main for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: No mcmod.info file found in directory main
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package co
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package co.aikar
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package co.aikar.timings
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.block
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.block.tileentity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.block.tileentity.carrier
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.block.trait
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.command
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.command.args
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.command.args.parsing
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.command.dispatcher
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.command.source
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.command.spec
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.config
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.key
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.catalog
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.immutable
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.immutable.block
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.immutable.common
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.immutable.common.collection
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.immutable.entity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.immutable.item
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.immutable.tileentity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.mutable
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.mutable.block
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.mutable.common
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.mutable.common.collection
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.mutable.entity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.mutable.item
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.manipulator.mutable.tileentity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.merge
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.meta
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.property
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.property.block
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.property.entity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.property.item
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.translator
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.type
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.value
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.value.immutable
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.data.value.mutable
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.effect
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.effect.particle
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.effect.potion
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.effect.sound
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.ai
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.ai.task
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.ai.task.builtin
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.ai.task.builtin.creature
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.ai.task.builtin.creature.horse
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.ai.task.builtin.creature.target
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.explosive
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.hanging
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.living
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.living.animal
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.living.complex
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.living.golem
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.living.monster
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.living.player
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.living.player.gamemode
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.living.player.tab
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.projectile
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.projectile.explosive
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.projectile.explosive.fireball
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.projectile.source
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.vehicle
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.vehicle.minecart
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.entity.weather
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.achievement
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.action
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.block
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.block.tileentity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.cause
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.cause.entity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.cause.entity.damage
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.cause.entity.damage.source
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.cause.entity.damage.source.common
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.cause.entity.dismount
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.cause.entity.health
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.cause.entity.health.source
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.cause.entity.spawn
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.cause.entity.teleport
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.command
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.data
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.economy
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.entity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.entity.ai
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.entity.item
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.entity.living
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.entity.living.humanoid
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.entity.living.humanoid.player
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.entity.projectile
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.filter
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.filter.cause
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.filter.data
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.filter.type
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.game
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.game.state
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.impl
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.item
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.item.inventory
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.message
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.network
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.network.rcon
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.server
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.server.query
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.service
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.statistic
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.user
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.world
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.event.world.chunk
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.extra
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.extra.fluid
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.extra.fluid.data
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.extra.fluid.data.manipulator
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.extra.fluid.data.manipulator.immutable
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.extra.fluid.data.manipulator.mutable
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.extra.fluid.data.property
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.extra.skylands
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.item
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.item.inventory
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.item.inventory.crafting
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.item.inventory.custom
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.item.inventory.entity
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.item.inventory.equipment
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.item.inventory.property
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.item.inventory.slot
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.item.inventory.transaction
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.item.inventory.type
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.item.merchant
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.item.recipe
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.network
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.network.status
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.plugin
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.profile
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.registry
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.registry.util
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.resourcepack
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.scheduler
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.scoreboard
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.scoreboard.critieria
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.scoreboard.displayslot
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.scoreboard.objective
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.scoreboard.objective.displaymode
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service.ban
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service.context
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service.economy
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service.economy.account
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service.economy.transaction
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service.pagination
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service.permission
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service.permission.option
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service.rcon
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service.sql
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service.user
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.service.whitelist
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.statistic
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.statistic.achievement
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text.action
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text.channel
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text.channel.impl
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text.channel.type
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text.chat
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text.format
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text.selector
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text.serializer
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text.sink
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text.title
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text.translation
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.text.translation.locale
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.util
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.util.annotation
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.util.ban
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.util.blockray
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.util.event
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.util.event.factory
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.util.event.factory.plugin
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.util.persistence
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.util.rotation
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.util.weighted
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world.biome
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world.difficulty
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world.explosion
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world.extent
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world.extent.worker
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world.extent.worker.procedure
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world.gamerule
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world.gen
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world.gen.populator
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world.gen.type
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world.storage
+[10:23:21] [Client thread/TRACE] [FML/]: Recursing into package org.spongepowered.api.world.weather
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file slf4j-api-1.7.14.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container slf4j-api-1.7.14.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file jsr305-1.3.9.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container jsr305-1.3.9.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file guice-4.0.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container guice-4.0.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file configurate-hocon-3.1.1.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container configurate-hocon-3.1.1.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file configurate-gson-3.1.1.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container configurate-gson-3.1.1.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file configurate-yaml-3.1.1.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container configurate-yaml-3.1.1.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file flow-math-1.0.1.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container flow-math-1.0.1.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file flow-noise-1.0.1-SNAPSHOT.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container flow-noise-1.0.1-SNAPSHOT.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file asm-5.0.3.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container asm-5.0.3.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file event-gen-core-1.0.0.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container event-gen-core-1.0.0.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file javax.inject-1.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container javax.inject-1.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file aopalliance-1.0.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container aopalliance-1.0.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file configurate-core-3.1.1.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container configurate-core-3.1.1.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file snakeyaml-1.16.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container snakeyaml-1.16.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file compileDummy.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container compileDummy.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file providedDummy.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container providedDummy.jar appears to be missing an mcmod.info file
+[10:23:21] [Client thread/DEBUG] [FML/]: Examining file mixin-0.4.17-SNAPSHOT.jar for potential mods
+[10:23:21] [Client thread/DEBUG] [FML/]: The mod container mixin-0.4.17-SNAPSHOT.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file HikariCP-2.4.3.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container HikariCP-2.4.3.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file asm-commons-5.0.3.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container asm-commons-5.0.3.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file jarjar-1.1.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container jarjar-1.1.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file asm-tree-5.0.3.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container asm-tree-5.0.3.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file log4j-slf4j-impl-2.0-beta9.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container log4j-slf4j-impl-2.0-beta9.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file mariadb-java-client-1.3.4.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container mariadb-java-client-1.3.4.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file h2-1.4.191.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container h2-1.4.191.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file sqlite-jdbc-3.8.11.2.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container sqlite-jdbc-3.8.11.2.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining directory start for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: No mcmod.info file found in directory start
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package net
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package net.minecraftforge
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package net.minecraftforge.gradle
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package net.minecraftforge.gradle.tweakers
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file oshi-core-1.1.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container oshi-core-1.1.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file jna-3.4.0.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container jna-3.4.0.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file platform-3.4.0.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container platform-3.4.0.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file libraryjavasound-20101123.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container libraryjavasound-20101123.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file jline-2.13.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container jline-2.13.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file asm-debug-all-5.0.3.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container asm-debug-all-5.0.3.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file jansi-1.11.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container jansi-1.11.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file jsr305-2.0.1.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container jsr305-2.0.1.jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar appears to be missing an mcmod.info file
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining directory main for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: No mcmod.info file found in directory main
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.api
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.api.mappack
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.api.user
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.api.utils
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.authentication
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.command
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.command.element
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.map
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.mappack
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.player
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.services
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.sql
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.sql.obj
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.utils
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.world
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.world.gen
+[10:23:22] [Client thread/TRACE] [FML/]: Recursing into package nl.jk5.pumpkin.server.world.gen.empty
+[10:23:22] [Client thread/DEBUG] [FML/]: Examining file spongeapi-3.1.0-SNAPSHOT.jar for potential mods
+[10:23:22] [Client thread/DEBUG] [FML/]: The mod container spongeapi-3.1.0-SNAPSHOT.jar appears to be missing an mcmod.info file
+[10:23:23] [Client thread/DEBUG] [FML/]: Examining file postgresql-9.4-1206-jdbc41.jar for potential mods
+[10:23:23] [Client thread/DEBUG] [FML/]: The mod container postgresql-9.4-1206-jdbc41.jar appears to be missing an mcmod.info file
+[10:23:23] [Client thread/DEBUG] [FML/]: Examining file javassist-3.19.0-GA.jar for potential mods
+[10:23:23] [Client thread/DEBUG] [FML/]: The mod container javassist-3.19.0-GA.jar appears to be missing an mcmod.info file
+[10:23:23] [Client thread/DEBUG] [FML/]: Examining file ormlite-jdbc-4.48.jar for potential mods
+[10:23:23] [Client thread/DEBUG] [FML/]: The mod container ormlite-jdbc-4.48.jar appears to be missing an mcmod.info file
+[10:23:23] [Client thread/DEBUG] [FML/]: Examining file ormlite-core-4.48.jar for potential mods
+[10:23:23] [Client thread/DEBUG] [FML/]: The mod container ormlite-core-4.48.jar appears to be missing an mcmod.info file
+[10:23:23] [Client thread/DEBUG] [FML/]: Examining file idea_rt.jar for potential mods
+[10:23:23] [Client thread/DEBUG] [FML/]: The mod container idea_rt.jar appears to be missing an mcmod.info file
+[10:23:23] [Client thread/DEBUG] [FML/]: Examining file Waila-1.6.0-B3_1.8.8.jar for potential mods
+[10:23:23] [Client thread/TRACE] [FML/]: Located mcmod.info file in file Waila-1.6.0-B3_1.8.8.jar
+[10:23:23] [Client thread/DEBUG] [FML/]: Identified a mod of type Lnet/minecraftforge/fml/common/Mod; (mcp.mobius.waila.Waila) - loading
+[10:23:23] [Client thread/TRACE] [Waila/]: Parsed dependency info : [Forge@[11.15.0,)] [Forge@[11.15.0,)] []
+[10:23:23] [Client thread/DEBUG] [FML/]: Examining file worldedit-forge-mc1.8.9-6.1.1-dist.jar for potential mods
+[10:23:23] [Client thread/TRACE] [FML/]: Located mcmod.info file in file worldedit-forge-mc1.8.9-6.1.1-dist.jar
+[10:23:23] [Client thread/DEBUG] [FML/]: Identified a mod of type Lnet/minecraftforge/fml/common/Mod; (com.sk89q.worldedit.forge.ForgeWorldEdit) - loading
+[10:23:23] [Client thread/TRACE] [worldedit/]: Parsed dependency info : [] [sponge] []
+[10:23:23] [Client thread/INFO] [FML/]: Forge Mod Loader has identified 5 mods to load
+[10:23:23] [Client thread/DEBUG] [FML/]: Found API mcp.mobius.waila.api (owned by Waila providing WailaAPI) embedded in Waila
+[10:23:23] [Client thread/DEBUG] [FML/]: Creating API container dummy for API WailaAPI: owner: Waila, dependents: []
+[10:23:23] [Client thread/TRACE] [FML/]: Received a system property request ''
+[10:23:23] [Client thread/TRACE] [FML/]: System property request managing the state of 0 mods
+[10:23:23] [Client thread/DEBUG] [FML/]: After merging, found state information for 0 mods
+[10:23:23] [Client thread/DEBUG] [FML/]: Found translations in forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar [en_US, en_US]
+[10:23:23] [Client thread/DEBUG] [FML/]: Found translations in forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar [en_US, en_US]
+[10:23:23] [Client thread/DEBUG] [Waila/]: Enabling mod Waila
+[10:23:23] [Client thread/DEBUG] [FML/]: Found translations in Waila-1.6.0-B3_1.8.8.jar [fr_FR, de_DE, et_EE, cs_CZ, zh_CN, ru_RU, nl_NL, it_IT, en_US]
+[10:23:23] [Client thread/DEBUG] [worldedit/]: Enabling mod worldedit
+[10:23:23] [Client thread/TRACE] [FML/]: Verifying mod requirements are satisfied
+[10:23:23] [Client thread/TRACE] [FML/]: All mod requirements are satisfied
+[10:23:23] [Client thread/TRACE] [FML/]: Sorting mods into an ordered list
+[10:23:23] [Client thread/TRACE] [FML/]: Mod sorting completed successfully
+[10:23:23] [Client thread/DEBUG] [FML/]: Mod sorting data
+[10:23:23] [Client thread/DEBUG] [FML/]: 	Waila(Waila:1.6.0): Waila-1.6.0-B3_1.8.8.jar (required-after:Forge@[11.15.0,))
+[10:23:23] [Client thread/DEBUG] [FML/]: 	worldedit(WorldEdit:6.1.1): worldedit-forge-mc1.8.9-6.1.1-dist.jar (after:sponge)
+[10:23:23] [Client thread/DEBUG] [FML/]: 	WailaAPI(API: WailaAPI:1.3): Waila-1.6.0-B3_1.8.8.jar ()
+[10:23:23] [Client thread/TRACE] [mcp/mcp]: Sending event FMLConstructionEvent to mod mcp
+[10:23:23] [Client thread/TRACE] [mcp/mcp]: Sent event FMLConstructionEvent to mod mcp
+[10:23:23] [Client thread/DEBUG] [FML/]: Bar Step: Construction - Minecraft Coder Pack took 0.001s
+[10:23:23] [Client thread/TRACE] [FML/FML]: Sending event FMLConstructionEvent to mod FML
+[10:23:23] [Client thread/DEBUG] [io.netty.util.internal.logging.InternalLoggerFactory/FML]: Using SLF4J as the default logging framework
+[10:23:23] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent0/FML]: java.nio.Buffer.address: available
+[10:23:23] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent0/FML]: sun.misc.Unsafe.theUnsafe: available
+[10:23:23] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent0/FML]: sun.misc.Unsafe.copyMemory: available
+[10:23:23] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent0/FML]: java.nio.Bits.unaligned: true
+[10:23:23] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent/FML]: UID: 1000
+[10:23:23] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent/FML]: Java version: 8
+[10:23:23] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent/FML]: -Dio.netty.noUnsafe: false
+[10:23:23] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent/FML]: sun.misc.Unsafe: available
+[10:23:23] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent/FML]: -Dio.netty.noJavassist: false
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent/FML]: Javassist: available
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent/FML]: -Dio.netty.tmpdir: /tmp (java.io.tmpdir)
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent/FML]: -Dio.netty.bitMode: 64 (sun.arch.data.model)
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.PlatformDependent/FML]: -Dio.netty.noPreferDirect: false
+[10:23:24] [Client thread/TRACE] [FML/FML]: Mod FML is using network checker : Invoking method checkModLists
+[10:23:24] [Client thread/TRACE] [FML/FML]: Testing mod FML to verify it accepts its own version in a remote connection
+[10:23:24] [Client thread/TRACE] [FML/FML]: The mod FML accepts its own version (8.0.99.99)
+[10:23:24] [Client thread/INFO] [FML/FML]: Attempting connection with missing mods [mcp, FML, Forge, Waila, worldedit] at CLIENT
+[10:23:24] [Client thread/INFO] [FML/FML]: Attempting connection with missing mods [mcp, FML, Forge, Waila, worldedit] at SERVER
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/FML]: Generated: io.netty.util.internal.__matchers__.net.minecraftforge.fml.common.network.internal.FMLProxyPacketMatcher
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/FML]: Generated: io.netty.util.internal.__matchers__.net.minecraftforge.fml.common.network.internal.FMLMessageMatcher
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/FML]: Generated: io.netty.util.internal.__matchers__.net.minecraftforge.fml.common.network.internal.FMLMessage$CompleteHandshakeMatcher
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.ThreadLocalRandom/FML]: -Dio.netty.initialSeedUniquifier: 0x396859c2bcee7fa4 (took 7 ms)
+[10:23:24] [Client thread/DEBUG] [io.netty.buffer.ByteBufUtil/FML]: -Dio.netty.allocator.type: unpooled
+[10:23:24] [Client thread/DEBUG] [io.netty.buffer.ByteBufUtil/FML]: -Dio.netty.threadLocalDirectBufferSize: 65536
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/FML]: Generated: io.netty.util.internal.__matchers__.net.minecraftforge.fml.common.network.internal.FMLMessage$OpenGuiMatcher
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/FML]: Generated: io.netty.util.internal.__matchers__.net.minecraftforge.fml.common.network.internal.FMLMessage$EntityMessageMatcher
+[10:23:24] [Client thread/TRACE] [FML/FML]: Sent event FMLConstructionEvent to mod FML
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: Construction - Forge Mod Loader took 0.967s
+[10:23:24] [Client thread/TRACE] [Forge/Forge]: Sending event FMLConstructionEvent to mod Forge
+[10:23:24] [Client thread/TRACE] [FML/Forge]: Mod Forge is using network checker : No network checking performed
+[10:23:24] [Client thread/TRACE] [FML/Forge]: Testing mod Forge to verify it accepts its own version in a remote connection
+[10:23:24] [Client thread/TRACE] [FML/Forge]: The mod Forge accepts its own version (11.15.1.1722)
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/Forge]: Generated: io.netty.util.internal.__matchers__.net.minecraftforge.common.network.ForgeMessageMatcher
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/Forge]: Generated: io.netty.util.internal.__matchers__.net.minecraftforge.common.network.ForgeMessage$DimensionRegisterMessageMatcher
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/Forge]: Generated: io.netty.util.internal.__matchers__.net.minecraftforge.common.network.ForgeMessage$FluidIdMapMessageMatcher
+[10:23:24] [Client thread/TRACE] [Forge/Forge]: Sent event FMLConstructionEvent to mod Forge
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: Construction - Minecraft Forge took 0.024s
+[10:23:24] [Client thread/TRACE] [Waila/Waila]: Sending event FMLConstructionEvent to mod Waila
+[10:23:24] [Client thread/TRACE] [FML/Waila]: Mod Waila is using network checker : No network checking performed
+[10:23:24] [Client thread/TRACE] [FML/Waila]: Testing mod Waila to verify it accepts its own version in a remote connection
+[10:23:24] [Client thread/TRACE] [FML/Waila]: The mod Waila accepts its own version (1.6.0)
+[10:23:24] [Client thread/DEBUG] [FML/Waila]: Attempting to inject @SidedProxy classes into Waila
+[10:23:24] [Client thread/TRACE] [Waila/Waila]: Sent event FMLConstructionEvent to mod Waila
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: Construction - Waila took 0.062s
+[10:23:24] [Client thread/TRACE] [worldedit/worldedit]: Sending event FMLConstructionEvent to mod worldedit
+[10:23:24] [Client thread/TRACE] [FML/worldedit]: Mod worldedit is using network checker : No network checking performed
+[10:23:24] [Client thread/TRACE] [FML/worldedit]: Testing mod worldedit to verify it accepts its own version in a remote connection
+[10:23:24] [Client thread/TRACE] [FML/worldedit]: The mod worldedit accepts its own version (6.1.1)
+[10:23:24] [Client thread/DEBUG] [FML/worldedit]: Attempting to inject @SidedProxy classes into worldedit
+[10:23:24] [Client thread/TRACE] [worldedit/worldedit]: Sent event FMLConstructionEvent to mod worldedit
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: Construction - WorldEdit took 0.118s
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Finished: Construction took 1.171s
+[10:23:24] [Client thread/DEBUG] [FML/]: Mod signature data
+[10:23:24] [Client thread/DEBUG] [FML/]:  	Valid Signatures:
+[10:23:24] [Client thread/DEBUG] [FML/]:  	Missing Signatures:
+[10:23:24] [Client thread/DEBUG] [FML/]: 		mcp	(Minecraft Coder Pack	9.19)	minecraft.jar
+[10:23:24] [Client thread/DEBUG] [FML/]: 		FML	(Forge Mod Loader	8.0.99.99)	forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar
+[10:23:24] [Client thread/DEBUG] [FML/]: 		Forge	(Minecraft Forge	11.15.1.1722)	forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar
+[10:23:24] [Client thread/DEBUG] [FML/]: 		Waila	(Waila	1.6.0)	Waila-1.6.0-B3_1.8.8.jar
+[10:23:24] [Client thread/DEBUG] [FML/]: 		worldedit	(WorldEdit	6.1.1)	worldedit-forge-mc1.8.9-6.1.1-dist.jar
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - Default took 0.005s
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - FMLFileResourcePack:Forge Mod Loader took 0.009s
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - FMLFileResourcePack:Minecraft Forge took 0.008s
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - FMLFileResourcePack:Waila took 0.001s
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - FMLFileResourcePack:WorldEdit took 0.001s
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Finished: Reloading took 0.041s
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - Reloading listeners took 0.042s
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resources took 0.065s
+[10:23:24] [Client thread/DEBUG] [Forge Mod Loader/]: Mod Forge Mod Loader is missing a pack.mcmeta file, substituting a dummy one
+[10:23:24] [Client thread/DEBUG] [Minecraft Forge/]: Mod Minecraft Forge is missing a pack.mcmeta file, substituting a dummy one
+[10:23:24] [Client thread/DEBUG] [Waila/]: Mod Waila is missing a pack.mcmeta file, substituting a dummy one
+[10:23:24] [Client thread/DEBUG] [WorldEdit/]: Mod WorldEdit is missing a pack.mcmeta file, substituting a dummy one
+[10:23:24] [Client thread/INFO] [FML/]: Processing ObjectHolder annotations
+[10:23:24] [Client thread/INFO] [FML/]: Found 384 ObjectHolder annotations
+[10:23:24] [Client thread/INFO] [FML/]: Identifying ItemStackHolder annotations
+[10:23:24] [Client thread/INFO] [FML/]: Found 0 ItemStackHolder annotations
+[10:23:24] [Client thread/TRACE] [mcp/mcp]: Sending event FMLPreInitializationEvent to mod mcp
+[10:23:24] [Client thread/TRACE] [mcp/mcp]: Sent event FMLPreInitializationEvent to mod mcp
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: PreInitialization - Minecraft Coder Pack took 0.001s
+[10:23:24] [Client thread/TRACE] [FML/FML]: Sending event FMLPreInitializationEvent to mod FML
+[10:23:24] [Client thread/TRACE] [FML/FML]: Sent event FMLPreInitializationEvent to mod FML
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: PreInitialization - Forge Mod Loader took 0.026s
+[10:23:24] [Client thread/TRACE] [Forge/Forge]: Sending event FMLPreInitializationEvent to mod Forge
+[10:23:24] [Client thread/INFO] [FML/Forge]: Configured a dormant chunk cache size of 0
+[10:23:24] [Client thread/TRACE] [Forge/Forge]: Sent event FMLPreInitializationEvent to mod Forge
+[10:23:24] [Client thread/DEBUG] [FML/]: Bar Step: PreInitialization - Minecraft Forge took 0.075s
+[10:23:24] [Client thread/TRACE] [Waila/Waila]: Sending event FMLPreInitializationEvent to mod Waila
+[10:23:24] [Forge Version Check/INFO] [ForgeVersionCheck/Forge]: [Forge] Starting version check at http://files.minecraftforge.net/maven/net/minecraftforge/forge/promotions_slim.json
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/Waila]: Generated: io.netty.util.internal.__matchers__.mcp.mobius.waila.network.IWailaMessageMatcher
+[10:23:24] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/Waila]: Generated: io.netty.util.internal.__matchers__.mcp.mobius.waila.network.Message0x00ServerPingMatcher
+[10:23:25] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/Waila]: Generated: io.netty.util.internal.__matchers__.mcp.mobius.waila.network.Message0x02TENBTDataMatcher
+[10:23:25] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/Waila]: Generated: io.netty.util.internal.__matchers__.mcp.mobius.waila.network.Message0x04EntNBTDataMatcher
+[10:23:25] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/Waila]: Generated: io.netty.util.internal.__matchers__.mcp.mobius.waila.network.Message0x01TERequestMatcher
+[10:23:25] [Client thread/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/Waila]: Generated: io.netty.util.internal.__matchers__.mcp.mobius.waila.network.Message0x03EntRequestMatcher
+[10:23:25] [Client thread/TRACE] [Waila/Waila]: Sent event FMLPreInitializationEvent to mod Waila
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Step: PreInitialization - Waila took 0.093s
+[10:23:25] [Client thread/TRACE] [worldedit/worldedit]: Sending event FMLPreInitializationEvent to mod worldedit
+[10:23:25] [Client thread/TRACE] [worldedit/worldedit]: Sent event FMLPreInitializationEvent to mod worldedit
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Step: PreInitialization - WorldEdit took 0.022s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: PreInitialization took 0.217s
+[10:23:25] [Client thread/INFO] [FML/]: Applying holder lookups
+[10:23:25] [Client thread/INFO] [FML/]: Holder lookups applied
+[10:23:25] [Client thread/INFO] [FML/]: Injecting itemstacks
+[10:23:25] [Client thread/INFO] [FML/]: Itemstack injection complete
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - TextureManager took 0.000s
+[10:23:25] [Client thread/INFO] [STDOUT/]: [tv.twitch.StandardCoreAPI:<init>:16]: If on Windows, make sure to provide all of the necessary dll's as specified in the twitchsdk README. Also, make sure to set the PATH environment variable to point to the directory containing the dll's.
+[10:23:25] [Forge Version Check/DEBUG] [ForgeVersionCheck/Forge]: [Forge] Received version check data:
+{
+  "homepage": "http://files.minecraftforge.net/maven/net/minecraftforge/forge/",
+  "promos": {
+    "1.5.2-latest": "7.8.1.738",
+    "1.5.2-recommended": "7.8.1.737",
+    "1.6.1-latest": "8.9.0.775",
+    "1.6.2-latest": "9.10.1.871",
+    "1.6.2-recommended": "9.10.1.871",
+    "1.6.3-latest": "9.11.0.878",
+    "1.6.4-latest": "9.11.1.1345",
+    "1.6.4-recommended": "9.11.1.1345",
+    "1.7.10-latest": "10.13.4.1614",
+    "1.7.10-latest-1.7.10": "10.13.2.1343",
+    "1.7.10-recommended": "10.13.4.1558",
+    "1.7.2-latest": "10.12.2.1147",
+    "1.7.2-recommended": "10.12.2.1121",
+    "1.8-latest": "11.14.4.1577",
+    "1.8-recommended": "11.14.4.1563",
+    "1.8.8-latest": "11.15.0.1655",
+    "1.8.9-latest": "11.15.1.1763",
+    "1.8.9-recommended": "11.15.1.1722",
+    "latest": "11.15.1.1763",
+    "latest-1.7.10": "10.13.2.1343",
+    "recommended": "11.15.1.1722"
+  }
+}
+[10:23:25] [Forge Version Check/INFO] [ForgeVersionCheck/Forge]: [Forge] Found status: UP_TO_DATE Target: null
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - SoundHandler took 0.579s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - FontRenderer took 0.004s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - FontRenderer took 0.003s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - GrassColorReloadListener took 0.007s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - FoliageColorReloadListener took 0.008s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - GL Setup took 0.000s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Loading Texture Map took 0.010s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - ModelLoaderRegistry$1 took 0.000s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - ModelLoaderRegistry$1 took 0.000s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - ModelLoaderRegistry$1 took 0.000s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - ModelLoaderRegistry$1 took 0.000s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - ModelLoaderRegistry$1 took 0.000s
+[10:23:25] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - ModelLoaderRegistry$1 took 0.000s
+[10:23:28] [Client thread/DEBUG] [FML/]: Bar Finished: ModelLoader: blocks took 2.152s
+[10:23:28] [Client thread/DEBUG] [FML/]: Bar Finished: ModelLoader: items took 0.452s
+[10:23:28] [Client thread/INFO] [FML/]: Max texture size: 16384
+[10:23:28] [Client thread/DEBUG] [FML/]: Bar Finished: Texture stitching - missingno took 0.001s
+[10:23:28] [Client thread/DEBUG] [FML/]: Bar Finished: Texture creation took 0.002s
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - ModelManager took 3.395s
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Loading Model Manager took 3.482s
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - RenderItem took 0.025s
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Loading Item Renderer took 0.367s
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - EntityRenderer took 0.000s
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - BlockRendererDispatcher took 0.000s
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - RenderGlobal took 0.000s
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Loading Entity Renderer took 0.170s
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Finished: Rendering Setup took 4.030s
+[10:23:29] [Client thread/TRACE] [mcp/mcp]: Sending event FMLInitializationEvent to mod mcp
+[10:23:29] [Client thread/TRACE] [mcp/mcp]: Sent event FMLInitializationEvent to mod mcp
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: Initialization - Minecraft Coder Pack took 0.000s
+[10:23:29] [Client thread/TRACE] [FML/FML]: Sending event FMLInitializationEvent to mod FML
+[10:23:29] [Client thread/TRACE] [FML/FML]: Sent event FMLInitializationEvent to mod FML
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: Initialization - Forge Mod Loader took 0.000s
+[10:23:29] [Client thread/TRACE] [Forge/Forge]: Sending event FMLInitializationEvent to mod Forge
+[10:23:29] [Client thread/TRACE] [Forge/Forge]: Sent event FMLInitializationEvent to mod Forge
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: Initialization - Minecraft Forge took 0.000s
+[10:23:29] [Client thread/TRACE] [Waila/Waila]: Sending event FMLInitializationEvent to mod Waila
+[10:23:29] [Client thread/TRACE] [Waila/Waila]: Sent event FMLInitializationEvent to mod Waila
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: Initialization - Waila took 0.029s
+[10:23:29] [Client thread/TRACE] [worldedit/worldedit]: Sending event FMLInitializationEvent to mod worldedit
+[10:23:29] [Client thread/TRACE] [worldedit/worldedit]: Sent event FMLInitializationEvent to mod worldedit
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: Initialization - WorldEdit took 0.029s
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Finished: Initialization took 0.058s
+[10:23:29] [Client thread/TRACE] [FML/]: Attempting to deliver 0 IMC messages to mod mcp
+[10:23:29] [Client thread/TRACE] [mcp/mcp]: Sending event IMCEvent to mod mcp
+[10:23:29] [Client thread/TRACE] [mcp/mcp]: Sent event IMCEvent to mod mcp
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: InterModComms$IMC - Minecraft Coder Pack took 0.004s
+[10:23:29] [Client thread/TRACE] [FML/]: Attempting to deliver 0 IMC messages to mod FML
+[10:23:29] [Client thread/TRACE] [FML/FML]: Sending event IMCEvent to mod FML
+[10:23:29] [Client thread/TRACE] [FML/FML]: Sent event IMCEvent to mod FML
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: InterModComms$IMC - Forge Mod Loader took 0.000s
+[10:23:29] [Client thread/TRACE] [FML/]: Attempting to deliver 0 IMC messages to mod Forge
+[10:23:29] [Client thread/TRACE] [Forge/Forge]: Sending event IMCEvent to mod Forge
+[10:23:29] [Client thread/TRACE] [Forge/Forge]: Sent event IMCEvent to mod Forge
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: InterModComms$IMC - Minecraft Forge took 0.000s
+[10:23:29] [Client thread/TRACE] [FML/]: Attempting to deliver 0 IMC messages to mod Waila
+[10:23:29] [Client thread/TRACE] [Waila/Waila]: Sending event IMCEvent to mod Waila
+[10:23:29] [Client thread/TRACE] [Waila/Waila]: Sent event IMCEvent to mod Waila
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: InterModComms$IMC - Waila took 0.000s
+[10:23:29] [Client thread/TRACE] [FML/]: Attempting to deliver 0 IMC messages to mod worldedit
+[10:23:29] [Client thread/TRACE] [worldedit/worldedit]: Sending event IMCEvent to mod worldedit
+[10:23:29] [Client thread/TRACE] [worldedit/worldedit]: Sent event IMCEvent to mod worldedit
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: InterModComms$IMC - WorldEdit took 0.000s
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Finished: InterModComms$IMC took 0.005s
+[10:23:29] [Client thread/INFO] [FML/]: Injecting itemstacks
+[10:23:29] [Client thread/INFO] [FML/]: Itemstack injection complete
+[10:23:29] [Client thread/TRACE] [mcp/mcp]: Sending event FMLPostInitializationEvent to mod mcp
+[10:23:29] [Client thread/TRACE] [mcp/mcp]: Sent event FMLPostInitializationEvent to mod mcp
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: PostInitialization - Minecraft Coder Pack took 0.000s
+[10:23:29] [Client thread/TRACE] [FML/FML]: Sending event FMLPostInitializationEvent to mod FML
+[10:23:29] [Client thread/TRACE] [FML/FML]: Sent event FMLPostInitializationEvent to mod FML
+[10:23:29] [Client thread/DEBUG] [FML/]: Bar Step: PostInitialization - Forge Mod Loader took 0.000s
+[10:23:29] [Client thread/TRACE] [Forge/Forge]: Sending event FMLPostInitializationEvent to mod Forge
+[10:23:30] [Client thread/TRACE] [Forge/Forge]: Sent event FMLPostInitializationEvent to mod Forge
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: PostInitialization - Minecraft Forge took 0.131s
+[10:23:30] [Client thread/TRACE] [Waila/Waila]: Sending event FMLPostInitializationEvent to mod Waila
+[10:23:30] [Client thread/INFO] [STDOUT/Waila]: [mcp.mobius.waila.gui.truetyper.TrueTypeFont:<init>:93]: TrueTypeFont loaded: java.awt.Font[family=Minecraftia,name=Minecraftia Regular,style=plain,size=14] - AntiAlias = true
+[10:23:30] [Client thread/TRACE] [Waila/Waila]: Sent event FMLPostInitializationEvent to mod Waila
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: PostInitialization - Waila took 0.432s
+[10:23:30] [Client thread/TRACE] [worldedit/worldedit]: Sending event FMLPostInitializationEvent to mod worldedit
+[10:23:30] [Client thread/INFO] [worldedit/worldedit]: WorldEdit for Forge (version 6.1.1) is loaded
+[10:23:30] [Client thread/TRACE] [worldedit/worldedit]: Sent event FMLPostInitializationEvent to mod worldedit
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: PostInitialization - WorldEdit took 0.020s
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Finished: PostInitialization took 0.584s
+[10:23:30] [Client thread/TRACE] [mcp/mcp]: Sending event FMLLoadCompleteEvent to mod mcp
+[10:23:30] [Client thread/TRACE] [mcp/mcp]: Sent event FMLLoadCompleteEvent to mod mcp
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: LoadComplete - Minecraft Coder Pack took 0.000s
+[10:23:30] [Client thread/TRACE] [FML/FML]: Sending event FMLLoadCompleteEvent to mod FML
+[10:23:30] [Client thread/TRACE] [FML/FML]: Sent event FMLLoadCompleteEvent to mod FML
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: LoadComplete - Forge Mod Loader took 0.000s
+[10:23:30] [Client thread/TRACE] [Forge/Forge]: Sending event FMLLoadCompleteEvent to mod Forge
+[10:23:30] [Client thread/DEBUG] [FML/Forge]: Forge RecipeSorter Baking:
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   14: RecipeEntry("Before", UNKNOWN, )
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   13: RecipeEntry("minecraft:shaped", SHAPED, net.minecraft.item.crafting.ShapedRecipes) Before: minecraft:shapeless
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   12: RecipeEntry("forge:shapedore", SHAPED, net.minecraftforge.oredict.ShapedOreRecipe) Before: minecraft:shapeless After: minecraft:shaped
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   11: RecipeEntry("minecraft:mapextending", SHAPED, net.minecraft.item.crafting.RecipesMapExtending) Before: minecraft:shapeless After: minecraft:shaped
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   10: RecipeEntry("minecraft:shapeless", SHAPELESS, net.minecraft.item.crafting.ShapelessRecipes) After: minecraft:shaped
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   9: RecipeEntry("minecraft:repair", SHAPELESS, net.minecraft.item.crafting.RecipeRepairItem) After: minecraft:shapeless
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   8: RecipeEntry("forge:shapelessore", SHAPELESS, net.minecraftforge.oredict.ShapelessOreRecipe) After: minecraft:shapeless
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   7: RecipeEntry("minecraft:armordyes", SHAPELESS, net.minecraft.item.crafting.RecipesArmorDyes) After: minecraft:shapeless
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   6: RecipeEntry("minecraft:fireworks", SHAPELESS, net.minecraft.item.crafting.RecipeFireworks) After: minecraft:shapeless
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   5: RecipeEntry("minecraft:pattern_add", SHAPELESS, net.minecraft.item.crafting.RecipesBanners$RecipeAddPattern) After: minecraft:shapeless
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   4: RecipeEntry("minecraft:pattern_dupe", SHAPELESS, net.minecraft.item.crafting.RecipesBanners$RecipeDuplicatePattern) After: minecraft:shapeless
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   3: RecipeEntry("minecraft:bookcloning", SHAPELESS, net.minecraft.item.crafting.RecipeBookCloning) After: minecraft:shapeless
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   2: RecipeEntry("minecraft:mapcloning", SHAPELESS, net.minecraft.item.crafting.RecipesMapCloning) After: minecraft:shapeless
+[10:23:30] [Client thread/DEBUG] [FML/Forge]:   1: RecipeEntry("After", UNKNOWN, )
+[10:23:30] [Client thread/DEBUG] [FML/Forge]: Sorting recipies
+[10:23:30] [Client thread/TRACE] [Forge/Forge]: Sent event FMLLoadCompleteEvent to mod Forge
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: LoadComplete - Minecraft Forge took 0.011s
+[10:23:30] [Client thread/TRACE] [Waila/Waila]: Sending event FMLLoadCompleteEvent to mod Waila
+[10:23:30] [Client thread/INFO] [Waila/Waila]: [Agriculture] Agriculture mod not found.
+[10:23:30] [Client thread/TRACE] [Waila/Waila]: Sent event FMLLoadCompleteEvent to mod Waila
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: LoadComplete - Waila took 0.010s
+[10:23:30] [Client thread/TRACE] [worldedit/worldedit]: Sending event FMLLoadCompleteEvent to mod worldedit
+[10:23:30] [Client thread/TRACE] [worldedit/worldedit]: Sent event FMLLoadCompleteEvent to mod worldedit
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: LoadComplete - WorldEdit took 0.000s
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Finished: LoadComplete took 0.021s
+[10:23:30] [Client thread/DEBUG] [FML/]: Freezing block and item id maps
+[10:23:30] [Client thread/INFO] [FML/]: Forge Mod Loader has successfully loaded 5 mods
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - Default took 0.000s
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - FMLFileResourcePack:Forge Mod Loader took 0.014s
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - FMLFileResourcePack:Minecraft Forge took 0.013s
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - FMLFileResourcePack:Waila took 0.001s
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - FMLFileResourcePack:WorldEdit took 0.002s
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: Reloading Texture Manager - minecraft:textures/atlas/blocks.png took 0.000s
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: Reloading Texture Manager - minecraft:textures/font/ascii.png took 0.016s
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: Reloading Texture Manager - minecraft:dynamic/lightMap_1 took 0.000s
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: Reloading Texture Manager - minecraft:textures/misc/forcefield.png took 0.007s
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Step: Reloading Texture Manager - minecraft:textures/font/ascii_sga.png took 0.012s
+[10:23:30] [Client thread/DEBUG] [FML/]: Bar Finished: Reloading Texture Manager took 0.035s
+[10:23:32] [Client thread/DEBUG] [FML/]: Bar Finished: ModelLoader: blocks took 1.272s
+[10:23:33] [Client thread/DEBUG] [FML/]: Bar Finished: ModelLoader: items took 0.463s
+[10:23:33] [Client thread/INFO] [FML/]: Max texture size: 16384
+[10:23:33] [Client thread/DEBUG] [FML/]: Bar Finished: Texture stitching took 0.278s
+[10:23:33] [Client thread/DEBUG] [FML/]: Bar Finished: Mipmap generation took 0.160s
+[10:23:33] [Client thread/DEBUG] [FML/]: Bar Finished: Texture stitching took 0.025s
+[10:23:33] [Client thread/DEBUG] [FML/]: Bar Finished: Texture creation took 0.055s
+[10:23:33] [Client thread/DEBUG] [FML/]: Bar Finished: Reloading took 3.434s
+[10:23:33] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - Reloading listeners took 3.435s
+[10:23:33] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resources took 3.464s
+[10:23:33] [Client thread/DEBUG] [Forge Mod Loader/]: Mod Forge Mod Loader is missing a pack.mcmeta file, substituting a dummy one
+[10:23:33] [Client thread/DEBUG] [Minecraft Forge/]: Mod Minecraft Forge is missing a pack.mcmeta file, substituting a dummy one
+[10:23:33] [Client thread/DEBUG] [Waila/]: Mod Waila is missing a pack.mcmeta file, substituting a dummy one
+[10:23:33] [Client thread/DEBUG] [WorldEdit/]: Mod WorldEdit is missing a pack.mcmeta file, substituting a dummy one
+[10:23:34] [Client thread/DEBUG] [FML/]: Bar Finished: Loading took 17.029s
+[10:23:58] [Server Pinger #0/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/]: Generated: io.netty.util.internal.__matchers__.net.minecraft.network.PacketMatcher
+[10:23:58] [Server Pinger #0/DEBUG] [io.netty.util.internal.NativeLibraryLoader/]: -Dio.netty.tmpdir: /tmp (java.io.tmpdir)
+[10:23:58] [Server Pinger #0/DEBUG] [io.netty.util.internal.NativeLibraryLoader/]: -Dio.netty.netty.workdir: /tmp (io.netty.tmpdir)
+[10:23:58] [Server Pinger #0/DEBUG] [io.netty.channel.MultithreadEventLoopGroup/]: -Dio.netty.eventLoopThreads: 16
+[10:23:58] [Server Pinger #0/DEBUG] [io.netty.channel.nio.NioEventLoop/]: -Dio.netty.noKeySetOptimization: false
+[10:23:58] [Server Pinger #0/DEBUG] [io.netty.channel.nio.NioEventLoop/]: -Dio.netty.selectorAutoRebuildThreshold: 512
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@691a56f
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@2fa20fca
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@141cce94
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@33ec93f4
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@385df23b
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@7be76a5
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@752470a8
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@22002ecb
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@751bdc9a
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@1e487c2
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@57930666
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@74460c29
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@5f12e137
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@7a6da780
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@35022e9d
+[10:23:58] [Server Pinger #0/TRACE] [io.netty.channel.nio.NioEventLoop/]: Instrumented an optimized java.util.Set into: sun.nio.ch.EPollSelectorImpl@71e14b50
+[10:23:59] [Netty Client IO #0/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/]: Generated: io.netty.util.internal.__matchers__.io.netty.buffer.ByteBufMatcher
+[10:23:59] [Netty Client IO #0/DEBUG] [io.netty.util.ResourceLeakDetector/]: -Dio.netty.leakDetectionLevel: simple
+[10:23:59] [Netty Client IO #0/DEBUG] [io.netty.util.internal.Cleaner0/]: java.nio.ByteBuffer.cleaner(): available
+[10:23:59] [Netty Client IO #0/DEBUG] [io.netty.util.Recycler/]: -Dio.netty.recycler.maxCapacity.default: 262144
+[10:24:00] [Netty Epoll Client IO #0/DEBUG] [io.netty.util.internal.JavassistTypeParameterMatcherGenerator/]: Generated: io.netty.util.internal.__matchers__.net.minecraftforge.fml.common.network.handshake.FMLHandshakeMessageMatcher
+[10:24:01] [Netty Epoll Client IO #0/TRACE] [FML/]: Handshake channel activating
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: FMLHandshakeClientState: null->FMLHandshakeClientState$1:START
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]:   Next: HELLO
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: Server FML protocol version 2, 4 byte dimension received 0
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: FMLHandshakeClientState: $ServerHello->FMLHandshakeClientState$2:HELLO
+[10:24:01] [Netty Epoll Client IO #0/INFO] [FML/]: Server protocol version 2
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: Received override dimension 0
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]:   Next: WAITINGSERVERDATA
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: FMLHandshakeClientState: $ModList:7 mods->FMLHandshakeClientState$3:WAITINGSERVERDATA
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]:   Next: WAITINGSERVERCOMPLETE
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: FMLHandshakeClientState: $RegistryData:23 mappings->FMLHandshakeClientState$4:WAITINGSERVERCOMPLETE
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: Received Mod Registry mapping for minecraft:potions: 23 IDs 0 subs 0 dummied
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]:   Next: WAITINGSERVERCOMPLETE
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: FMLHandshakeClientState: $RegistryData:5 mappings->FMLHandshakeClientState$4:WAITINGSERVERCOMPLETE
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: Received Mod Registry mapping for minecraft:villagerprofessions: 5 IDs 0 subs 0 dummied
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]:   Next: WAITINGSERVERCOMPLETE
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: FMLHandshakeClientState: $RegistryData:198 mappings->FMLHandshakeClientState$4:WAITINGSERVERCOMPLETE
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: Received Mod Registry mapping for minecraft:blocks: 198 IDs 0 subs 0 dummied
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]:   Next: WAITINGSERVERCOMPLETE
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: FMLHandshakeClientState: $RegistryData:337 mappings->FMLHandshakeClientState$4:WAITINGSERVERCOMPLETE
+[10:24:01] [Netty Epoll Client IO #0/INFO] [FML/]: Injecting existing block and item data into this client instance
+[10:24:01] [Netty Epoll Client IO #0/TRACE] [mcp/mcp]: Sending event FMLModIdMappingEvent to mod mcp
+[10:24:01] [Netty Epoll Client IO #0/TRACE] [mcp/mcp]: Sent event FMLModIdMappingEvent to mod mcp
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: Bar Step: ModIdMapping - Minecraft Coder Pack took 0.000s
+[10:24:01] [Netty Epoll Client IO #0/TRACE] [FML/FML]: Sending event FMLModIdMappingEvent to mod FML
+[10:24:01] [Netty Epoll Client IO #0/TRACE] [FML/FML]: Sent event FMLModIdMappingEvent to mod FML
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: Bar Step: ModIdMapping - Forge Mod Loader took 0.000s
+[10:24:01] [Netty Epoll Client IO #0/TRACE] [Forge/Forge]: Sending event FMLModIdMappingEvent to mod Forge
+[10:24:01] [Netty Epoll Client IO #0/TRACE] [Forge/Forge]: Sent event FMLModIdMappingEvent to mod Forge
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: Bar Step: ModIdMapping - Minecraft Forge took 0.000s
+[10:24:01] [Netty Epoll Client IO #0/TRACE] [Waila/Waila]: Sending event FMLModIdMappingEvent to mod Waila
+[10:24:01] [Netty Epoll Client IO #0/TRACE] [Waila/Waila]: Sent event FMLModIdMappingEvent to mod Waila
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: Bar Step: ModIdMapping - Waila took 0.000s
+[10:24:01] [Netty Epoll Client IO #0/TRACE] [worldedit/worldedit]: Sending event FMLModIdMappingEvent to mod worldedit
+[10:24:01] [Netty Epoll Client IO #0/TRACE] [worldedit/worldedit]: Sent event FMLModIdMappingEvent to mod worldedit
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: Bar Step: ModIdMapping - WorldEdit took 0.000s
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: Bar Finished: ModIdMapping took 0.002s
+[10:24:01] [Netty Epoll Client IO #0/INFO] [FML/]: Applying holder lookups
+[10:24:01] [Netty Epoll Client IO #0/INFO] [FML/]: Holder lookups applied
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]:   Next: PENDINGCOMPLETE
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: FMLHandshakeClientState: $HandshakeAck:{2}->FMLHandshakeClientState$5:PENDINGCOMPLETE
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]:   Next: COMPLETE
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: The fluid minecraft:lava has been selected as the default fluid for lava
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: The fluid minecraft:water has been selected as the default fluid for water
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]: FMLHandshakeClientState: $HandshakeAck:{3}->FMLHandshakeClientState$6:COMPLETE
+[10:24:01] [Netty Epoll Client IO #0/DEBUG] [FML/]:   Next: DONE
+[10:24:01] [Netty Epoll Client IO #0/INFO] [FML/]: [Netty Epoll Client IO #0] Client side modded connection established
+[10:24:01] [Netty Epoll Client IO #0/INFO] [Waila/]: Received server authentication msg. Remote sync will be activated
+[10:24:01] [Client thread/DEBUG] [FML/]: Overriding dimension: using 0
+[10:41:37] [Client thread/DEBUG] [FML/]: Reverting to frozen data state.
+[10:41:37] [Client thread/TRACE] [mcp/mcp]: Sending event FMLModIdMappingEvent to mod mcp
+[10:41:37] [Client thread/TRACE] [mcp/mcp]: Sent event FMLModIdMappingEvent to mod mcp
+[10:41:37] [Client thread/DEBUG] [FML/]: Bar Step: ModIdMapping - Minecraft Coder Pack took 0.001s
+[10:41:37] [Client thread/TRACE] [FML/FML]: Sending event FMLModIdMappingEvent to mod FML
+[10:41:37] [Client thread/TRACE] [FML/FML]: Sent event FMLModIdMappingEvent to mod FML
+[10:41:37] [Client thread/DEBUG] [FML/]: Bar Step: ModIdMapping - Forge Mod Loader took 0.000s
+[10:41:37] [Client thread/TRACE] [Forge/Forge]: Sending event FMLModIdMappingEvent to mod Forge
+[10:41:37] [Client thread/TRACE] [Forge/Forge]: Sent event FMLModIdMappingEvent to mod Forge
+[10:41:37] [Client thread/DEBUG] [FML/]: Bar Step: ModIdMapping - Minecraft Forge took 0.001s
+[10:41:37] [Client thread/TRACE] [Waila/Waila]: Sending event FMLModIdMappingEvent to mod Waila
+[10:41:37] [Client thread/TRACE] [Waila/Waila]: Sent event FMLModIdMappingEvent to mod Waila
+[10:41:37] [Client thread/DEBUG] [FML/]: Bar Step: ModIdMapping - Waila took 0.000s
+[10:41:37] [Client thread/TRACE] [worldedit/worldedit]: Sending event FMLModIdMappingEvent to mod worldedit
+[10:41:37] [Client thread/TRACE] [worldedit/worldedit]: Sent event FMLModIdMappingEvent to mod worldedit
+[10:41:37] [Client thread/DEBUG] [FML/]: Bar Step: ModIdMapping - WorldEdit took 0.000s
+[10:41:37] [Client thread/DEBUG] [FML/]: Bar Finished: ModIdMapping took 0.002s
+[10:41:37] [Client thread/INFO] [FML/]: Applying holder lookups
+[10:41:37] [Client thread/INFO] [FML/]: Holder lookups applied
+[10:41:37] [Client thread/DEBUG] [FML/]: Frozen state restored.
+[10:43:09] [Netty Epoll Client IO #1/TRACE] [FML/]: Handshake channel activating
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: FMLHandshakeClientState: null->FMLHandshakeClientState$1:START
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]:   Next: HELLO
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: Server FML protocol version 2, 4 byte dimension received 0
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: FMLHandshakeClientState: $ServerHello->FMLHandshakeClientState$2:HELLO
+[10:43:09] [Netty Epoll Client IO #1/INFO] [FML/]: Server protocol version 2
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: Received override dimension 0
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]:   Next: WAITINGSERVERDATA
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: FMLHandshakeClientState: $ModList:7 mods->FMLHandshakeClientState$3:WAITINGSERVERDATA
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]:   Next: WAITINGSERVERCOMPLETE
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: FMLHandshakeClientState: $RegistryData:23 mappings->FMLHandshakeClientState$4:WAITINGSERVERCOMPLETE
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: Received Mod Registry mapping for minecraft:potions: 23 IDs 0 subs 0 dummied
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]:   Next: WAITINGSERVERCOMPLETE
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: FMLHandshakeClientState: $RegistryData:5 mappings->FMLHandshakeClientState$4:WAITINGSERVERCOMPLETE
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: Received Mod Registry mapping for minecraft:villagerprofessions: 5 IDs 0 subs 0 dummied
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]:   Next: WAITINGSERVERCOMPLETE
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: FMLHandshakeClientState: $RegistryData:198 mappings->FMLHandshakeClientState$4:WAITINGSERVERCOMPLETE
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: Received Mod Registry mapping for minecraft:blocks: 198 IDs 0 subs 0 dummied
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]:   Next: WAITINGSERVERCOMPLETE
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: FMLHandshakeClientState: $RegistryData:337 mappings->FMLHandshakeClientState$4:WAITINGSERVERCOMPLETE
+[10:43:09] [Netty Epoll Client IO #1/INFO] [FML/]: Injecting existing block and item data into this client instance
+[10:43:09] [Netty Epoll Client IO #1/TRACE] [mcp/mcp]: Sending event FMLModIdMappingEvent to mod mcp
+[10:43:09] [Netty Epoll Client IO #1/TRACE] [mcp/mcp]: Sent event FMLModIdMappingEvent to mod mcp
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: Bar Step: ModIdMapping - Minecraft Coder Pack took 0.000s
+[10:43:09] [Netty Epoll Client IO #1/TRACE] [FML/FML]: Sending event FMLModIdMappingEvent to mod FML
+[10:43:09] [Netty Epoll Client IO #1/TRACE] [FML/FML]: Sent event FMLModIdMappingEvent to mod FML
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: Bar Step: ModIdMapping - Forge Mod Loader took 0.000s
+[10:43:09] [Netty Epoll Client IO #1/TRACE] [Forge/Forge]: Sending event FMLModIdMappingEvent to mod Forge
+[10:43:09] [Netty Epoll Client IO #1/TRACE] [Forge/Forge]: Sent event FMLModIdMappingEvent to mod Forge
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: Bar Step: ModIdMapping - Minecraft Forge took 0.000s
+[10:43:09] [Netty Epoll Client IO #1/TRACE] [Waila/Waila]: Sending event FMLModIdMappingEvent to mod Waila
+[10:43:09] [Netty Epoll Client IO #1/TRACE] [Waila/Waila]: Sent event FMLModIdMappingEvent to mod Waila
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: Bar Step: ModIdMapping - Waila took 0.000s
+[10:43:09] [Netty Epoll Client IO #1/TRACE] [worldedit/worldedit]: Sending event FMLModIdMappingEvent to mod worldedit
+[10:43:09] [Netty Epoll Client IO #1/TRACE] [worldedit/worldedit]: Sent event FMLModIdMappingEvent to mod worldedit
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: Bar Step: ModIdMapping - WorldEdit took 0.000s
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: Bar Finished: ModIdMapping took 0.001s
+[10:43:09] [Netty Epoll Client IO #1/INFO] [FML/]: Applying holder lookups
+[10:43:09] [Netty Epoll Client IO #1/INFO] [FML/]: Holder lookups applied
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]:   Next: PENDINGCOMPLETE
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: FMLHandshakeClientState: $HandshakeAck:{2}->FMLHandshakeClientState$5:PENDINGCOMPLETE
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]:   Next: COMPLETE
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: The fluid minecraft:lava has been selected as the default fluid for lava
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: The fluid minecraft:water has been selected as the default fluid for water
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]: FMLHandshakeClientState: $HandshakeAck:{3}->FMLHandshakeClientState$6:COMPLETE
+[10:43:09] [Netty Epoll Client IO #1/DEBUG] [FML/]:   Next: DONE
+[10:43:09] [Netty Epoll Client IO #1/INFO] [FML/]: [Netty Epoll Client IO #1] Client side modded connection established
+[10:43:09] [Netty Epoll Client IO #1/INFO] [Waila/]: Received server authentication msg. Remote sync will be activated
+[10:43:09] [Client thread/DEBUG] [FML/]: Overriding dimension: using 0
+[11:11:25] [Netty Epoll Client IO #1/ERROR] [FML/]: NetworkDispatcher exception
+java.io.IOException: Error while read(...): Connection reset by peer
+	at io.netty.channel.epoll.Native.readAddress(Native Method) ~[Native.class:4.0.23.Final]
+	at io.netty.channel.epoll.EpollSocketChannel$EpollSocketUnsafe.doReadBytes(EpollSocketChannel.java:675) [EpollSocketChannel$EpollSocketUnsafe.class:4.0.23.Final]
+	at io.netty.channel.epoll.EpollSocketChannel$EpollSocketUnsafe.epollInReady(EpollSocketChannel.java:714) [EpollSocketChannel$EpollSocketUnsafe.class:4.0.23.Final]
+	at io.netty.channel.epoll.EpollEventLoop.processReady(EpollEventLoop.java:326) [EpollEventLoop.class:4.0.23.Final]
+	at io.netty.channel.epoll.EpollEventLoop.run(EpollEventLoop.java:264) [EpollEventLoop.class:4.0.23.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:116) [SingleThreadEventExecutor$2.class:4.0.23.Final]
+	at java.lang.Thread.run(Thread.java:745) [?:1.8.0_72]
+[11:11:25] [Client thread/DEBUG] [FML/]: Reverting to frozen data state.
+[11:11:25] [Client thread/TRACE] [mcp/mcp]: Sending event FMLModIdMappingEvent to mod mcp
+[11:11:25] [Client thread/TRACE] [mcp/mcp]: Sent event FMLModIdMappingEvent to mod mcp
+[11:11:25] [Client thread/DEBUG] [FML/]: Bar Step: ModIdMapping - Minecraft Coder Pack took 0.000s
+[11:11:25] [Client thread/TRACE] [FML/FML]: Sending event FMLModIdMappingEvent to mod FML
+[11:11:25] [Client thread/TRACE] [FML/FML]: Sent event FMLModIdMappingEvent to mod FML
+[11:11:25] [Client thread/DEBUG] [FML/]: Bar Step: ModIdMapping - Forge Mod Loader took 0.000s
+[11:11:25] [Client thread/TRACE] [Forge/Forge]: Sending event FMLModIdMappingEvent to mod Forge
+[11:11:25] [Client thread/TRACE] [Forge/Forge]: Sent event FMLModIdMappingEvent to mod Forge
+[11:11:25] [Client thread/DEBUG] [FML/]: Bar Step: ModIdMapping - Minecraft Forge took 0.000s
+[11:11:25] [Client thread/TRACE] [Waila/Waila]: Sending event FMLModIdMappingEvent to mod Waila
+[11:11:25] [Client thread/TRACE] [Waila/Waila]: Sent event FMLModIdMappingEvent to mod Waila
+[11:11:25] [Client thread/DEBUG] [FML/]: Bar Step: ModIdMapping - Waila took 0.000s
+[11:11:25] [Client thread/TRACE] [worldedit/worldedit]: Sending event FMLModIdMappingEvent to mod worldedit
+[11:11:25] [Client thread/TRACE] [worldedit/worldedit]: Sent event FMLModIdMappingEvent to mod worldedit
+[11:11:25] [Client thread/DEBUG] [FML/]: Bar Step: ModIdMapping - WorldEdit took 0.000s
+[11:11:25] [Client thread/DEBUG] [FML/]: Bar Finished: ModIdMapping took 0.001s
+[11:11:25] [Client thread/INFO] [FML/]: Applying holder lookups
+[11:11:25] [Client thread/INFO] [FML/]: Holder lookups applied
+[11:11:25] [Client thread/DEBUG] [FML/]: Frozen state restored.

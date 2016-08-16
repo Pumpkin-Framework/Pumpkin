@@ -1,0 +1,238 @@
+---- Minecraft Crash Report ----
+// Hi. I'm Minecraft, and I'm a crashaholic.
+
+Time: 3/1/16 12:14 PM
+Description: Watching Server
+
+java.lang.Error
+	at net.minecraft.entity.Entity.onEntityCollideWithBlock(Entity.java:953)
+	at net.minecraft.entity.Entity.moveEntity(Entity.java:816)
+	at net.minecraft.entity.EntityLivingBase.moveEntityWithHeading(EntityLivingBase.java:1644)
+	at net.minecraft.entity.EntityLivingBase.onLivingUpdate(EntityLivingBase.java:2022)
+	at net.minecraft.entity.EntityLiving.onLivingUpdate(EntityLiving.java:448)
+	at net.minecraft.entity.EntityAgeable.onLivingUpdate(EntityAgeable.java:172)
+	at net.minecraft.entity.EntityLivingBase.onUpdate(EntityLivingBase.java:1824)
+	at net.minecraft.entity.EntityLiving.onUpdate(EntityLiving.java:275)
+	at net.minecraft.world.World.onCallEntityUpdate(World.java:487)
+	at net.minecraft.world.World.updateEntityWithOptionalForce(World.java:2009)
+	at net.minecraft.world.WorldServer.updateEntityWithOptionalForce(WorldServer.java:724)
+	at net.minecraft.world.World.updateEntity(World.java:1974)
+	at net.minecraft.world.World.updateEntities(World.java:1803)
+	at net.minecraft.world.WorldServer.updateEntities(WorldServer.java:559)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:777)
+	at net.minecraft.server.dedicated.DedicatedServer.updateTimeLightAndEntities(DedicatedServer.java:365)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:681)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:548)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.entity.Entity.onEntityCollideWithBlock(Entity.java:953)
+	at net.minecraft.entity.Entity.moveEntity(Entity.java:816)
+	at net.minecraft.entity.EntityLivingBase.moveEntityWithHeading(EntityLivingBase.java:1644)
+	at net.minecraft.entity.EntityLivingBase.onLivingUpdate(EntityLivingBase.java:2022)
+	at net.minecraft.entity.EntityLiving.onLivingUpdate(EntityLiving.java:448)
+	at net.minecraft.entity.EntityAgeable.onLivingUpdate(EntityAgeable.java:172)
+	at net.minecraft.entity.EntityLivingBase.onUpdate(EntityLivingBase.java:1824)
+	at net.minecraft.entity.EntityLiving.onUpdate(EntityLiving.java:275)
+	at net.minecraft.world.World.onCallEntityUpdate(World.java:487)
+	at net.minecraft.world.World.updateEntityWithOptionalForce(World.java:2009)
+	at net.minecraft.world.WorldServer.updateEntityWithOptionalForce(WorldServer.java:724)
+	at net.minecraft.world.World.updateEntity(World.java:1974)
+	at net.minecraft.world.World.updateEntities(World.java:1803)
+	at net.minecraft.world.WorldServer.updateEntities(WorldServer.java:559)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:777)
+	at net.minecraft.server.dedicated.DedicatedServer.updateTimeLightAndEntities(DedicatedServer.java:365)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:681)
+
+-- Thread Dump --
+Details:
+	Threads: "Pumpkin-Machine-2" Id=59 WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@42088ed4
+	at sun.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@42088ed4
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2039)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1088)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1067)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1127)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	...
+
+
+"Pumpkin-Machine-1" Id=58 BLOCKED on net.minecraft.launchwrapper.LaunchClassLoader@273e7444 owned by "Server thread" Id=20
+	at nl.jk5.pumpkin.server.scripting.architecture.jnlua.JNLuaArchitecture.invoke(JNLuaArchitecture.java:60)
+	-  blocked on net.minecraft.launchwrapper.LaunchClassLoader@273e7444
+	at nl.jk5.pumpkin.server.scripting.architecture.jnlua.api.ComponentApi.lambda$initialize$7(ComponentApi.java:86)
+	at nl.jk5.pumpkin.server.scripting.architecture.jnlua.api.ComponentApi$$Lambda$240/1704054157.invoke(Unknown Source)
+	at com.naef.jnlua.LuaState.lua_resume(Native Method)
+	at com.naef.jnlua.LuaState.resume(LuaState.java:1745)
+	-  locked com.naef.jnlua.LuaState@4ccf68e5
+	at nl.jk5.pumpkin.server.scripting.architecture.jnlua.JNLuaArchitecture.runThreaded(JNLuaArchitecture.java:207)
+	at nl.jk5.pumpkin.server.scripting.DefaultMachine.run(DefaultMachine.java:581)
+	-  locked nl.jk5.pumpkin.server.scripting.DefaultMachine@48f0e5a4
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	...
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.ThreadPoolExecutor$Worker@d301739
+
+
+"Server Watchdog" Id=49 RUNNABLE
+	at sun.management.ThreadImpl.dumpThreads0(Native Method)
+	at sun.management.ThreadImpl.dumpAllThreads(ThreadImpl.java:454)
+	at net.minecraft.server.dedicated.ServerHangWatchdog.run(ServerHangWatchdog.java:46)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+"Timer-0" Id=48 TIMED_WAITING on java.util.TaskQueue@df262de
+	at java.lang.Object.wait(Native Method)
+	-  waiting on java.util.TaskQueue@df262de
+	at java.util.TimerThread.mainLoop(Timer.java:552)
+	at java.util.TimerThread.run(Timer.java:505)
+
+
+"Netty Epoll Server IO #0" Id=32 RUNNABLE (in native)
+	at io.netty.channel.epoll.Native.epollWait(Native Method)
+	at io.netty.channel.epoll.EpollEventLoop.epollWait(EpollEventLoop.java:194)
+	at io.netty.channel.epoll.EpollEventLoop.run(EpollEventLoop.java:219)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:116)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+"PostgreSQL-JDBC-SharedTimer-1" Id=31 WAITING on java.util.TaskQueue@b0a339a
+	at java.lang.Object.wait(Native Method)
+	-  waiting on java.util.TaskQueue@b0a339a
+	at java.lang.Object.wait(Object.java:502)
+	at java.util.TimerThread.mainLoop(Timer.java:526)
+	at java.util.TimerThread.run(Timer.java:505)
+
+
+"Hikari housekeeper (pool HikariPool-0)" Id=29 RUNNABLE
+	at java.lang.Thread.isInterrupted(Native Method)
+	at java.lang.Thread.interrupted(Thread.java:944)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireInterruptibly(AbstractQueuedSynchronizer.java:1219)
+	at java.util.concurrent.locks.ReentrantLock.lockInterruptibly(ReentrantLock.java:335)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1076)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1067)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1127)
+	...
+
+
+"Server console handler" Id=23 RUNNABLE (in native)
+	at java.io.FileInputStream.read0(Native Method)
+	at java.io.FileInputStream.read(FileInputStream.java:207)
+	at jline.internal.NonBlockingInputStream.read(NonBlockingInputStream.java:245)
+	at jline.internal.InputStreamReader.read(InputStreamReader.java:257)
+	-  locked jline.internal.NonBlockingInputStream@3cb5ea5e
+	at jline.internal.InputStreamReader.read(InputStreamReader.java:194)
+	-  locked jline.internal.NonBlockingInputStream@3cb5ea5e
+	at jline.console.ConsoleReader.readCharacter(ConsoleReader.java:2136)
+	at jline.console.ConsoleReader.readCharacter(ConsoleReader.java:2126)
+	at jline.console.ConsoleReader.readLineSimple(ConsoleReader.java:3228)
+	...
+
+
+"DestroyJavaVM" Id=22 RUNNABLE
+
+
+"Server thread" Id=20 RUNNABLE
+	at net.minecraft.entity.Entity.onEntityCollideWithBlock(Entity.java:953)
+	at net.minecraft.entity.Entity.moveEntity(Entity.java:816)
+	at net.minecraft.entity.EntityLivingBase.moveEntityWithHeading(EntityLivingBase.java:1644)
+	at net.minecraft.entity.EntityLivingBase.onLivingUpdate(EntityLivingBase.java:2022)
+	at net.minecraft.entity.EntityLiving.onLivingUpdate(EntityLiving.java:448)
+	at net.minecraft.entity.EntityAgeable.onLivingUpdate(EntityAgeable.java:172)
+	at net.minecraft.entity.EntityLivingBase.onUpdate(EntityLivingBase.java:1824)
+	at net.minecraft.entity.EntityLiving.onUpdate(EntityLiving.java:275)
+	...
+
+
+"Server Infinisleeper" Id=19 TIMED_WAITING
+	at java.lang.Thread.sleep(Native Method)
+	at net.minecraft.server.dedicated.DedicatedServer$1.run(DedicatedServer.java:69)
+
+
+"Snooper Timer" Id=18 WAITING on java.util.TaskQueue@73a7e5a9
+	at java.lang.Object.wait(Native Method)
+	-  waiting on java.util.TaskQueue@73a7e5a9
+	at java.lang.Object.wait(Object.java:502)
+	at java.util.TimerThread.mainLoop(Timer.java:526)
+	at java.util.TimerThread.run(Timer.java:505)
+
+
+"Sponge Async Scheduler Thread" Id=17 TIMED_WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@6ddd9d91
+	at sun.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@6ddd9d91
+	at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2163)
+	at org.spongepowered.common.scheduler.AsyncScheduler.preTick(AsyncScheduler.java:112)
+	at org.spongepowered.common.scheduler.SchedulerBase.runTick(SchedulerBase.java:102)
+	at org.spongepowered.common.scheduler.AsyncScheduler.mainLoop(AsyncScheduler.java:66)
+	at org.spongepowered.common.scheduler.AsyncScheduler$$Lambda$9/303790741.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+"JDWP Command Reader" Id=7 RUNNABLE
+
+
+"JDWP Event Helper Thread" Id=6 RUNNABLE
+
+
+"JDWP Transport Listener: dt_socket" Id=5 RUNNABLE
+
+
+"Signal Dispatcher" Id=4 RUNNABLE
+
+
+"Finalizer" Id=3 WAITING on java.lang.ref.ReferenceQueue$Lock@3791f553
+	at java.lang.Object.wait(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@3791f553
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:143)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:164)
+	at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)
+
+
+"Reference Handler" Id=2 WAITING on java.lang.ref.Reference$Lock@24650ee5
+	at java.lang.Object.wait(Native Method)
+	-  waiting on java.lang.ref.Reference$Lock@24650ee5
+	at java.lang.Object.wait(Object.java:502)
+	at java.lang.ref.Reference.tryHandlePending(Reference.java:191)
+	at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)
+
+
+
+Stacktrace:
+	at net.minecraft.server.dedicated.ServerHangWatchdog.run(ServerHangWatchdog.java:63)
+	at java.lang.Thread.run(Thread.java:745)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Linux (amd64) version 4.2.0-30-generic
+	Java Version: 1.8.0_72, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 1313557520 bytes (1252 MB) / 1720713216 bytes (1641 MB) up to 3707764736 bytes (3536 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: MCP 9.19 Powered by Forge 11.15.1.1722 7 mods loaded, 7 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+	UCHIJAAAA	mcp{9.19} [Minecraft Coder Pack] (minecraft.jar) 
+	UCHIJAAAA	FML{8.0.99.99} [Forge Mod Loader] (forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar) 
+	UCHIJAAAA	Forge{11.15.1.1722} [Minecraft Forge] (forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar) 
+	UCHIJAAAA	sponge{$version} [SpongeForge] (SpongeForge) 
+	UCHIJAAAA	pumpkin{unknown} [Pumpkin] (main) 
+	UCHIJAAAA	Waila{1.6.0} [Waila] (Waila-1.6.0-B3_1.8.8.jar) 
+	UCHIJAAAA	worldedit{6.1.1} [WorldEdit] (worldedit-forge-mc1.8.9-6.1.1-dist.jar) 
+	Loaded coremods (and transformers): 
+SpongeCoremod (unknown)
+  org.spongepowered.common.launch.transformer.SpongeSuperclassTransformer
+	Profiler Position: N/A (disabled)
+	Player Count: 0 / 20; []
+	Is Modded: Definitely; Server brand changed to 'fml,forge,SpongeForge'
+	Type: Dedicated Server (map_server.txt)

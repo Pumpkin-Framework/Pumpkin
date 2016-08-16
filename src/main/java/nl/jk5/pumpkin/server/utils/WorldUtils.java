@@ -1,6 +1,7 @@
 package nl.jk5.pumpkin.server.utils;
 
 import nl.jk5.pumpkin.server.Log;
+import org.spongepowered.api.world.DimensionType;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +18,16 @@ public final class WorldUtils {
         try{
             Class<?> dimensionManager = Class.forName("net.minecraftforge.common.DimensionManager");
             unregisterDimensionMethod = dimensionManager.getDeclaredMethod("unregisterDimension", Integer.TYPE);
-            registerDimensionMethod = dimensionManager.getDeclaredMethod("registerDimension", Integer.TYPE, Integer.TYPE);
+            Method m = null;
+            for (Method method : dimensionManager.getDeclaredMethods()) {
+                if(method.getName().equals("registerDimension")){
+                    m = method;
+                }
+            }
+            if(m == null){
+                throw new NoSuchMethodException("net.minecraftforge.common.DimensionManager.registerDimension(int, DimensionType)");
+            }
+            registerDimensionMethod = m;
 
             Field dimMapField = dimensionManager.getDeclaredField("dimensionMap");
             dimMapField.setAccessible(true);
@@ -39,9 +49,9 @@ public final class WorldUtils {
         }
     }
 
-    public static void registerDimension(int dimid, int providerId) {
+    public static void registerDimension(int dimid, DimensionType type) {
         try{
-            registerDimensionMethod.invoke(null, dimid, providerId);
+            registerDimensionMethod.invoke(null, dimid, type);
         }catch(IllegalAccessException | InvocationTargetException e){
             Log.warn("Was not able to register dimension " + dimid, e);
         }

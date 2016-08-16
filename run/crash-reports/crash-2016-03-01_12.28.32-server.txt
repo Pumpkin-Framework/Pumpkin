@@ -1,0 +1,255 @@
+---- Minecraft Crash Report ----
+// Hey, that tickles! Hehehe!
+
+Time: 3/1/16 12:28 PM
+Description: Watching Server
+
+java.lang.Error
+	at nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystems.fromClass(FileSystems.java:111)
+	at nl.jk5.pumpkin.server.map.DefaultMap.<init>(DefaultMap.java:55)
+	at nl.jk5.pumpkin.server.map.MapRegistry.load(MapRegistry.java:65)
+	at nl.jk5.pumpkin.server.Pumpkin.onServerStarting(Pumpkin.java:257)
+	at org.spongepowered.common.event.listener.GameStartingServerEventListener_Pumpkin_onServerStarting3.handle(Unknown Source)
+	at org.spongepowered.common.event.RegisteredListener.handle(RegisteredListener.java:86)
+	at org.spongepowered.mod.event.SpongeModEventManager.post(SpongeModEventManager.java:236)
+	at org.spongepowered.mod.event.SpongeModEventManager.post(SpongeModEventManager.java:280)
+	at org.spongepowered.mod.SpongeMod.onStateEvent(SpongeMod.java:185)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.google.common.eventbus.EventSubscriber.handleEvent(EventSubscriber.java:74)
+	at com.google.common.eventbus.SynchronizedEventSubscriber.handleEvent(SynchronizedEventSubscriber.java:47)
+	at com.google.common.eventbus.EventBus.dispatch(EventBus.java:322)
+	at com.google.common.eventbus.EventBus.dispatchQueuedEvents(EventBus.java:304)
+	at com.google.common.eventbus.EventBus.post(EventBus.java:275)
+	at net.minecraftforge.fml.common.LoadController.sendEventToModContainer(LoadController.java:211)
+	at net.minecraftforge.fml.common.LoadController.propogateStateMessage(LoadController.java:189)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.google.common.eventbus.EventSubscriber.handleEvent(EventSubscriber.java:74)
+	at com.google.common.eventbus.SynchronizedEventSubscriber.handleEvent(SynchronizedEventSubscriber.java:47)
+	at com.google.common.eventbus.EventBus.dispatch(EventBus.java:322)
+	at com.google.common.eventbus.EventBus.dispatchQueuedEvents(EventBus.java:304)
+	at com.google.common.eventbus.EventBus.post(EventBus.java:275)
+	at net.minecraftforge.fml.common.LoadController.onPost(LoadController.java:53)
+	at net.minecraftforge.fml.common.LoadController.distributeStateMessage(LoadController.java:118)
+	at net.minecraftforge.fml.common.Loader.serverStarting(Loader.java:787)
+	at net.minecraftforge.fml.common.FMLCommonHandler.handleServerStarting(FMLCommonHandler.java:284)
+	at net.minecraft.server.dedicated.DedicatedServer.startServer(DedicatedServer.java:284)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:508)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystems.fromClass(FileSystems.java:111)
+	at nl.jk5.pumpkin.server.map.DefaultMap.<init>(DefaultMap.java:55)
+	at nl.jk5.pumpkin.server.map.MapRegistry.load(MapRegistry.java:65)
+	at nl.jk5.pumpkin.server.Pumpkin.onServerStarting(Pumpkin.java:257)
+	at org.spongepowered.common.event.listener.GameStartingServerEventListener_Pumpkin_onServerStarting3.handle(Unknown Source)
+	at org.spongepowered.common.event.RegisteredListener.handle(RegisteredListener.java:86)
+	at org.spongepowered.mod.event.SpongeModEventManager.post(SpongeModEventManager.java:236)
+	at org.spongepowered.mod.event.SpongeModEventManager.post(SpongeModEventManager.java:280)
+	at org.spongepowered.mod.SpongeMod.onStateEvent(SpongeMod.java:185)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.google.common.eventbus.EventSubscriber.handleEvent(EventSubscriber.java:74)
+	at com.google.common.eventbus.SynchronizedEventSubscriber.handleEvent(SynchronizedEventSubscriber.java:47)
+	at com.google.common.eventbus.EventBus.dispatch(EventBus.java:322)
+	at com.google.common.eventbus.EventBus.dispatchQueuedEvents(EventBus.java:304)
+	at com.google.common.eventbus.EventBus.post(EventBus.java:275)
+	at net.minecraftforge.fml.common.LoadController.sendEventToModContainer(LoadController.java:211)
+	at net.minecraftforge.fml.common.LoadController.propogateStateMessage(LoadController.java:189)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.google.common.eventbus.EventSubscriber.handleEvent(EventSubscriber.java:74)
+	at com.google.common.eventbus.SynchronizedEventSubscriber.handleEvent(SynchronizedEventSubscriber.java:47)
+	at com.google.common.eventbus.EventBus.dispatch(EventBus.java:322)
+	at com.google.common.eventbus.EventBus.dispatchQueuedEvents(EventBus.java:304)
+	at com.google.common.eventbus.EventBus.post(EventBus.java:275)
+	at net.minecraftforge.fml.common.LoadController.onPost(LoadController.java:53)
+	at net.minecraftforge.fml.common.LoadController.distributeStateMessage(LoadController.java:118)
+	at net.minecraftforge.fml.common.Loader.serverStarting(Loader.java:787)
+	at net.minecraftforge.fml.common.FMLCommonHandler.handleServerStarting(FMLCommonHandler.java:284)
+	at net.minecraft.server.dedicated.DedicatedServer.startServer(DedicatedServer.java:284)
+
+-- Thread Dump --
+Details:
+	Threads: "Server Watchdog" Id=49 RUNNABLE
+	at sun.management.ThreadImpl.dumpThreads0(Native Method)
+	at sun.management.ThreadImpl.dumpAllThreads(ThreadImpl.java:454)
+	at net.minecraft.server.dedicated.ServerHangWatchdog.run(ServerHangWatchdog.java:46)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+"Timer-0" Id=48 TIMED_WAITING on java.util.TaskQueue@15e9edf6
+	at java.lang.Object.wait(Native Method)
+	-  waiting on java.util.TaskQueue@15e9edf6
+	at java.util.TimerThread.mainLoop(Timer.java:552)
+	at java.util.TimerThread.run(Timer.java:505)
+
+
+"Netty Epoll Server IO #0" Id=32 RUNNABLE (in native)
+	at io.netty.channel.epoll.Native.epollWait(Native Method)
+	at io.netty.channel.epoll.EpollEventLoop.epollWait(EpollEventLoop.java:194)
+	at io.netty.channel.epoll.EpollEventLoop.run(EpollEventLoop.java:219)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:116)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+"PostgreSQL-JDBC-SharedTimer-1" Id=31 WAITING on java.util.TaskQueue@1b2e113b
+	at java.lang.Object.wait(Native Method)
+	-  waiting on java.util.TaskQueue@1b2e113b
+	at java.lang.Object.wait(Object.java:502)
+	at java.util.TimerThread.mainLoop(Timer.java:526)
+	at java.util.TimerThread.run(Timer.java:505)
+
+
+"Hikari housekeeper (pool HikariPool-0)" Id=29 TIMED_WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1f118686
+	at sun.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1f118686
+	at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1067)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1127)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	...
+
+
+"process reaper" Id=25 TIMED_WAITING on java.util.concurrent.SynchronousQueue$TransferStack@5a131b00
+	at sun.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.SynchronousQueue$TransferStack@5a131b00
+	at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+	at java.util.concurrent.SynchronousQueue$TransferStack.awaitFulfill(SynchronousQueue.java:460)
+	at java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:362)
+	at java.util.concurrent.SynchronousQueue.poll(SynchronousQueue.java:941)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1066)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1127)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	...
+
+
+"Server console handler" Id=23 RUNNABLE (in native)
+	at java.io.FileInputStream.read0(Native Method)
+	at java.io.FileInputStream.read(FileInputStream.java:207)
+	at jline.internal.NonBlockingInputStream.read(NonBlockingInputStream.java:245)
+	at jline.internal.InputStreamReader.read(InputStreamReader.java:257)
+	-  locked jline.internal.NonBlockingInputStream@cfdbe9
+	at jline.internal.InputStreamReader.read(InputStreamReader.java:194)
+	-  locked jline.internal.NonBlockingInputStream@cfdbe9
+	at jline.console.ConsoleReader.readCharacter(ConsoleReader.java:2136)
+	at jline.console.ConsoleReader.readCharacter(ConsoleReader.java:2126)
+	at jline.console.ConsoleReader.readLineSimple(ConsoleReader.java:3228)
+	...
+
+
+"DestroyJavaVM" Id=22 RUNNABLE
+
+
+"Server thread" Id=20 RUNNABLE
+	at nl.jk5.pumpkin.server.scripting.component.impl.fs.FileSystems.fromClass(FileSystems.java:111)
+	at nl.jk5.pumpkin.server.map.DefaultMap.<init>(DefaultMap.java:55)
+	at nl.jk5.pumpkin.server.map.MapRegistry.load(MapRegistry.java:65)
+	at nl.jk5.pumpkin.server.Pumpkin.onServerStarting(Pumpkin.java:257)
+	at org.spongepowered.common.event.listener.GameStartingServerEventListener_Pumpkin_onServerStarting3.handle(Unknown Source)
+	at org.spongepowered.common.event.RegisteredListener.handle(RegisteredListener.java:86)
+	at org.spongepowered.mod.event.SpongeModEventManager.post(SpongeModEventManager.java:236)
+	at org.spongepowered.mod.event.SpongeModEventManager.post(SpongeModEventManager.java:280)
+	...
+
+
+"Server Infinisleeper" Id=19 TIMED_WAITING
+	at java.lang.Thread.sleep(Native Method)
+	at net.minecraft.server.dedicated.DedicatedServer$1.run(DedicatedServer.java:69)
+
+
+"Snooper Timer" Id=18 WAITING on java.util.TaskQueue@3a3ce44f
+	at java.lang.Object.wait(Native Method)
+	-  waiting on java.util.TaskQueue@3a3ce44f
+	at java.lang.Object.wait(Object.java:502)
+	at java.util.TimerThread.mainLoop(Timer.java:526)
+	at java.util.TimerThread.run(Timer.java:505)
+
+
+"Sponge Async Scheduler Thread" Id=17 TIMED_WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@44d26072
+	at sun.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@44d26072
+	at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2163)
+	at org.spongepowered.common.scheduler.AsyncScheduler.preTick(AsyncScheduler.java:112)
+	at org.spongepowered.common.scheduler.SchedulerBase.runTick(SchedulerBase.java:102)
+	at org.spongepowered.common.scheduler.AsyncScheduler.mainLoop(AsyncScheduler.java:66)
+	at org.spongepowered.common.scheduler.AsyncScheduler$$Lambda$9/1330012679.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+"JDWP Command Reader" Id=7 RUNNABLE (in native)
+
+
+"JDWP Event Helper Thread" Id=6 RUNNABLE
+
+
+"JDWP Transport Listener: dt_socket" Id=5 RUNNABLE
+
+
+"Signal Dispatcher" Id=4 RUNNABLE
+
+
+"Finalizer" Id=3 WAITING on java.lang.ref.ReferenceQueue$Lock@320f665f
+	at java.lang.Object.wait(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@320f665f
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:143)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:164)
+	at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)
+
+
+"Reference Handler" Id=2 WAITING on java.lang.ref.Reference$Lock@63b13477
+	at java.lang.Object.wait(Native Method)
+	-  waiting on java.lang.ref.Reference$Lock@63b13477
+	at java.lang.Object.wait(Object.java:502)
+	at java.lang.ref.Reference.tryHandlePending(Reference.java:191)
+	at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)
+
+
+
+Stacktrace:
+	at net.minecraft.server.dedicated.ServerHangWatchdog.run(ServerHangWatchdog.java:63)
+	at java.lang.Thread.run(Thread.java:745)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Linux (amd64) version 4.2.0-30-generic
+	Java Version: 1.8.0_72, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 957884160 bytes (913 MB) / 1588592640 bytes (1515 MB) up to 3707764736 bytes (3536 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: MCP 9.19 Powered by Forge 11.15.1.1722 7 mods loaded, 7 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+	UCHIJAAA	mcp{9.19} [Minecraft Coder Pack] (minecraft.jar) 
+	UCHIJAAA	FML{8.0.99.99} [Forge Mod Loader] (forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar) 
+	UCHIJAAA	Forge{11.15.1.1722} [Minecraft Forge] (forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar) 
+	UCHIJAA	sponge{$version} [SpongeForge] (SpongeForge) 
+	UCHIJAA	pumpkin{unknown} [Pumpkin] (main) 
+	UCHIJAA	Waila{1.6.0} [Waila] (Waila-1.6.0-B3_1.8.8.jar) 
+	UCHIJAA	worldedit{6.1.1} [WorldEdit] (worldedit-forge-mc1.8.9-6.1.1-dist.jar) 
+	Loaded coremods (and transformers): 
+SpongeCoremod (unknown)
+  org.spongepowered.common.launch.transformer.SpongeSuperclassTransformer
+	Profiler Position: N/A (disabled)
+	Player Count: 0 / 20; []
+	Is Modded: Definitely; Server brand changed to 'fml,forge,SpongeForge'
+	Type: Dedicated Server (map_server.txt)

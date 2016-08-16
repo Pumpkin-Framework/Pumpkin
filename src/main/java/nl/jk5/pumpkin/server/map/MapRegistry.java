@@ -4,8 +4,6 @@ import com.google.common.base.Preconditions;
 import nl.jk5.pumpkin.api.mappack.*;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
-import nl.jk5.pumpkin.server.world.gen.empty.DummyVoidGenerator;
-import nl.jk5.pumpkin.server.world.gen.empty.VoidWorldGeneratorModifier;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -13,7 +11,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.scheduler.SpongeExecutorService;
 import org.spongepowered.api.world.World;
-import org.spongepowered.api.world.WorldCreationSettings;
+import org.spongepowered.api.world.WorldArchetypes;
 import org.spongepowered.api.world.storage.WorldProperties;
 
 import java.io.File;
@@ -113,41 +111,38 @@ public class MapRegistry {
 
             CompletableFuture<WorldProperties> prepareFuture = downloadFuture.thenApplyAsync((downloadRes) -> {
                 //TODO: 9-2-16 flat generator settings
-                WorldCreationSettings.Builder settingsBuilder = WorldCreationSettings.builder()
-                        .dimension(world.getDimension())
-                        .enabled(true)
-                        .gameMode(world.getGamemode())
-                        .name("maps/map-" + id + "/" + world.getName())
-                        .seed(world.getSeed())
-                        .generateSpawnOnLoad(false)
-                        .usesMapFeatures(world.shouldGenerateStructures());
 
-                if(world.getGenerator() instanceof DummyVoidGenerator){
-                    settingsBuilder.generatorModifiers(new VoidWorldGeneratorModifier());
-                }else{
-                    settingsBuilder.generator(world.getGenerator());
+                try {
+                    //TODO: remove hardcoded overworld
+                    WorldProperties properties = this.pumpkin.getGame().getServer().createWorldProperties("maps/map-" + id + "/" + world.getName(), WorldArchetypes.OVERWORLD);
+                    //properties.setDimensionType(world.getDimension()); //TODO: Unable to change dimension type
+                    properties.setGenerateSpawnOnLoad(false);
+                    properties.setGameMode(world.getGamemode());
+                    //properties.setSeed(world.getSeed()); //TODO: Unable to change the seed
+                    properties.setGenerateSpawnOnLoad(false);
+                    properties.setMapFeaturesEnabled(world.shouldGenerateStructures());
+
+                    //if(world.getGenerator() instanceof DummyVoidGenerator){
+                    //    properties.setGeneratorModifiers(Collections.singletonList(new VoidWorldGeneratorModifier()));
+                    //}else{
+                        properties.setGeneratorType(world.getGenerator());
+                    //}
+
+                    properties.setWorldTime(world.getInitialTime());
+                    properties.setSpawnPosition(world.getSpawnpoint().toVector3i());
+                    return properties;
+                } catch (IOException e) {
+                    Log.warn("World could not be generated. Map loading canceled (mappack id: " + mappack.getId() + ")(map id: " + id + ")(world id: " + world.getId() + ")");
+                    throw new MapLoadingException("World could not be generated", e);
                 }
-
-                WorldCreationSettings settings = settingsBuilder.build();
-
-                Optional<WorldProperties> properties = this.pumpkin.getGame().getServer().createWorldProperties(settings);
-                if(!properties.isPresent()){
-                    Log.warn("World properties could not be loaded. Map loading canceled (mappack id: " + mappack.getId() + ")(map id: " + id + ")(world id: " + world.getId() + ")");
-                    destroyMap(map);
-                    throw new MapLoadingException("World properties could not be loaded");
-                }
-                properties.get().setWorldTime(world.getInitialTime());
-                properties.get().setSpawnPosition(world.getSpawnpoint().toVector3i());
-
-                return properties.get();
             }, asyncExecutor);
 
             loadFutures.add(prepareFuture.thenApplyAsync((properties) -> {
                 Optional<World> generatedWorld = this.pumpkin.getGame().getServer().loadWorld(properties);
                 if(!generatedWorld.isPresent()){
-                    Log.warn("World could not be generated. Map loading canceled (mappack id: " + mappack.getId() + ")(map id: " + id + ")(world id: " + world.getId() + ")");
+                    Log.warn("World could not be loaded. Map loading canceled (mappack id: " + mappack.getId() + ")(map id: " + id + ")(world id: " + world.getId() + ")");
                     destroyMap(map);
-                    throw new MapLoadingException("World could not be generated");
+                    throw new MapLoadingException("World could not be loaded");
                 }
                 DefaultMapWorld mapWorld = new DefaultMapWorld(generatedWorld.get(), world, map);
                 map.addWorld(mapWorld);

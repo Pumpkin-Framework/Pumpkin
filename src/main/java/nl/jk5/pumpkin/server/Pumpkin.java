@@ -14,7 +14,6 @@ import nl.jk5.pumpkin.server.services.PumpkinServiceManger;
 import nl.jk5.pumpkin.server.settings.PumpkinSettings;
 import nl.jk5.pumpkin.server.sql.SqlTableManager;
 import nl.jk5.pumpkin.server.utils.WorldUtils;
-import nl.jk5.pumpkin.server.world.gen.empty.VoidWorldGeneratorModifier;
 import org.postgresql.Driver;
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
@@ -25,8 +24,8 @@ import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartingServerEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.service.ban.BanService;
-import org.spongepowered.api.world.gen.WorldGeneratorModifier;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -54,6 +53,7 @@ public class Pumpkin {
     private MappackRegistry mappackRegistry;
     private MapRegistry mapRegistry;
     private PumpkinSettings settings;
+    private PluginContainer pluginContainer;
 
     private MapEventListener mapEventListener;
 
@@ -80,10 +80,12 @@ public class Pumpkin {
         this.mapEventListener = new MapEventListener(this);
         PlayerRegistry playerRegistry = new PlayerRegistry(this);
 
-        this.game.getRegistry().register(WorldGeneratorModifier.class, new VoidWorldGeneratorModifier());
+        //this.game.getRegistry().register(WorldGeneratorModifier.class, new VoidWorldGeneratorModifier());
         this.game.getEventManager().registerListeners(this, this.mapRegistry);
         this.game.getEventManager().registerListeners(this, this.mapEventListener);
         this.game.getEventManager().registerListeners(this, playerRegistry);
+
+        this.pluginContainer = this.game.getPluginManager().fromInstance(this).get();
     }
 
     @Listener
@@ -126,6 +128,7 @@ public class Pumpkin {
         try {
             Map lobbyMap = this.mapRegistry.load(lobby.get(), true).get();
             this.mapRegistry.setLobby(lobbyMap);
+            Log.info("Lobby map loaded. Ready to accept players");
         } catch (InterruptedException ignored) {
 
         } catch (ExecutionException e) {
@@ -177,5 +180,9 @@ public class Pumpkin {
 
     public MapEventListener getMapEventListener() {
         return mapEventListener;
+    }
+
+    public PluginContainer getPluginContainer() {
+        return pluginContainer;
     }
 }

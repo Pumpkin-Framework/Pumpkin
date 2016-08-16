@@ -1,0 +1,120 @@
+---- Minecraft Crash Report ----
+// Ooh. Shiny.
+
+Time: 5/2/16 10:10 PM
+Description: Ticking entity
+
+java.lang.NullPointerException: Ticking entity
+	at com.google.common.base.Preconditions.checkNotNull(Preconditions.java:213)
+	at org.spongepowered.common.data.util.DirectionResolver.getFor(DirectionResolver.java:56)
+	at net.minecraft.entity.EntityHanging.getDirectionalData(EntityHanging.java:85)
+	at net.minecraft.entity.EntityHanging.supplyVanillaManipulators(EntityHanging.java:96)
+	at net.minecraft.entity.Entity.getContainers(Entity.java:948)
+	at org.spongepowered.common.entity.SpongeEntitySnapshotBuilder.from(SpongeEntitySnapshotBuilder.java:135)
+	at net.minecraft.entity.Entity.createSnapshot(Entity.java:316)
+	at org.spongepowered.common.event.CauseTracker.processSpawnEntity(CauseTracker.java:991)
+	at net.minecraft.world.World.spawnEntityInWorld(World.java:321)
+	at net.minecraft.entity.EntityLeashKnot.createKnot(EntityLeashKnot.java:155)
+	at net.minecraft.entity.EntityLiving.recreateLeash(EntityLiving.java:1245)
+	at net.minecraft.entity.EntityLiving.updateLeashedState(EntityLiving.java:1153)
+	at net.minecraft.entity.EntityCreature.updateLeashedState(EntityCreature.java:95)
+	at net.minecraft.entity.EntityLiving.onUpdate(EntityLiving.java:279)
+	at net.minecraft.entity.passive.EntityHorse.onUpdate(EntityHorse.java:1115)
+	at net.minecraft.world.World.redirect$onCallEntityUpdate$0(World.java:287)
+	at net.minecraft.world.World.updateEntityWithOptionalForce(World.java:2011)
+	at net.minecraft.world.WorldServer.updateEntityWithOptionalForce(WorldServer.java:725)
+	at net.minecraft.world.World.updateEntity(World.java:1976)
+	at net.minecraft.world.World.updateEntities(World.java:1805)
+	at net.minecraft.world.WorldServer.updateEntities(WorldServer.java:560)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:777)
+	at net.minecraft.server.dedicated.DedicatedServer.updateTimeLightAndEntities(DedicatedServer.java:365)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:681)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:548)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at com.google.common.base.Preconditions.checkNotNull(Preconditions.java:213)
+	at org.spongepowered.common.data.util.DirectionResolver.getFor(DirectionResolver.java:56)
+	at net.minecraft.entity.EntityHanging.getDirectionalData(EntityHanging.java:85)
+	at net.minecraft.entity.EntityHanging.supplyVanillaManipulators(EntityHanging.java:96)
+	at net.minecraft.entity.Entity.getContainers(Entity.java:948)
+	at org.spongepowered.common.entity.SpongeEntitySnapshotBuilder.from(SpongeEntitySnapshotBuilder.java:135)
+	at net.minecraft.entity.Entity.createSnapshot(Entity.java:316)
+	at org.spongepowered.common.event.CauseTracker.processSpawnEntity(CauseTracker.java:991)
+	at net.minecraft.world.World.spawnEntityInWorld(World.java:321)
+	at net.minecraft.entity.EntityLeashKnot.createKnot(EntityLeashKnot.java:155)
+	at net.minecraft.entity.EntityLiving.recreateLeash(EntityLiving.java:1245)
+	at net.minecraft.entity.EntityLiving.updateLeashedState(EntityLiving.java:1153)
+	at net.minecraft.entity.EntityCreature.updateLeashedState(EntityCreature.java:95)
+	at net.minecraft.entity.EntityLiving.onUpdate(EntityLiving.java:279)
+	at net.minecraft.entity.passive.EntityHorse.onUpdate(EntityHorse.java:1115)
+	at net.minecraft.world.World.redirect$onCallEntityUpdate$0(World.java:287)
+	at net.minecraft.world.World.updateEntityWithOptionalForce(World.java:2011)
+	at net.minecraft.world.WorldServer.updateEntityWithOptionalForce(WorldServer.java:725)
+	at net.minecraft.world.World.updateEntity(World.java:1976)
+
+-- Entity being ticked --
+Details:
+	Entity Type: EntityHorse (net.minecraft.entity.passive.EntityHorse)
+	Entity ID: 1169
+	Entity Name: Zenith
+	Entity's Exact location: 939.46, 84.00, 776.80
+	Entity's Block location: 939.00,84.00,776.00 - World: (939,84,776), Chunk: (at 11,5,8 in 58,48; contains blocks 928,0,768 to 943,255,783), Region: (1,1; contains chunks 32,32 to 63,63, blocks 512,0,512 to 1023,255,1023)
+	Entity's Momentum: 0.00, -0.08, 0.00
+	Entity's Rider: ~~ERROR~~ NullPointerException: null
+	Entity's Vehicle: ~~ERROR~~ NullPointerException: null
+Stacktrace:
+	at net.minecraft.world.World.updateEntities(World.java:1805)
+	at net.minecraft.world.WorldServer.updateEntities(WorldServer.java:560)
+
+-- Affected level --
+Details:
+	Level name: maps/map-3/default
+	All players: 1 total; [EntityPlayerMP['jk_5'/38, l='maps/map-3/default', x=947.00, y=85.00, z=740.00]]
+	Chunk stats: ServerChunkCache: 459 Drop: 0
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: 73.00,64.00,147.00 - World: (73,64,147), Chunk: (at 9,4,3 in 4,9; contains blocks 64,0,144 to 79,255,159), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 133 game time, 133 day time
+	Level dimension: 11
+	Level storage version: 0x04ABD - Anvil
+	Level weather: Rain time: 32944 (now: false), thunder time: 28393 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+Stacktrace:
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:777)
+	at net.minecraft.server.dedicated.DedicatedServer.updateTimeLightAndEntities(DedicatedServer.java:365)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:681)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:548)
+	at java.lang.Thread.run(Thread.java:745)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Linux (amd64) version 4.4.0-21-generic
+	Java Version: 1.8.0_77, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 569776512 bytes (543 MB) / 1728577536 bytes (1648 MB) up to 3707764736 bytes (3536 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	FML: MCP 9.19 Powered by Forge 11.15.1.1855 7 mods loaded, 7 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+	UCHIJAAAA	mcp{9.19} [Minecraft Coder Pack] (minecraft.jar) 
+	UCHIJAAAA	FML{8.0.99.99} [Forge Mod Loader] (forgeSrc-1.8.9-11.15.1.1855-PROJECT(SpongeForge).jar) 
+	UCHIJAAAA	Forge{11.15.1.1855} [Minecraft Forge] (forgeSrc-1.8.9-11.15.1.1855-PROJECT(SpongeForge).jar) 
+	UCHIJAAAA	sponge{$version} [SpongeForge] (SpongeForge_java6) 
+	UCHIJAAAA	nl.jk5.pumpkin{} [pumpkin] (main) 
+	UCHIJAAAA	Waila{1.6.0} [Waila] (Waila-1.6.0-B3_1.8.8.jar) 
+	UCHIJAAAA	worldedit{6.1.1} [WorldEdit] (worldedit-forge-mc1.8.9-6.1.1-dist.jar) 
+	Loaded coremods (and transformers): 
+SpongeCoremod (unknown)
+  org.spongepowered.common.launch.transformer.SpongeSuperclassTransformer
+	Profiler Position: N/A (disabled)
+	Player Count: 1 / 20; [EntityPlayerMP['jk_5'/38, l='maps/map-3/default', x=947.00, y=85.00, z=740.00]]
+	Is Modded: Definitely; Server brand changed to 'fml,forge,sponge'
+	Type: Dedicated Server (map_server.txt)

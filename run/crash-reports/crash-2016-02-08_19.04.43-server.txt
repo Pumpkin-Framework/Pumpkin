@@ -1,0 +1,103 @@
+---- Minecraft Crash Report ----
+// I let you down. Sorry :(
+
+Time: 2/8/16 7:04 PM
+Description: Exception generating new chunk
+
+org.spongepowered.api.util.PositionOutOfBoundsException: Position is out of bounds: expected in range (0, 0, 0) to (15, 255, 15) but got (-381, 64, 676)
+	at org.spongepowered.common.util.gen.AbstractBlockBuffer.checkRange(AbstractBlockBuffer.java:58)
+	at org.spongepowered.common.util.gen.ChunkPrimerBuffer.setBlock(ChunkPrimerBuffer.java:75)
+	at org.spongepowered.api.world.extent.MutableBlockVolume.setBlock(MutableBlockVolume.java:50)
+	at nl.jk5.pumpkin.server.world.gen.empty.VoidGenerationPopulator.populate(VoidGenerationPopulator.java:17)
+	at org.spongepowered.common.world.gen.SpongeChunkProvider.provideChunk(SpongeChunkProvider.java:213)
+	at net.minecraft.world.gen.ChunkProviderServer.originalLoadChunk(ChunkProviderServer.java:169)
+	at net.minecraft.world.gen.ChunkProviderServer.loadChunk(ChunkProviderServer.java:129)
+	at net.minecraft.world.gen.ChunkProviderServer.loadChunk(ChunkProviderServer.java:99)
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:200)
+	at net.minecraft.world.World.getChunkFromChunkCoords(World.java:336)
+	at net.minecraft.world.World.getChunkFromBlockCoords(World.java:328)
+	at net.minecraft.world.World.getBlockState(World.java:889)
+	at net.minecraft.world.SpawnerAnimals.canCreatureTypeSpawnAtLocation(SpawnerAnimals.java:193)
+	at net.minecraft.world.SpawnerAnimals.findChunksForSpawning(SpawnerAnimals.java:126)
+	at net.minecraft.world.WorldServer.tick(WorldServer.java:205)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:766)
+	at net.minecraft.server.dedicated.DedicatedServer.updateTimeLightAndEntities(DedicatedServer.java:365)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:681)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:548)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at org.spongepowered.common.util.gen.AbstractBlockBuffer.checkRange(AbstractBlockBuffer.java:58)
+	at org.spongepowered.common.util.gen.ChunkPrimerBuffer.setBlock(ChunkPrimerBuffer.java:75)
+	at org.spongepowered.api.world.extent.MutableBlockVolume.setBlock(MutableBlockVolume.java:50)
+	at nl.jk5.pumpkin.server.world.gen.empty.VoidGenerationPopulator.populate(VoidGenerationPopulator.java:17)
+	at org.spongepowered.common.world.gen.SpongeChunkProvider.provideChunk(SpongeChunkProvider.java:213)
+
+-- Chunk to be generated --
+Details:
+	Location: 0,0
+	Position hash: 0
+	Generator: RandomLevelSource
+Stacktrace:
+	at net.minecraft.world.gen.ChunkProviderServer.originalLoadChunk(ChunkProviderServer.java:169)
+	at net.minecraft.world.gen.ChunkProviderServer.loadChunk(ChunkProviderServer.java:129)
+	at net.minecraft.world.gen.ChunkProviderServer.loadChunk(ChunkProviderServer.java:99)
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:200)
+	at net.minecraft.world.World.getChunkFromChunkCoords(World.java:336)
+	at net.minecraft.world.World.getChunkFromBlockCoords(World.java:328)
+	at net.minecraft.world.World.getBlockState(World.java:889)
+	at net.minecraft.world.SpawnerAnimals.canCreatureTypeSpawnAtLocation(SpawnerAnimals.java:193)
+	at net.minecraft.world.SpawnerAnimals.findChunksForSpawning(SpawnerAnimals.java:126)
+	at net.minecraft.world.WorldServer.tick(WorldServer.java:205)
+
+-- Affected level --
+Details:
+	Level name: maps/map-0/default
+	All players: 1 total; [EntityPlayerMP['jk_5'/948, l='maps/map-0/default', x=0.50, y=64.00, z=0.50]]
+	Chunk stats: ServerChunkCache: 1101 Drop: 0
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: -381.00,64.00,676.00 - World: (-381,64,676), Chunk: (at 3,4,4 in -24,42; contains blocks -384,0,672 to -369,255,687), Region: (-1,1; contains chunks -32,32 to -1,63, blocks -512,0,512 to -1,255,1023)
+	Level time: 485 game time, 485 day time
+	Level dimension: 1
+	Level storage version: 0x04ABD - Anvil
+	Level weather: Rain time: 112723 (now: false), thunder time: 56048 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+Stacktrace:
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:766)
+	at net.minecraft.server.dedicated.DedicatedServer.updateTimeLightAndEntities(DedicatedServer.java:365)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:681)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:548)
+	at java.lang.Thread.run(Thread.java:745)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Linux (amd64) version 4.2.0-27-generic
+	Java Version: 1.8.0_72, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 1213013952 bytes (1156 MB) / 1768947712 bytes (1687 MB) up to 3722969088 bytes (3550 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 1, tcache: 1, allocated: 12, tallocated: 94
+	FML: MCP 9.19 Powered by Forge 11.15.1.1722 7 mods loaded, 7 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+	UCHIJAAAA	mcp{9.19} [Minecraft Coder Pack] (minecraft.jar) 
+	UCHIJAAAA	FML{8.0.99.99} [Forge Mod Loader] (forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar) 
+	UCHIJAAAA	Forge{11.15.1.1722} [Minecraft Forge] (forgeSrc-1.8.9-11.15.1.1722-PROJECT(SpongeForge).jar) 
+	UCHIJAAAA	sponge{$version} [SpongeForge] (SpongeForge) 
+	UCHIJAAAA	pumpkin{unknown} [Pumpkin] (main) 
+	UCHIJAAAA	Waila{1.6.0} [Waila] (Waila-1.6.0-B3_1.8.8.jar) 
+	UCHIJAAAA	worldedit{6.1.1} [WorldEdit] (worldedit-forge-mc1.8.9-6.1.1-dist.jar) 
+	Loaded coremods (and transformers): 
+SpongeCoremod (unknown)
+  org.spongepowered.common.launch.transformer.SpongeSuperclassTransformer
+	Profiler Position: N/A (disabled)
+	Player Count: 1 / 20; [EntityPlayerMP['jk_5'/948, l='maps/map-0/default', x=0.50, y=64.00, z=0.50]]
+	Is Modded: Definitely; Server brand changed to 'fml,forge,SpongeForge'
+	Type: Dedicated Server (map_server.txt)

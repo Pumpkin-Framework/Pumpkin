@@ -13,7 +13,6 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.data.Transaction;
 import org.spongepowered.api.data.key.Keys;
-import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.entity.Item;
 import org.spongepowered.api.entity.living.player.Player;
@@ -287,19 +286,16 @@ public final class MapEventListener {
                         if (stack.isPresent()) {
                             Vector3d position = player.getLocation().getPosition();
                             position = position.add(0, 1.3, 0);
-                            Optional<Entity> entity = player.getWorld().createEntity(EntityTypes.ITEM, position);
-                            if (entity.isPresent()) {
-                                Item item = (Item) entity.get();
-                                item.offer(Keys.REPRESENTED_ITEM, stack.get().createSnapshot());
+                            Item item = (Item) player.getWorld().createEntity(EntityTypes.ITEM, position);
+                            item.offer(Keys.REPRESENTED_ITEM, stack.get().createSnapshot());
 
-                                double m1 = player.getRandom().nextDouble() * 0.5d;
-                                double m2 = player.getRandom().nextDouble() * Math.PI * 2d;
-                                double mX = -Math.sin(m2) * m1;
-                                double mZ = Math.cos(m2) * m1;
-                                item.setVelocity(new Vector3d(mX, 0.2, mZ));
+                            double m1 = player.getRandom().nextDouble() * 0.5d;
+                            double m2 = player.getRandom().nextDouble() * Math.PI * 2d;
+                            double mX = -Math.sin(m2) * m1;
+                            double mZ = Math.cos(m2) * m1;
+                            item.setVelocity(new Vector3d(mX, 0.2, mZ));
 
-                                player.getWorld().spawnEntity(item, Cause.builder().owner(player).build());
-                            }
+                            player.getWorld().spawnEntity(item, Cause.builder().owner(player).build());
                             slot.clear();
                         }
                     });

@@ -10,7 +10,7 @@ import nl.jk5.pumpkin.server.map.DefaultMapWorld;
 import nl.jk5.pumpkin.server.sql.obj.DatabasePlayer;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.entity.DisplaceEntityEvent;
+import org.spongepowered.api.event.entity.MoveEntityEvent;
 import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.world.Location;
@@ -125,8 +125,8 @@ public class PlayerRegistry {
         this.pumpkin.getTableManager().playerDao.update(player);
     }
 
-    @Listener // TODO: 25-2-16 Switch to DisplaceEntityEvent.Teleport once it's implemented
-    public void onMove(DisplaceEntityEvent.Move event, @First Player player){
+    @Listener // TODO: 25-2-16 Switch to MoveEntityEvent.Teleport ??
+    public void onMove(MoveEntityEvent event, @First Player player){
         if(event.getFromTransform().getExtent() != event.getToTransform().getExtent()){
             Optional<MapWorld> oldMapWorld = this.pumpkin.getMapRegistry().getMapWorld(event.getFromTransform().getExtent());
             Optional<MapWorld> newMapWorld = this.pumpkin.getMapRegistry().getMapWorld(event.getToTransform().getExtent());

@@ -1,6 +1,6 @@
 package nl.jk5.pumpkin.server.utils;
 
-import nl.jk5.pumpkin.server.world.gen.empty.DummyVoidGenerator;
+import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.entity.living.player.gamemode.GameMode;
 import org.spongepowered.api.entity.living.player.gamemode.GameModes;
 import org.spongepowered.api.world.DimensionType;
@@ -54,11 +54,12 @@ public final class RegistryUtils {
         }else if(name.equals("the-end")){
             return Optional.of(GeneratorTypes.THE_END);
         }else if(name.equals("void")){
-            //GeneratorType ret = GeneratorTypes.FLAT;
-            //ret.getGeneratorSettings().set(DataQuery.of("customSettings"), "3;minecraft:air;127;decoration");
-            //return Optional.of(ret);
+            //TODO: maybe create our own void provider?
+            GeneratorType ret = GeneratorTypes.FLAT;
+            ret.getGeneratorSettings().set(DataQuery.of("customSettings"), "3;minecraft:air;127;decoration");
+            return Optional.of(ret);
 
-            return Optional.of(new DummyVoidGenerator());
+            //return Optional.of(new DummyVoidGenerator());
         }
         return Optional.empty();
     }
