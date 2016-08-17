@@ -7,6 +7,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import nl.jk5.pumpkin.api.mappack.MappackWorld;
 import nl.jk5.pumpkin.api.mappack.WorldFile;
+import nl.jk5.pumpkin.api.mappack.WorldGamerule;
 import nl.jk5.pumpkin.api.mappack.Zone;
 import nl.jk5.pumpkin.api.mappack.game.stat.StatEmitterConfig;
 import nl.jk5.pumpkin.api.utils.PlayerLocation;
@@ -77,6 +78,9 @@ public class DatabaseMappackWorld implements MappackWorld {
 
     @ForeignCollectionField(eager = true)
     private ForeignCollection<DatabaseStatEmitter> statEmitters;
+
+    @ForeignCollectionField(eager = true)
+    private ForeignCollection<DatabaseWorldGamerule> gamerules;
 
     @Override
     public int getId() {
@@ -173,6 +177,12 @@ public class DatabaseMappackWorld implements MappackWorld {
     @Override
     public Collection<StatEmitterConfig> getStatEmitters() {
         return ((Collection) this.statEmitters);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Collection<WorldGamerule> getGamerules() {
+        return ((Collection) this.gamerules);
     }
 
     @Override

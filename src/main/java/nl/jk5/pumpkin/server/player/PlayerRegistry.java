@@ -4,6 +4,7 @@ import com.flowpowered.math.vector.Vector3d;
 import com.google.common.base.Charsets;
 import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
+import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
 import nl.jk5.pumpkin.server.map.DefaultMap;
 import nl.jk5.pumpkin.server.map.DefaultMapWorld;
@@ -26,6 +27,11 @@ public class PlayerRegistry {
 
     public PlayerRegistry(Pumpkin pumpkin) {
         this.pumpkin = pumpkin;
+    }
+
+    @Listener
+    public void onAuth(ClientConnectionEvent.Auth event) {
+        Log.info("Player {}/{} connecting to {}", event.getProfile().getName().orElse("[UNKNOWN]"), event.getProfile().getUniqueId().toString(), event.getConnection().getVirtualHost().getHostString());
     }
 
     @Listener

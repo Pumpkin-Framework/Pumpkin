@@ -28,6 +28,7 @@ public final class SqlTableManager {
     public Dao<DatabaseMappackTeam, Integer> mappackTeamDao;
     public Dao<DatabaseMappackStat, Integer> mappackStatDao;
     public Dao<DatabaseStatEmitter, Integer> statEmitterDao;
+    public Dao<DatabaseWorldGamerule, Integer> gameruleDao;
 
     public SqlTableManager(Pumpkin pumpkin, String connectionString) {
         this.pumpkin = pumpkin;
@@ -55,6 +56,7 @@ public final class SqlTableManager {
         this.mappackTeamDao = createTable(DatabaseMappackTeam.class);
         this.mappackStatDao = createTable(DatabaseMappackStat.class);
         this.statEmitterDao = createTable(DatabaseStatEmitter.class);
+        this.gameruleDao = createTable(DatabaseWorldGamerule.class);
     }
 
     private <T, ID> Dao<T, ID> createTable(Class<T> cls){

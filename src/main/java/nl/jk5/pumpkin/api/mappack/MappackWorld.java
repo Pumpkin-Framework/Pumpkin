@@ -38,4 +38,6 @@ public interface MappackWorld {
     Collection<Zone> getZones();
 
     Collection<StatEmitterConfig> getStatEmitters();
+
+    Collection<WorldGamerule> getGamerules();
 }

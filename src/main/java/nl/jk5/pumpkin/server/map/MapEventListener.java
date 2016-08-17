@@ -24,6 +24,9 @@ import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.entity.damage.DamageTypes;
 import org.spongepowered.api.event.cause.entity.damage.source.DamageSource;
 import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
+import org.spongepowered.api.event.cause.entity.spawn.SpawnCause;
+import org.spongepowered.api.event.cause.entity.spawn.SpawnTypes;
+import org.spongepowered.api.event.data.ChangeDataHolderEvent;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.entity.living.humanoid.player.RespawnPlayerEvent;
 import org.spongepowered.api.event.filter.cause.Root;
@@ -125,7 +128,8 @@ public final class MapEventListener {
                     }
                 }
             }else{
-                transaction.setValid(false);
+                //TODO: add edit mode, to bypass this
+                //transaction.setValid(false);
             }
         }
     }
@@ -157,7 +161,8 @@ public final class MapEventListener {
                     }
                 }
             }else{
-                transaction.setValid(false);
+                //TODO: add edit mode, to bypass this
+                //transaction.setValid(false);
             }
         }
     }
@@ -295,7 +300,7 @@ public final class MapEventListener {
                             double mZ = Math.cos(m2) * m1;
                             item.setVelocity(new Vector3d(mX, 0.2, mZ));
 
-                            player.getWorld().spawnEntity(item, Cause.builder().owner(player).build());
+                            player.getWorld().spawnEntity(item, Cause.builder().named("root", SpawnCause.builder().type(SpawnTypes.DROPPED_ITEM).build()).owner(player).build());
                             slot.clear();
                         }
                     });
@@ -351,6 +356,11 @@ public final class MapEventListener {
                 }
             }
         }
+    }
+
+    @Listener
+    public void onDataHolderChanged(ChangeDataHolderEvent event){
+        //TODO: handle food drain. Cancel when needed
     }
 
     public void onPlayerJoinMap(Player player, DefaultMap map) {

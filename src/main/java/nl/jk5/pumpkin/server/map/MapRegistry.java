@@ -122,6 +122,10 @@ public class MapRegistry {
                     properties.setGenerateSpawnOnLoad(false);
                     properties.setMapFeaturesEnabled(world.shouldGenerateStructures());
 
+                    for (WorldGamerule gamerule : world.getGamerules()) {
+                        properties.setGameRule(gamerule.getName(), gamerule.getValue());
+                    }
+
                     //if(world.getGenerator() instanceof DummyVoidGenerator){
                     //    properties.setGeneratorModifiers(Collections.singletonList(new VoidWorldGeneratorModifier()));
                     //}else{
