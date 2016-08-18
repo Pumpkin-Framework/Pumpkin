@@ -4,9 +4,5 @@ public interface WorldFile {
 
     String getPath();
 
-    String getFileId();
-
     boolean isRequired();
-
-    String getChecksum();
 }

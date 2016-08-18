@@ -25,6 +25,8 @@ public final class SqlTableManager {
     public Dao<DatabaseMappackWorld, Integer> mappackWorldsDao;
     public Dao<DatabasePlayer, Integer> playerDao;
     public Dao<DatabaseZone, Integer> zoneDao;
+    public Dao<DatabaseWorldRevision, Integer> revisionDao;
+    public Dao<DatabaseWorldFile, Integer> worldFileDao;
     public Dao<DatabaseMappackTeam, Integer> mappackTeamDao;
     public Dao<DatabaseMappackStat, Integer> mappackStatDao;
     public Dao<DatabaseStatEmitter, Integer> statEmitterDao;
@@ -53,6 +55,8 @@ public final class SqlTableManager {
         this.mappackWorldsDao = createTable(DatabaseMappackWorld.class);
         this.playerDao = createTable(DatabasePlayer.class);
         this.zoneDao = createTable(DatabaseZone.class);
+        this.revisionDao = createTable(DatabaseWorldRevision.class);
+        this.worldFileDao = createTable(DatabaseWorldFile.class);
         this.mappackTeamDao = createTable(DatabaseMappackTeam.class);
         this.mappackStatDao = createTable(DatabaseMappackStat.class);
         this.statEmitterDao = createTable(DatabaseStatEmitter.class);

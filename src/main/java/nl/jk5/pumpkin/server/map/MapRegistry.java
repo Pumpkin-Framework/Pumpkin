@@ -4,10 +4,8 @@ import com.google.common.base.Preconditions;
 import nl.jk5.pumpkin.api.mappack.*;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.asynchttpclient.ListenableFuture;
+import org.asynchttpclient.Response;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.scheduler.SpongeExecutorService;
 import org.spongepowered.api.world.World;
@@ -19,14 +17,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
-import java.security.DigestInputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MapRegistry {
@@ -67,45 +63,46 @@ public class MapRegistry {
         Log.info("Loading mappack " + mappack.getName() + " (mappack id: " + mappack.getId() + ")(map id: " + id + ")");
 
         for (MappackWorld world : mappack.getWorlds()) {
-            HttpClient client = HttpClientBuilder.create().build();
-
             List<CompletableFuture<Void>> downloadFutures = new ArrayList<>();
-            world.getFiles().stream().filter(WorldFile::isRequired).forEach(file -> {
+
+            world.getCurrentRevision().getFiles().stream().filter(WorldFile::isRequired).forEach(file -> {
                 // TODO: 13-2-16 maybe even generate level.dat instead of downloading it
-                downloadFutures.add(CompletableFuture.runAsync(() -> {
-                    try{
-                        Log.info("Downloading file " + file.getPath());
-                        HttpGet req = new HttpGet("https://pumpkin.jk-5.nl/api/files/" + file.getFileId());
-                        HttpResponse res = client.execute(req);
-                        if(res.getStatusLine().getStatusCode() != 200){
-                            throw new MapLoadingException("Got non-200 response code on downloading file " + file.getPath() + ": " + res.getStatusLine().getStatusCode() + ": " + res.getStatusLine().getReasonPhrase());
-                        }
+                CompletableFuture<Void> retrieveFuture = new CompletableFuture<>();
+                downloadFutures.add(retrieveFuture);
+                Log.info("Downloading file " + file.getPath());
+                ListenableFuture<Response> f = this.pumpkin.getAsyncHttpClient().prepareGet("https://pumpkin.jk-5.nl/api/mappacks/" + mappack.getId() + "/worlds/" + world.getId() + "/files/" + file.getPath()).execute();
+                f.addListener(() -> {
+                    Response response = null;
+                    try {
+                        response = f.get();
+                    } catch (InterruptedException ignored) {
+                        return;
+                    } catch (ExecutionException e) {
+                        retrieveFuture.completeExceptionally(e.getCause());
+                        return;
+                    }
+
+                    if(response.getStatusCode() != 200){
+                        retrieveFuture.completeExceptionally(new MapLoadingException("Got non-200 response code on downloading file " + file.getPath() + ": " + response.getStatusCode() + ": " + response.getStatusText()));
+                        return;
+                    }
+
+                    try {
                         File dest = new File(mapDir, world.getName() + "/" + file.getPath());
                         if(!dest.getParentFile().exists()) dest.getParentFile().mkdirs();
-                        MessageDigest md = MessageDigest.getInstance("MD5");
-                        try(
-                                InputStream content = res.getEntity().getContent();
-                                DigestInputStream dis = new DigestInputStream(content, md)
-                        ){
-                            Files.copy(dis, dest.toPath());
-                            String downloadedChecksum = bytesToHex(md.digest());
-                            if(file.getChecksum().equals(downloadedChecksum)){
-                                Log.info("Downloaded file " + file.getPath() + " (checksums matched)");
-                            }else{
-                                throw new MapLoadingException("Could not download file " + file.getPath() + ". Checksums did not match\n" +
-                                        "Calculated: " + downloadedChecksum + '\n' +
-                                        "Should be:  " + file.getChecksum()
-                                );
-                            }
+                        try(InputStream content = response.getResponseBodyAsStream()){
+                            Files.copy(content, dest.toPath());
+                            Log.info("Downloaded file " + file.getPath());
                         }
-                    }catch(FileAlreadyExistsException e){
+                    } catch(FileAlreadyExistsException e){
                         Log.warn("File " + file.getPath() + " already exists");
-                    }catch(IOException e){
-                        throw new MapLoadingException("Error while downloading file " + file.getPath(), e);
-                    }catch(NoSuchAlgorithmException e){
-                        throw new MapLoadingException("md5 algorithm not found. Should not be able to happen", e);
+                    } catch (IOException e) {
+                        retrieveFuture.completeExceptionally(new MapLoadingException("Error while downloading file " + file.getPath(), e));
+                        return;
                     }
-                }, asyncExecutor));
+                    retrieveFuture.complete(null);
+                }, this.pumpkin.getAsyncExecutor());
+
             });
             CompletableFuture<Void> downloadFuture = CompletableFuture.allOf(downloadFutures.toArray(new CompletableFuture[downloadFutures.size()]));
 

@@ -5,10 +5,7 @@ import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
-import nl.jk5.pumpkin.api.mappack.MappackWorld;
-import nl.jk5.pumpkin.api.mappack.WorldFile;
-import nl.jk5.pumpkin.api.mappack.WorldGamerule;
-import nl.jk5.pumpkin.api.mappack.Zone;
+import nl.jk5.pumpkin.api.mappack.*;
 import nl.jk5.pumpkin.api.mappack.game.stat.StatEmitterConfig;
 import nl.jk5.pumpkin.api.utils.PlayerLocation;
 import nl.jk5.pumpkin.server.utils.RegistryUtils;
@@ -70,9 +67,6 @@ public class DatabaseMappackWorld implements MappackWorld {
     @DatabaseField(columnName = "flat_generator_settings", canBeNull = true, width = 256)
     private String generatorOptions;
 
-    @ForeignCollectionField
-    private ForeignCollection<DatabaseWorldFile> files;
-
     @ForeignCollectionField(eager = true)
     private ForeignCollection<DatabaseZone> zones;
 
@@ -81,6 +75,12 @@ public class DatabaseMappackWorld implements MappackWorld {
 
     @ForeignCollectionField(eager = true)
     private ForeignCollection<DatabaseWorldGamerule> gamerules;
+
+    @ForeignCollectionField(eager = true)
+    private ForeignCollection<DatabaseWorldRevision> revisions;
+
+    @DatabaseField(columnName = "world_revision", foreign = true, foreignAutoRefresh = true)
+    private DatabaseWorldRevision currentRevision;
 
     @Override
     public int getId() {
@@ -163,12 +163,6 @@ public class DatabaseMappackWorld implements MappackWorld {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Collection<WorldFile> getFiles() {
-        return ((Collection) this.files);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
     public Collection<Zone> getZones() {
         return ((Collection) this.zones);
     }
@@ -183,6 +177,17 @@ public class DatabaseMappackWorld implements MappackWorld {
     @Override
     public Collection<WorldGamerule> getGamerules() {
         return ((Collection) this.gamerules);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Collection<WorldRevision> getRevisions() {
+        return ((Collection) this.revisions);
+    }
+
+    @Override
+    public DatabaseWorldRevision getCurrentRevision() {
+        return currentRevision;
     }
 
     @Override

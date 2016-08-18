@@ -10,37 +10,17 @@ public class DatabaseWorldFile implements WorldFile {
     @DatabaseField(generatedId = true, unique = true)
     private int id;
 
-    @DatabaseField(columnName = "world_id", foreign = true, foreignAutoRefresh = true)
-    private DatabaseMappackWorld world;
+    @DatabaseField(columnName = "revision_id", foreign = true, foreignAutoRefresh = true)
+    private DatabaseWorldRevision revision;
 
     @DatabaseField
     private String path;
 
-    @DatabaseField(columnName = "file_id")
-    private String fileId;
-
     @DatabaseField(defaultValue = "TRUE")
     private boolean required;
 
-    @DatabaseField(canBeNull = false, width = 32)
-    private String checksum;
-
     public int getId() {
         return id;
-    }
-
-    public DatabaseMappackWorld getWorld() {
-        return world;
-    }
-
-    @Override
-    public String getPath() {
-        return path;
-    }
-
-    @Override
-    public String getFileId() {
-        return fileId;
     }
 
     @Override
@@ -49,7 +29,7 @@ public class DatabaseWorldFile implements WorldFile {
     }
 
     @Override
-    public String getChecksum() {
-        return checksum;
+    public String getPath() {
+        return path;
     }
 }

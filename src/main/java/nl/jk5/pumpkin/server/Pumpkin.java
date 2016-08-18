@@ -14,6 +14,9 @@ import nl.jk5.pumpkin.server.services.PumpkinServiceManger;
 import nl.jk5.pumpkin.server.settings.PumpkinSettings;
 import nl.jk5.pumpkin.server.sql.SqlTableManager;
 import nl.jk5.pumpkin.server.utils.WorldUtils;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.DefaultAsyncHttpClient;
+import org.asynchttpclient.DefaultAsyncHttpClientConfig;
 import org.postgresql.Driver;
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
@@ -25,13 +28,13 @@ import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartingServerEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.api.scheduler.SpongeExecutorService;
 import org.spongepowered.api.service.ban.BanService;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
@@ -56,6 +59,9 @@ public class Pumpkin {
     private PluginContainer pluginContainer;
 
     private MapEventListener mapEventListener;
+    private SpongeExecutorService asyncExecutor;
+
+    private AsyncHttpClient asyncHttpClient;
 
     public Pumpkin() {
         INSTANCE = this;
@@ -86,6 +92,14 @@ public class Pumpkin {
         this.game.getEventManager().registerListeners(this, playerRegistry);
 
         this.pluginContainer = this.game.getPluginManager().fromInstance(this).get();
+
+        this.asyncExecutor = this.game.getScheduler().createAsyncExecutor(this.pluginContainer);
+        this.asyncHttpClient = new DefaultAsyncHttpClient(new DefaultAsyncHttpClientConfig.Builder()
+                .setUsePooledMemory(true)
+                .setUserAgent("Pumpkin/1.0.0-SNAPSHOT")
+                .setUseNativeTransport(true)
+                .build()
+        );
     }
 
     @Listener
@@ -117,33 +131,28 @@ public class Pumpkin {
     }
 
     @Listener
-    public void onServerStarting(GameStartingServerEvent event){
+    public void onServerStarting(GameStartingServerEvent event) throws Throwable {
         int lobbyId = this.settings.getLobbyMappack();
-        Optional<Mappack> lobby = this.getMappackRegistry().byId(lobbyId);
-        if(!lobby.isPresent()){
-            Log.error("Mappack with id " + lobbyId + " not found. Could not load lobby");
-            throw new RuntimeException("Mappack with id " + lobbyId + " not found. Could not load lobby");
+
+        Mappack lobby = null;
+        try {
+            lobby = this.getMappackRegistry().byId(lobbyId).get();
+            Log.info("Loading done");
+        } catch (InterruptedException ignored) {
+        } catch (ExecutionException e) {
+            Log.error("Exception while retrieving lobby mappack");
+            throw e.getCause();
         }
 
         try {
-            Map lobbyMap = this.mapRegistry.load(lobby.get(), true).get();
+            Map lobbyMap = this.mapRegistry.load(lobby, true).get();
             this.mapRegistry.setLobby(lobbyMap);
             Log.info("Lobby map loaded. Ready to accept players");
         } catch (InterruptedException ignored) {
-
         } catch (ExecutionException e) {
-            Log.error("Error while loading lobby map", e);
-            throw new RuntimeException("Error while loading lobby map", e);
+            Log.error("Exception while loading lobby mappack");
+            throw e.getCause();
         }
-
-
-        /*this.mapRegistry.load(lobby.get()).whenComplete((res, e) -> {
-            if(e != null){
-                Log.error("Could not load lobby map", e);
-                throw new RuntimeException("Could not load lobby map", e);
-            }
-            this.mapRegistry.setLobby(res);
-        });*/
     }
 
     public PumpkinServiceManger getServiceManager() {
@@ -184,5 +193,13 @@ public class Pumpkin {
 
     public PluginContainer getPluginContainer() {
         return pluginContainer;
+    }
+
+    public SpongeExecutorService getAsyncExecutor() {
+        return asyncExecutor;
+    }
+
+    public AsyncHttpClient getAsyncHttpClient() {
+        return asyncHttpClient;
     }
 }

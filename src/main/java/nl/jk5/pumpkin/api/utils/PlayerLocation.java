@@ -3,6 +3,7 @@ package nl.jk5.pumpkin.api.utils;
 import com.flowpowered.math.vector.Vector3d;
 import com.flowpowered.math.vector.Vector3i;
 import com.google.common.base.Objects;
+import com.google.gson.JsonObject;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.extent.Extent;
 
@@ -113,5 +114,9 @@ public final class PlayerLocation {
 
     public <E extends Extent> Location<E> toLocation(E extent) {
         return new Location<E>(extent, this.x, this.y, this.z);
+    }
+
+    public static PlayerLocation fromJson(JsonObject json) {
+        return new PlayerLocation(json.get("x").getAsDouble(), json.get("y").getAsDouble(), json.get("z").getAsDouble(), json.get("yaw").getAsFloat(), json.get("pitch").getAsFloat());
     }
 }

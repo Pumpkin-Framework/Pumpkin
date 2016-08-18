@@ -33,11 +33,13 @@ public interface MappackWorld {
 
     String getGeneratorOptions();
 
-    Collection<WorldFile> getFiles();
-
     Collection<Zone> getZones();
 
     Collection<StatEmitterConfig> getStatEmitters();
 
     Collection<WorldGamerule> getGamerules();
+
+    Collection<WorldRevision> getRevisions();
+
+    WorldRevision getCurrentRevision();
 }
