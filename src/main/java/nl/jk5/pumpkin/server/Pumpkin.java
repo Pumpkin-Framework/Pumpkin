@@ -13,10 +13,8 @@ import nl.jk5.pumpkin.server.player.PlayerRegistry;
 import nl.jk5.pumpkin.server.services.PumpkinServiceManger;
 import nl.jk5.pumpkin.server.settings.PumpkinSettings;
 import nl.jk5.pumpkin.server.sql.SqlTableManager;
-import nl.jk5.pumpkin.server.utils.WorldUtils;
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.DefaultAsyncHttpClient;
-import org.asynchttpclient.DefaultAsyncHttpClientConfig;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.postgresql.Driver;
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
@@ -38,7 +36,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
-@Plugin(id = "nl.jk5.pumpkin")
+@Plugin(id = "pumpkin", name = "pumpkin", description = "PVP Framework", version = "0.1.0")
 public class Pumpkin {
 
     private static final UUID SERVER_ID = UUID.randomUUID();
@@ -61,7 +59,7 @@ public class Pumpkin {
     private MapEventListener mapEventListener;
     private SpongeExecutorService asyncExecutor;
 
-    private AsyncHttpClient asyncHttpClient;
+    private HttpClient httpClient;
 
     public Pumpkin() {
         INSTANCE = this;
@@ -94,12 +92,10 @@ public class Pumpkin {
         this.pluginContainer = this.game.getPluginManager().fromInstance(this).get();
 
         this.asyncExecutor = this.game.getScheduler().createAsyncExecutor(this.pluginContainer);
-        this.asyncHttpClient = new DefaultAsyncHttpClient(new DefaultAsyncHttpClientConfig.Builder()
-                .setUsePooledMemory(true)
+
+        this.httpClient = HttpClientBuilder.create()
                 .setUserAgent("Pumpkin/1.0.0-SNAPSHOT")
-                .setUseNativeTransport(true)
-                .build()
-        );
+                .build();
     }
 
     @Listener
@@ -113,14 +109,15 @@ public class Pumpkin {
 
     @Listener
     public void onServerAboutToStart(GameAboutToStartServerEvent event) throws SQLException {
+        Log.info("About to start");
         /*
          * Not really technically needed to have these worlds unloaded, it's just for performance improvements,
          * as the default worlds are always loaded.
          */
-        WorldUtils.unregisterDimension(-1);
-        WorldUtils.unregisterDimension(1);
-        WorldUtils.releaseDimensionId(-1);
-        WorldUtils.releaseDimensionId(1);
+        //WorldUtils.unregisterDimension(-1);
+        //WorldUtils.unregisterDimension(1);
+        //WorldUtils.releaseDimensionId(-1);
+        //WorldUtils.releaseDimensionId(1);
 
         //To change the generator type, see MixinMinecraftServer.loadAllWorlds (SpongeCommon)
         //The worldInfo var is loaded from the level.dat file. To change it in the code we need to patch that loading code
@@ -132,6 +129,7 @@ public class Pumpkin {
 
     @Listener
     public void onServerStarting(GameStartingServerEvent event) throws Throwable {
+        Log.info("Starting");
         int lobbyId = this.settings.getLobbyMappack();
 
         Mappack lobby = null;
@@ -143,6 +141,8 @@ public class Pumpkin {
             Log.error("Exception while retrieving lobby mappack");
             throw e.getCause();
         }
+
+        //TODO: handle null lobby
 
         try {
             Map lobbyMap = this.mapRegistry.load(lobby, true).get();
@@ -199,7 +199,7 @@ public class Pumpkin {
         return asyncExecutor;
     }
 
-    public AsyncHttpClient getAsyncHttpClient() {
-        return asyncHttpClient;
+    public HttpClient getHttpClient() {
+        return httpClient;
     }
 }

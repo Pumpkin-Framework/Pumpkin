@@ -4,8 +4,8 @@ import com.google.common.base.Preconditions;
 import nl.jk5.pumpkin.api.mappack.*;
 import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
-import org.asynchttpclient.ListenableFuture;
-import org.asynchttpclient.Response;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.scheduler.SpongeExecutorService;
 import org.spongepowered.api.world.World;
@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MapRegistry {
@@ -70,38 +69,36 @@ public class MapRegistry {
                 CompletableFuture<Void> retrieveFuture = new CompletableFuture<>();
                 downloadFutures.add(retrieveFuture);
                 Log.info("Downloading file " + file.getPath());
-                ListenableFuture<Response> f = this.pumpkin.getAsyncHttpClient().prepareGet("https://pumpkin.jk-5.nl/api/mappacks/" + mappack.getId() + "/worlds/" + world.getId() + "/files/" + file.getPath()).execute();
-                f.addListener(() -> {
-                    Response response = null;
-                    try {
-                        response = f.get();
-                    } catch (InterruptedException ignored) {
-                        return;
-                    } catch (ExecutionException e) {
-                        retrieveFuture.completeExceptionally(e.getCause());
-                        return;
-                    }
 
-                    if(response.getStatusCode() != 200){
-                        retrieveFuture.completeExceptionally(new MapLoadingException("Got non-200 response code on downloading file " + file.getPath() + ": " + response.getStatusCode() + ": " + response.getStatusText()));
-                        return;
-                    }
-
+                this.pumpkin.getAsyncExecutor().execute(() -> {
+                    HttpGet request = new HttpGet("https://pumpkin.jk-5.nl/api/mappacks/" + mappack.getId() + "/worlds/" + world.getId() + "/files/" + file.getPath());
                     try {
-                        File dest = new File(mapDir, world.getName() + "/" + file.getPath());
-                        if(!dest.getParentFile().exists()) dest.getParentFile().mkdirs();
-                        try(InputStream content = response.getResponseBodyAsStream()){
-                            Files.copy(content, dest.toPath());
-                            Log.info("Downloaded file " + file.getPath());
+                        HttpResponse response = this.pumpkin.getHttpClient().execute(request);
+
+                        if(response.getStatusLine().getStatusCode() != 200){
+                            retrieveFuture.completeExceptionally(new MapLoadingException("Got non-200 response code on downloading file " + file.getPath() + ": " + response.getStatusLine().getStatusCode() + ": " + response.getStatusLine().getReasonPhrase()));
+                            return;
                         }
-                    } catch(FileAlreadyExistsException e){
-                        Log.warn("File " + file.getPath() + " already exists");
+
+                        try {
+                            File dest = new File(mapDir, world.getName() + "/" + file.getPath());
+                            if(!dest.getParentFile().exists()) dest.getParentFile().mkdirs();
+                            try(InputStream content = response.getEntity().getContent()){
+                                Files.copy(content, dest.toPath());
+                                Log.info("Downloaded file " + file.getPath());
+                            }
+                        } catch(FileAlreadyExistsException e){
+                            Log.warn("File " + file.getPath() + " already exists");
+                        } catch (IOException e) {
+                            retrieveFuture.completeExceptionally(new MapLoadingException("Error while downloading file " + file.getPath(), e));
+                            return;
+                        }
+                        retrieveFuture.complete(null);
+
                     } catch (IOException e) {
-                        retrieveFuture.completeExceptionally(new MapLoadingException("Error while downloading file " + file.getPath(), e));
-                        return;
+                        retrieveFuture.completeExceptionally(e.getCause());
                     }
-                    retrieveFuture.complete(null);
-                }, this.pumpkin.getAsyncExecutor());
+                });
 
             });
             CompletableFuture<Void> downloadFuture = CompletableFuture.allOf(downloadFutures.toArray(new CompletableFuture[downloadFutures.size()]));

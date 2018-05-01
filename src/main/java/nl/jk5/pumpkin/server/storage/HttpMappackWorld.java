@@ -1,22 +1,25 @@
 package nl.jk5.pumpkin.server.storage;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import io.netty.util.CharsetUtil;
 import nl.jk5.pumpkin.api.mappack.*;
 import nl.jk5.pumpkin.api.mappack.game.stat.StatEmitterConfig;
 import nl.jk5.pumpkin.api.utils.PlayerLocation;
 import nl.jk5.pumpkin.server.Pumpkin;
 import nl.jk5.pumpkin.server.exception.MappackLoadingException;
 import nl.jk5.pumpkin.server.exception.MappackNotFoundException;
-import nl.jk5.pumpkin.server.utils.FutureUtils;
 import nl.jk5.pumpkin.server.utils.RegistryUtils;
-import org.asynchttpclient.ListenableFuture;
-import org.asynchttpclient.Response;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.spongepowered.api.entity.living.player.gamemode.GameMode;
 import org.spongepowered.api.world.DimensionType;
 import org.spongepowered.api.world.GeneratorType;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -168,29 +171,34 @@ public class HttpMappackWorld implements MappackWorld {
 
     public static CompletableFuture<HttpMappackWorld> byId(Mappack mappack, int id){
         CompletableFuture<HttpMappackWorld> ret = new CompletableFuture<>();
-        ListenableFuture<Response> future = Pumpkin.instance().getAsyncHttpClient().prepareGet("https://pumpkin.jk-5.nl/api/mappacks/" + mappack.getId() + "/" + id).execute();
-        future.addListener(() -> {
-            Optional<Response> result = FutureUtils.getResult(future, ret);
-            if(!result.isPresent()){
-                return;
-            }
-            Response response = result.get();
+        Pumpkin.instance().getAsyncExecutor().execute(() -> {
+            HttpGet request = new HttpGet("https://pumpkin.jk-5.nl/api/mappacks/" + mappack.getId() + "/" + id);
+            try {
+                HttpResponse response = Pumpkin.instance().getHttpClient().execute(request);
 
-            if(response.getStatusCode() == 404){
-                ret.completeExceptionally(new MappackNotFoundException());
-                return;
-            }
+                if(response.getStatusLine().getStatusCode() == 404){
+                    ret.completeExceptionally(new MappackNotFoundException());
+                    return;
+                }
 
-            JsonParser parser = new JsonParser();
-            JsonObject json = parser.parse(response.getResponseBody(CharsetUtil.UTF_8)).getAsJsonObject();
-            if(!json.get("success").getAsBoolean()){
-                ret.completeExceptionally(new MappackLoadingException(json.get("error").getAsString()));
-                return;
-            }
+                String jsonString;
+                try(InputStream is = response.getEntity().getContent()){
+                    jsonString = CharStreams.toString(new InputStreamReader(is, Charsets.UTF_8));
+                }
 
-            JsonObject data = json.getAsJsonObject("data");
-            ret.complete(new HttpMappackWorld(mappack, data));
-        }, Pumpkin.instance().getAsyncExecutor());
+                JsonParser parser = new JsonParser();
+                JsonObject json = parser.parse(jsonString).getAsJsonObject();
+                if(!json.get("success").getAsBoolean()){
+                    ret.completeExceptionally(new MappackLoadingException(json.get("error").getAsString()));
+                    return;
+                }
+
+                JsonObject data = json.getAsJsonObject("data");
+                ret.complete(new HttpMappackWorld(mappack, data));
+            } catch (IOException e) {
+                ret.completeExceptionally(e);
+            }
+        });
         return ret;
     }
 }

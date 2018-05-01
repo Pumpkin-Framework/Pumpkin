@@ -118,13 +118,13 @@ public class ZipFileInputStreamFileSystem extends InputStreamFileSystem {
     // ----------------------------------------------------------------------- //
 
     private Optional<Archive> entry(String path){
+        if(path.startsWith("/")){
+            path = path.substring(1);
+        }
+        if(path.endsWith("/")){
+            path = path.substring(0, path.length() - 1);
+        }
         String cleanPath = "/" + path.replace("\\", "/").replace("//", "/");
-        if(cleanPath.startsWith("/")){
-            cleanPath = cleanPath.substring(1);
-        }
-        if(cleanPath.endsWith("/")){
-            cleanPath = cleanPath.substring(0, cleanPath.length() - 1);
-        }
         if(cleanPath.equals("/")){
             return Optional.of(archive);
         }else {

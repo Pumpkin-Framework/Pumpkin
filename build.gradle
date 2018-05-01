@@ -1,6 +1,7 @@
 plugins {
     id "java"
     id "idea"
+    id "com.github.johnrengelman.shadow" version "2.0.4"
 }
 
 group = "nl.jk-5.pumpkin"
@@ -20,32 +21,31 @@ repositories {
 
 configurations {
     shaded
+    compile.extendsFrom shaded
 }
 
 dependencies {
     compile "org.spongepowered:spongeapi:5.0.0-SNAPSHOT"
 
-    compile 'io.netty:netty-all:4.0.40.Final'
-    compile 'org.postgresql:postgresql:9.4-1206-jdbc41'
-    compile 'org.javassist:javassist:3.19.0-GA'
-    compile 'com.j256.ormlite:ormlite-jdbc:4.48'
-    compile 'org.apache.httpcomponents:httpclient:4.5.1'
-    compile 'org.asynchttpclient:async-http-client:2.0.12'
+    shaded 'org.postgresql:postgresql:9.4-1206-jdbc41'
+    shaded 'org.javassist:javassist:3.19.0-GA'
+    shaded 'com.j256.ormlite:ormlite-jdbc:4.48'
+    shaded 'org.apache.httpcomponents:httpclient:4.5.1'
 
-    compile 'nl.jk5.pumpkin:jnlua:1.1.0'
-    compile 'net.sf.trove4j:trove4j:3.0.3'
+    shaded 'nl.jk5.pumpkin:jnlua:1.1.0'
+    shaded 'net.sf.trove4j:trove4j:3.0.3'
 }
 
-jar {
-    from {
-        configurations.shaded.collect {
-            it.isDirectory() ? it : zipTree(it).matching {
-                exclude "META-INF", "META-INF/**", "*META-INF*", "meta-inf"
-                exclude "**.jar", "**/*.jar", "*.jar"
-            }
-        }
-    }
-}
+// jar {
+//     from {
+//         configurations.shaded.collect {
+//             it.isDirectory() ? it : zipTree(it).matching {
+//                 exclude "META-INF", "META-INF/**", "*META-INF*", "meta-inf"
+//                 exclude "**.jar", "**/*.jar", "*.jar"
+//             }
+//         }
+//     }
+// }
 
 processResources {
     from(sourceSets.main.resources.srcDirs) {
@@ -64,4 +64,12 @@ jar.manifest {
     attributes "Implementation-Version": project.version
     attributes "Implementation-Title": "nl.jk_5.pumpkin"
     attributes "Implementation-Vendor": "jk-5"
+}
+
+shadowJar {
+    configurations = [project.configurations.shaded]
+    manifest {
+        inheritFrom project.tasks.jar.manifest
+    }
+    relocate 'org.apache', 'nl.jk5.pumpkin.shadow.org.apache'
 }
