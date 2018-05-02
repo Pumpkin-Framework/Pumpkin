@@ -133,7 +133,7 @@ public class MapRegistry {
                     Log.warn("World could not be generated. Map loading canceled (mappack id: " + mappack.getId() + ")(map id: " + id + ")(world id: " + world.getId() + ")");
                     throw new MapLoadingException("World could not be generated", e);
                 }
-            }, asyncExecutor);
+            }, syncExecutor);
 
             loadFutures.add(prepareFuture.thenApplyAsync((properties) -> {
                 Optional<World> generatedWorld = this.pumpkin.getGame().getServer().loadWorld(properties);
