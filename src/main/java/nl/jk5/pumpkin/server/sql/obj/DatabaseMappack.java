@@ -1,6 +1,6 @@
 package nl.jk5.pumpkin.server.sql.obj;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
@@ -99,7 +99,7 @@ public class DatabaseMappack implements Mappack {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("id", id)
                 .add("name", name)
                 .add("isPublic", isPublic)

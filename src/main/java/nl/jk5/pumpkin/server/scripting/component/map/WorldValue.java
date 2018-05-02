@@ -8,8 +8,6 @@ import nl.jk5.pumpkin.server.scripting.Callback;
 import nl.jk5.pumpkin.server.scripting.Context;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
-import org.spongepowered.api.event.cause.Cause;
-import org.spongepowered.api.event.cause.NamedCause;
 import org.spongepowered.api.world.difficulty.Difficulties;
 import org.spongepowered.api.world.difficulty.Difficulty;
 
@@ -69,7 +67,9 @@ public class WorldValue extends SimpleValue<MapWorld> {
         if(!type.isPresent()){
             throw new IllegalArgumentException("Block type " + blockName + " does not exist");
         }
-        this.getValue().getWorld().setBlock(x, y, z, BlockState.builder().blockType(type.get()).build(), Cause.of(NamedCause.of("plugin", Pumpkin.instance().getPluginContainer())));
+
+        BlockState blockState = BlockState.builder().blockType(type.get()).build();
+        this.getValue().getWorld().setBlock(x, y, z, blockState);
         return new Object[0];
     }
 }

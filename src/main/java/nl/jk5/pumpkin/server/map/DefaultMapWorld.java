@@ -1,6 +1,6 @@
 package nl.jk5.pumpkin.server.map;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
 import nl.jk5.pumpkin.api.mappack.MappackWorld;
@@ -28,7 +28,7 @@ public class DefaultMapWorld implements MapWorld {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("world", world)
                 .toString();
     }

@@ -2,7 +2,7 @@ package nl.jk5.pumpkin.api.utils;
 
 import com.flowpowered.math.vector.Vector3d;
 import com.flowpowered.math.vector.Vector3i;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.gson.JsonObject;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.extent.Extent;
@@ -95,7 +95,7 @@ public final class PlayerLocation {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("x", x)
                 .add("y", y)
                 .add("z", z)

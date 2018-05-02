@@ -1,6 +1,6 @@
 package nl.jk5.pumpkin.server.sql.obj;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import nl.jk5.pumpkin.api.mappack.MappackAuthor;
@@ -43,7 +43,7 @@ public class DatabaseMappackAuthor implements MappackAuthor {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("mappack", mappack)
                 .add("author", author)
                 .add("role", role)

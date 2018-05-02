@@ -1,6 +1,6 @@
 package nl.jk5.pumpkin.server.scripting.component.impl.fs;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import nl.jk5.pumpkin.server.scripting.AbstractValue;
 import nl.jk5.pumpkin.server.scripting.Context;
 
@@ -33,7 +33,7 @@ public final class HandleValue implements AbstractValue {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper("Handle")
+        return MoreObjects.toStringHelper("Handle")
                 .add("handle", handle)
                 .toString();
     }

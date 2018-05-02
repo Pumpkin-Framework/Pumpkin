@@ -9,7 +9,6 @@ import nl.jk5.pumpkin.server.sql.obj.DatabaseStatEmitter;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockTypes;
-import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
@@ -17,8 +16,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class StatEmitter implements StatListener {
-
-    private final Cause cause = Cause.source(Pumpkin.instance().getPluginContainer()).build();
 
     private final MapWorld world;
     private final StatEmitterConfig config;
@@ -33,9 +30,9 @@ public class StatEmitter implements StatListener {
 
     public void setEnabled(boolean enabled){
         if(enabled){
-            this.location.setBlock(BlockState.builder().blockType(BlockTypes.REDSTONE_BLOCK).build(), cause);
+            this.location.setBlock(BlockState.builder().blockType(BlockTypes.REDSTONE_BLOCK).build());
         }else{
-            this.location.setBlock(BlockState.builder().blockType(BlockTypes.COAL_BLOCK).build(), cause);
+            this.location.setBlock(BlockState.builder().blockType(BlockTypes.COAL_BLOCK).build());
         }
     }
 

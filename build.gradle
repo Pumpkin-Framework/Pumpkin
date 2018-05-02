@@ -25,7 +25,7 @@ configurations {
 }
 
 dependencies {
-    compile "org.spongepowered:spongeapi:5.0.0-SNAPSHOT"
+    compile "org.spongepowered:spongeapi:7.1.0-SNAPSHOT"
 
     shaded 'org.postgresql:postgresql:9.4-1206-jdbc41'
     shaded 'org.javassist:javassist:3.19.0-GA'

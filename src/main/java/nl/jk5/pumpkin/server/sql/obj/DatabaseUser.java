@@ -1,5 +1,6 @@
 package nl.jk5.pumpkin.server.sql.obj;
 
+import com.google.common.base.MoreObjects;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import nl.jk5.pumpkin.api.user.User;
@@ -114,7 +115,7 @@ public class DatabaseUser implements User {
 
     @Override
     public String toString() {
-        return com.google.common.base.Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("id", id)
                 .add("username", username)
                 .add("email", email)

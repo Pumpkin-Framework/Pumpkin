@@ -20,21 +20,20 @@ import org.spongepowered.api.entity.living.player.gamemode.GameMode;
 import org.spongepowered.api.entity.living.player.gamemode.GameModes;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
-import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.entity.damage.DamageTypes;
 import org.spongepowered.api.event.cause.entity.damage.source.DamageSource;
 import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
-import org.spongepowered.api.event.cause.entity.spawn.SpawnCause;
-import org.spongepowered.api.event.cause.entity.spawn.SpawnTypes;
 import org.spongepowered.api.event.data.ChangeDataHolderEvent;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.entity.living.humanoid.player.RespawnPlayerEvent;
+import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.title.Title;
+import org.spongepowered.api.world.World;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -99,7 +98,8 @@ public final class MapEventListener {
 
     @Listener
     public void onBlockBreak(ChangeBlockEvent.Break event, @Root Player player){
-        Optional<MapWorld> mapWorld = this.pumpkin.getMapRegistry().getMapWorld(event.getTargetWorld());
+        // TODO: Is getting the world from the player the nicest way to handle this?
+        Optional<MapWorld> mapWorld = this.pumpkin.getMapRegistry().getMapWorld(player.getWorld());
         if(!mapWorld.isPresent()){
             return;
         }
@@ -136,7 +136,8 @@ public final class MapEventListener {
 
     @Listener
     public void onBlockPlace(ChangeBlockEvent.Place event, @Root Player player){
-        Optional<MapWorld> mapWorld = this.pumpkin.getMapRegistry().getMapWorld(event.getTargetWorld());
+        // TODO: Is getting the world from the player the nicest way to handle this?
+        Optional<MapWorld> mapWorld = this.pumpkin.getMapRegistry().getMapWorld(player.getWorld());
         if(!mapWorld.isPresent()){
             return;
         }
@@ -300,7 +301,7 @@ public final class MapEventListener {
                             double mZ = Math.cos(m2) * m1;
                             item.setVelocity(new Vector3d(mX, 0.2, mZ));
 
-                            player.getWorld().spawnEntity(item, Cause.builder().named("root", SpawnCause.builder().type(SpawnTypes.DROPPED_ITEM).build()).owner(player).build());
+                            player.getWorld().spawnEntity(item);
                             slot.clear();
                         }
                     });
@@ -407,8 +408,8 @@ public final class MapEventListener {
     }
 
     @Listener
-    public void watcherBlockBreak(ChangeBlockEvent.Break event){
-        Optional<MapWorld> mapWorld = pumpkin.getMapRegistry().getMapWorld(event.getTargetWorld());
+    public void watcherBlockBreak(ChangeBlockEvent.Break event, @First World world){
+        Optional<MapWorld> mapWorld = pumpkin.getMapRegistry().getMapWorld(world);  //TODO: Is this way of getting the world correct?
         if(!mapWorld.isPresent()){
             return;
         }

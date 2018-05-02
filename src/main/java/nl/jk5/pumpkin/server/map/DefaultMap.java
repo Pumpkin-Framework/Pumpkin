@@ -1,7 +1,9 @@
 package nl.jk5.pumpkin.server.map;
 
-import com.google.common.base.Objects;
-import nl.jk5.pumpkin.api.mappack.*;
+import com.google.common.base.MoreObjects;
+import nl.jk5.pumpkin.api.mappack.MapWorld;
+import nl.jk5.pumpkin.api.mappack.Mappack;
+import nl.jk5.pumpkin.api.mappack.Team;
 import nl.jk5.pumpkin.api.mappack.game.Game;
 import nl.jk5.pumpkin.api.mappack.game.Winnable;
 import nl.jk5.pumpkin.api.mappack.game.WinnablePlayerWrapper;
@@ -24,7 +26,6 @@ import org.spongepowered.api.text.format.TextColors;
 
 import java.io.File;
 import java.util.*;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue {
@@ -156,7 +157,7 @@ public class DefaultMap implements nl.jk5.pumpkin.api.mappack.Map, AbstractValue
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("mappack", mappack)
                 .add("worlds", worlds)
                 .toString();
