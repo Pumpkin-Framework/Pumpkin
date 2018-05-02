@@ -127,7 +127,7 @@ public class Pumpkin {
         Commands.register(this);
     }
 
-    @Listener
+    //@Listener
     public void onServerStarting(GameStartingServerEvent event) throws Throwable {
         Log.info("Starting");
         int lobbyId = this.settings.getLobbyMappack();
