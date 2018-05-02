@@ -1,28 +1,25 @@
 package nl.jk5.pumpkin.server.command;
 
-import com.flowpowered.math.vector.Vector3d;
 import nl.jk5.pumpkin.api.mappack.Map;
 import nl.jk5.pumpkin.api.mappack.MapWorld;
-import nl.jk5.pumpkin.api.mappack.Mappack;
 import nl.jk5.pumpkin.api.mappack.Team;
 import nl.jk5.pumpkin.api.mappack.game.GameStartResult;
-import nl.jk5.pumpkin.api.utils.PlayerLocation;
-import nl.jk5.pumpkin.server.Log;
 import nl.jk5.pumpkin.server.Pumpkin;
+import nl.jk5.pumpkin.server.command.element.MapWorldCommandElement;
 import nl.jk5.pumpkin.server.command.element.MappackCommandElement;
+import nl.jk5.pumpkin.server.command.executor.GotoCommandExecutor;
+import nl.jk5.pumpkin.server.command.executor.MappackLoadCommandExecutor;
 import nl.jk5.pumpkin.server.map.stat.StatEmitter;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.action.TextActions;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public final class Commands {
 
@@ -34,24 +31,7 @@ public final class Commands {
         CommandSpec mappackLoadCommand = CommandSpec.builder()
                 .description(Text.of("Load a mappack"))
                 .arguments(new MappackCommandElement(pumpkin, Text.of("mappack")))
-                .executor((src, args) -> {
-                    Optional<Mappack> mappack = args.getOne("mappack");
-                    if(mappack.isPresent()){
-                        pumpkin.getMapRegistry().load(mappack.get()).whenComplete((map, e) -> {
-                            if(e != null){
-                                Log.error("Could not load map " + mappack.get().getName() + " (" + mappack.get().getId() + ")", e);
-                                src.sendMessage(Text.of(TextColors.RED, "Failed to load map ", TextColors.GOLD, mappack.get().getName()));
-                            }else{
-                                Text.Builder builder = Text.builder();
-                                builder.append(Text.of(TextColors.GREEN, "Successfully loaded mappack ", TextColors.GOLD, mappack.get().getName(), TextColors.GREEN, ". Click "));
-                                builder.append(Text.of(TextColors.GOLD, TextActions.runCommand("/goto " + map.getDefaultWorld().getWorld().getUniqueId().toString()), TextActions.showText(Text.of("/goto " + map.getDefaultWorld().getWorld().getUniqueId().toString())), "here"));
-                                builder.append(Text.of(TextColors.GREEN, " to teleport to it"));
-                                src.sendMessage(builder.build());
-                            }
-                        });
-                    }
-                    return CommandResult.success();
-                })
+                .executor(new MappackLoadCommandExecutor(pumpkin))
                 .build();
 
         CommandSpec mappackCommand = CommandSpec.builder()
@@ -61,34 +41,8 @@ public final class Commands {
 
         CommandSpec gotoCommand = CommandSpec.builder()
                 .description(Text.of("Go to a world"))
-                .arguments(GenericArguments.string(Text.of("world name")))
-                .executor((src, args) -> {
-                    String name = args.<String>getOne("world name").get();
-                    if(!(src instanceof Player)){
-                        return CommandResult.success();
-                    }
-                    Player player = (Player) src;
-                    Optional<World> world;
-                    try{
-                        UUID uuid = UUID.fromString(name);
-                        world = pumpkin.game.getServer().getWorld(uuid);
-                        if(world.isPresent() && pumpkin.getMapRegistry().getMapWorld(world.get()).isPresent()){
-                            Optional<MapWorld> mapWorld = pumpkin.getMapRegistry().getMapWorld(world.get());
-                            PlayerLocation spawn = mapWorld.get().getConfig().getSpawnpoint();
-                            player.setLocationAndRotation(new Location<>(world.get(), spawn.getX(), spawn.getY(), spawn.getZ()), new Vector3d(spawn.getPitch(), spawn.getYaw(), 0));
-                            return CommandResult.success();
-                        }
-                    }catch(IllegalArgumentException ignored){}
-                    world = pumpkin.game.getServer().getWorld(name);
-                    if(!world.isPresent() || !pumpkin.getMapRegistry().getMapWorld(world.get()).isPresent()){
-                        src.sendMessage(Text.of(TextColors.RED, "No world found with name ", TextColors.GOLD, name));
-                        return CommandResult.empty();
-                    }
-                    Optional<MapWorld> mapWorld = pumpkin.getMapRegistry().getMapWorld(world.get());
-                    PlayerLocation spawn = mapWorld.get().getConfig().getSpawnpoint();
-                    player.setLocationAndRotation(new Location<>(world.get(), spawn.getX(), spawn.getY(), spawn.getZ()), new Vector3d(spawn.getPitch(), spawn.getYaw(), 0));
-                    return CommandResult.success();
-                })
+                .arguments(new MapWorldCommandElement(pumpkin, Text.of("world")))
+                .executor(new GotoCommandExecutor())
                 .build();
 
         CommandSpec teamJoinCommand = CommandSpec.builder()
