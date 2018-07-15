@@ -26,14 +26,12 @@ import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource
 import org.spongepowered.api.event.data.ChangeDataHolderEvent;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.entity.living.humanoid.player.RespawnPlayerEvent;
-import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.title.Title;
-import org.spongepowered.api.world.World;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -129,7 +127,7 @@ public final class MapEventListener {
                 }
             }else{
                 //TODO: add edit mode, to bypass this
-                //transaction.setValid(false);
+                transaction.setValid(false);
             }
         }
     }
@@ -163,7 +161,7 @@ public final class MapEventListener {
                 }
             }else{
                 //TODO: add edit mode, to bypass this
-                //transaction.setValid(false);
+                transaction.setValid(false);
             }
         }
     }
@@ -178,6 +176,8 @@ public final class MapEventListener {
 
         Optional<MapWorld> mapWorldOpt = this.pumpkin.getMapRegistry().getMapWorld(event.getTargetEntity().getWorld());
         if (!mapWorldOpt.isPresent()) {
+            // Disallow damage when not in a map
+            event.setCancelled(true);
             return;
         }
         MapWorld world = mapWorldOpt.get();
@@ -408,8 +408,8 @@ public final class MapEventListener {
     }
 
     @Listener
-    public void watcherBlockBreak(ChangeBlockEvent.Break event, @First World world){
-        Optional<MapWorld> mapWorld = pumpkin.getMapRegistry().getMapWorld(world);  //TODO: Is this way of getting the world correct?
+    public void watcherBlockBreak(ChangeBlockEvent.Break event, @Root Player player){
+        Optional<MapWorld> mapWorld = pumpkin.getMapRegistry().getMapWorld(player.getWorld());  //TODO: Is this way of getting the world correct?
         if(!mapWorld.isPresent()){
             return;
         }

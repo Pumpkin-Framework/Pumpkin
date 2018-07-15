@@ -34,7 +34,7 @@ public class PlayerRegistry {
         Log.info("Player {}/{} connecting to {}", event.getProfile().getName().orElse("[UNKNOWN]"), event.getProfile().getUniqueId().toString(), event.getConnection().getVirtualHost().getHostString());
     }
 
-    @Listener
+    // @Listener //TODO: Listener disabled because lobby stuff is broken currently
     public void onLogin(ClientConnectionEvent.Login event) throws SQLException {
         List<DatabasePlayer> players = this.pumpkin.getTableManager().playerDao.queryForEq("uuid", event.getProfile().getUniqueId());
         DatabasePlayer player;
@@ -136,25 +136,26 @@ public class PlayerRegistry {
         if(event.getFromTransform().getExtent() != event.getToTransform().getExtent()){
             Optional<MapWorld> oldMapWorld = this.pumpkin.getMapRegistry().getMapWorld(event.getFromTransform().getExtent());
             Optional<MapWorld> newMapWorld = this.pumpkin.getMapRegistry().getMapWorld(event.getToTransform().getExtent());
-            if(!oldMapWorld.isPresent() || !newMapWorld.isPresent()){
-                return;
-            }
-            if(oldMapWorld.get() instanceof DefaultMapWorld){
+            if(oldMapWorld.isPresent() && oldMapWorld.get() instanceof DefaultMapWorld){
                 ((DefaultMapWorld) oldMapWorld.get()).onPlayerLeave(player);
             }
-            if(newMapWorld.get() instanceof DefaultMapWorld){
+            if(newMapWorld.isPresent() && newMapWorld.get() instanceof DefaultMapWorld){
                 ((DefaultMapWorld) newMapWorld.get()).onPlayerJoin(player);
             }
 
-            Map oldMap = oldMapWorld.get().getMap();
-            Map newMap = newMapWorld.get().getMap();
-            if(oldMap instanceof DefaultMap){
-                DefaultMap defaultMap = (DefaultMap) oldMap;
-                defaultMap.onPlayerLeft(player);
+            if(oldMapWorld.isPresent()){
+                Map oldMap = oldMapWorld.get().getMap();
+                if(oldMap instanceof DefaultMap){
+                    DefaultMap defaultMap = (DefaultMap) oldMap;
+                    defaultMap.onPlayerLeft(player);
+                }
             }
-            if(newMap instanceof DefaultMap){
-                DefaultMap defaultMap = (DefaultMap) newMap;
-                defaultMap.onPlayerJoin(player);
+            if(newMapWorld.isPresent()){
+                Map newMap = newMapWorld.get().getMap();
+                if(newMap instanceof DefaultMap){
+                    DefaultMap defaultMap = (DefaultMap) newMap;
+                    defaultMap.onPlayerJoin(player);
+                }
             }
         }
     }
